@@ -1,10 +1,80 @@
 import React, { useState, useEffect, useRef } from "react";
 
 const Home: React.FC = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      setIsMenuOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMenuOpen]);
+
   return (
-    <div className="flex flex-col min-h-screen bg-indigo-700 px-6 sm:px-6 lg:px-8">
+    <div className="flex flex-col min-h-screen bg-[#4942E4] px-6 sm:px-6 lg:px-8">
       {/* Bagian atas */}
-      <div className="p-8">
+      <div className="p-7">
+        {!isMenuOpen && ( // Kondisi untuk menyembunyikan tombol saat menu terbuka
+          <button
+            onClick={toggleMenu}
+            className="absolute bg-[#4942E4] top-4 left-4 z-10"
+          >
+            <svg
+              className="w-8 h-8 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4 6h16M4 12h16m-16 6h16"
+              />
+            </svg>
+          </button>
+        )}
+        <div
+          ref={menuRef}
+          className={`fixed top-0 left-0 w-64 h-full bg-white transform ${
+            isMenuOpen ? "translate-x-0" : "-translate-x-full"
+          } transition-transform duration-300 ease-in-out`}
+        >
+          {/* Navbar kecil di dalam menu */}
+          <div className="bg-[#4942E4] text-white p-4 text-center text-lg font-bold shadow-md">
+            Smart Presence
+          </div>
+          <nav className="flex flex-col p-4">
+            <a href="#" className="mt-4 text-xl text-[#4942E4]">
+              Home
+            </a>
+            <a href="#" className="mt-4 text-xl text-[#4942E4]">
+              About Presensi
+            </a>
+            <a href="#Other" className="mt-4 text-xl text-[#4942E4]">
+              Other
+            </a>
+            <button className="mt-8 px-4 py-2 bg-[#4942E4] text-white rounded-md">
+              Log in
+            </button>
+          </nav>
+        </div>
         <h1 className="text-2xl text-neutral-100 font-bold text-center">
           Smart Presence
         </h1>
@@ -28,15 +98,27 @@ const Home: React.FC = () => {
               efisiensi organisasi Anda.
             </p>
           </div>
-          <div className="flex justify-center space-x-4 mt-4">
-            <a href="#" className="text-indigo-600 text-xl">
-              <i className="fab fa-instagram"></i>
+          <div className="items-center justify-center mt-8 flex space-x-4">
+            <a href="#">
+              <img
+                src="https://img.icons8.com/ios-filled/50/ffffff/instagram-new.png"
+                alt="Instagram"
+                className="w-8 h-8"
+              />
             </a>
-            <a href="#" className="text-indigo-600 text-xl">
-              <i className="fab fa-facebook"></i>
+            <a href="#">
+              <img
+                src="https://img.icons8.com/ios-filled/50/ffffff/facebook-new.png"
+                alt="Facebook"
+                className="w-8 h-8"
+              />
             </a>
-            <a href="#" className="text-indigo-600 text-xl">
-              <i className="fab fa-twitter"></i>
+            <a href="#">
+              <img
+                src="https://img.icons8.com/ios-filled/50/ffffff/twitter.png"
+                alt="Twitter"
+                className="w-8 h-8"
+              />
             </a>
           </div>
         </div>
