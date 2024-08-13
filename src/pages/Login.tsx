@@ -6,7 +6,7 @@ const Login: React.FC = () => {
     <div className="flex items-center justify-center min-h-screen bg-white px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md p-6 space-y-8 bg-white rounded-lg shadow-md">
         <div className="text-left">
-          <a href="#" className="text-indigo-600 text-xl font-bold">
+          <a href="/" className="text-indigo-600 text-xl font-bold">
             &#8592;
           </a>
         </div>
