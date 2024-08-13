@@ -100,9 +100,9 @@
                 efisiensi organisasi Anda.
               </p>
             </div>
-            <img src="/assets/image/Home1.png" />
+            <img src="/src/assets/image/Home1.png" />
             <div className="items-center justify-center mt-8 flex space-x-4">
-              <a href="https://www.instagram.com/eirumf/">
+              <a href="https://www.instagram.com/rplthreee_/">
                 <img
                   src="https://img.icons8.com/ios-filled/50/ffffff/instagram-new.png"
                   alt="Instagram"
