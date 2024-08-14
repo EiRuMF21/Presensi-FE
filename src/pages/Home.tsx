@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const Home: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -26,107 +28,102 @@ const Home: React.FC = () => {
   }, [isMenuOpen]);
 
   return (
-    <div className="flex flex-col min-h-screen bg-h-14 bg-gradient-to-t from-[#4942E4] to-[#A4A0F1] to-[#FFFFFF] px-6 sm:px-6 lg:px-8">
-      {/* Bagian atas */}
-      <div className="p-7">
-        {!isMenuOpen && ( // Kondisi untuk menyembunyikan tombol saat menu terbuka
-          <button
-            onClick={toggleMenu}
-            className="fixed bg-[#ffffff00] top-6 left-2 z-10"
-          >
-            <svg
-              className="w-8 h-8 text-black"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4 6h16M4 12h16m-16 6h16"
-              />
-            </svg>
-          </button>
-        )}
-        <div
-          ref={menuRef}
-          className={`fixed top-0 left-0 w-64 h-full bg-white transform ${
-            isMenuOpen ? "translate-x-0" : "-translate-x-full"
-          } transition-transform duration-300 ease-in-out`}
-        >
-          {/* Navbar kecil di dalam menu */}
-          <div className="bg-[#4942E4] text-white p-4 text-center text-lg font-bold shadow-md">
-            Smart Presence
-          </div>
-          <nav className="flex flex-col p-4">
-            <a href="#" className="mt-4 text-xl text-[#4942E4]">
-              Home
-            </a>
-            <a href="#" className="mt-4 text-xl text-[#4942E4]">
-              About Presensi
-            </a>
-            <a href="#Other" className="mt-4 text-xl text-[#4942E4]">
-              Other
-            </a>
-            <a
-              href="/login"
-              className="mt-8 px-4 py-2 bg-[#4942E4] text-white rounded-md"
-            >
-              Log in
-            </a>
-          </nav>
-        </div>
-        <h1 className="text-2xl text-[#4942E4] font-bold text-center">
-          Smart Presence
-        </h1>
-      </div>
+    <div className="flex flex-col min-h-screen bg-h-14 bg-gradient-to-t from-[#4942E4] to-[#A4A0F1] to-[#FFFFFF] px-6 sm:px-6 lg:px-8 z-10">
+      <Navbar />
 
-      {/* Bagian tengah */}
+      {/* Existing content */}
       <div className="flex-grow flex flex-col justify-center">
-        <div className="w-full max-w-sm p-8 space-y-8">
+        <div className="w-full max-w-sm p-8 space-y-8  ">
           <div>
-            <h2 className="text-center text-4xl text-neutral-100 font-bold">
+            <h2 className="text-center text-4xl mt-24 text-neutral-100 font-bold drop-shadow">
               Digital <br /> Platform For
             </h2>
-            <h2 className="text-center text-4xl text-gray-400 font-bold">
+            <h2 className="text-center text-4xl text-[#000000] opacity-80  font-bold drop-shadow">
               All Employee
             </h2>
             <br />
-            <p className="text-center font-inter text-neutral-100">
+            <p className="text-center font-inter text-neutral-100 drop-shadow">
               Web Presensi yang praktis dan akurat, memudahkan pencatatan
               kehadiran secara real-time dengan fitur rekap otomatis dan
               notifikasi. Solusi presensi digital yang aman untuk meningkatkan
               efisiensi organisasi Anda.
             </p>
           </div>
-          <img src="/src/assets/image/Home1.png" />
-          <div className="items-center justify-center mt-8 flex space-x-4">
-            <a href="https://www.instagram.com/rplthreee_/">
-              <img
-                src="https://img.icons8.com/ios-filled/50/ffffff/instagram-new.png"
-                alt="Instagram"
-                className="w-8 h-8"
-              />
-            </a>
-            <a href="#">
-              <img
-                src="https://img.icons8.com/ios-filled/50/ffffff/facebook-new.png"
-                alt="Facebook"
-                className="w-8 h-8"
-              />
-            </a>
-            <a href="#">
-              <img
-                src="https://img.icons8.com/ios-filled/50/ffffff/twitter.png"
-                alt="Twitter"
-                className="w-8 h-8"
-              />
-            </a>
+          <img src="/public/image/Home1.png" />
+        </div>
+      </div>
+      
+
+      {/* New Section with #4942E4 Background */}
+      <div className="bg-[#fffff00] py-16">
+        <div className="flex flex-col items-center justify-center max-w-2xl mx-auto px-4 sm:px-6 lg:px-2 space-y-8 md:space-y-0 md:space-x-12">
+          {/* Image Section */}
+          <div className="flex-shrink-0">
+            <img
+              src="/public/image/Home2.png"
+              alt="Illustration"
+              className=" max-w-xs mx-auto md:mx-0"
+            />
+          </div>
+
+          {/* Text Content */}
+          <div className="flex flex-col text-white px-0 space-y-6 max-w-80">
+            <h2 className="text-3xl font-bold text-center md:text-left">
+              Presensi From Our <br /> Online Platform
+            </h2>
+            <div className="space-y-2">
+              <div className="flex items-start">
+                <img
+                  src="https://img.icons8.com/ios-filled/50/ffffff/clock.png"
+                  alt="Masuk Icon"
+                  className="w-8 h-8 mr-4"
+                />
+                <div>
+                  <h3 className="font-bold text-lg">Masuk</h3>
+                  <p>
+                    Masuk kerja tepat waktu adalah kunci produktivitas. Dengan
+                    kedisiplinan hadir setiap hari, Anda berkontribusi pada
+                    kesuksesan tim dan perusahaan.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start">
+                <img
+                  src="https://img.icons8.com/ios-filled/50/ffffff/suitcase.png"
+                  alt="Izin Icon"
+                  className="w-8 h-8 mr-4"
+                />
+                <div>
+                  <h3 className="font-bold text-lg">Izin</h3>
+                  <p>
+                    Izin kerja diberikan untuk keperluan mendesak atau kondisi
+                    darurat. Karyawan harus mengajukan izin dan mendapatkan
+                    persetujuan sebelum tidak hadir.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start">
+                <img
+                  src="https://img.icons8.com/ios-filled/50/ffffff/beach.png"
+                  alt="Cuti Icon"
+                  className="w-8 h-8 mr-4"
+                />
+                <div>
+                  <h3 className="font-bold text-lg">Cuti</h3>
+                  <p>
+                    Cuti kerja adalah hak karyawan untuk tidak bekerja dalam
+                    jangka waktu tertentu, biasanya untuk istirahat atau
+                    keperluan pribadi. Cuti harus direncanakan dan disetujui
+                    sebelumnya.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 };
