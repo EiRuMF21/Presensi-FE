@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { PopupProvider } from "./PopupContext"; 
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
@@ -10,7 +9,6 @@ import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <PopupProvider>
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -19,6 +17,5 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="/history" element={<History />} />
         </Routes>
       </Router>
-    </PopupProvider>
   </React.StrictMode>
 );

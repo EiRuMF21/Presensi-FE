@@ -4,6 +4,15 @@ import Footer from "../components/Footer";
 
 
 const Home: React.FC = () => {
+  const [isRolePopupOpen, setIsRolePopupOpen] = useState(false);
+
+  const openRolePopup = () => {
+    setIsRolePopupOpen(true);
+  };
+
+  const closeRolePopup = () => {
+    setIsRolePopupOpen(false);
+  };
   
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -28,8 +37,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="relative flex flex-col items-center px-6 max-sm:px-0 lg:px-0 z-10">
-      <Navbar />
-      
+      <Navbar onLoginClick={openRolePopup} />
 
       {/* Halaman 1 (Home Section) */}
       <div className="flex-grow bg-gradient-to-t w-full from-[#4942E4] to-[#dfdeff] min-h-screen">
@@ -51,7 +59,6 @@ const Home: React.FC = () => {
           </div>
         </div>
       </div>
-      
 
       {/* Halaman 2 */}
       <div className="bg-[#4942E4] py-16 w-full min-h-screen flex">
@@ -156,6 +163,25 @@ const Home: React.FC = () => {
       </div>
       {/* Footer Section */}
       <Footer />
+      {isRolePopupOpen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="bg-white p-8 rounded shadow-lg">
+            <h2 className="text-xl font-bold mb-4">Pilih Peran</h2>
+            <button
+              onClick={closeRolePopup}
+              className="bg-blue-500 text-white px-4 py-2 rounded mb-4"
+            >
+              User
+            </button>
+            <button
+              onClick={closeRolePopup}
+              className="bg-green-500 text-white px-4 py-2 rounded"
+            >
+              Admin
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

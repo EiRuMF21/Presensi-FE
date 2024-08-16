@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  onLoginClick: () => void; // Tambahkan prop ini untuk event klik login
+}
+
+const Navbar: React.FC<NavbarProps> = ({ onLoginClick }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -14,7 +17,7 @@ const Navbar: React.FC = () => {
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });
     }
-    setIsMenuOpen(false); // Close the mobile menu after clicking
+    setIsMenuOpen(false); // Menutup menu mobile setelah klik
   };
 
   useEffect(() => {
@@ -41,15 +44,15 @@ const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <Link
-              to="/"
+            <a
+              href="#"
               className="text-lg font-bold tracking-wide text-gray-800 font-sans"
             >
               SMART PRESENCE
-            </Link>
+            </a>
           </div>
 
-          {/* Desktop Menu */}
+          {/* Menu Desktop */}
           <div className="hidden md:flex space-x-8">
             <button
               onClick={() => scrollToSection("home")}
@@ -71,17 +74,17 @@ const Navbar: React.FC = () => {
             </button>
           </div>
 
+          {/* Tombol Login */}
           <div className="hidden md:flex items-center">
-            <Link
-            
-              to="/Login"
+            <button
+              onClick={onLoginClick} // Menghubungkan event klik login
               className="text-sm text-blue-600 border border-blue-600 px-4 py-2 rounded-full hover:bg-blue-600 hover:text-white transition duration-300"
             >
               Login
-            </Link>
+            </button>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Tombol Menu Mobile */}
           <div className="-mr-2 flex md:hidden">
             <button
               onClick={toggleMenu}
@@ -107,7 +110,7 @@ const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Menu Mobile */}
       {isMenuOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
@@ -129,12 +132,12 @@ const Navbar: React.FC = () => {
             >
               Other
             </button>
-            <Link
-              to="/login"
+            <button
+              onClick={onLoginClick} // Tambahkan onClick ke menu mobile
               className="block px-3 py-2 rounded-md text-base font-medium text-blue-600 border border-blue-600 hover:bg-blue-600 hover:text-white transition duration-300"
             >
               Login
-            </Link>
+            </button>
           </div>
         </div>
       )}
