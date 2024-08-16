@@ -163,22 +163,80 @@ const Home: React.FC = () => {
       </div>
       {/* Footer Section */}
       <Footer />
+
+      {/* Popup Login */}
       {isRolePopupOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <div className="bg-white p-8 rounded shadow-lg">
-            <h2 className="text-xl font-bold mb-4">Pilih Peran</h2>
-            <button
-              onClick={closeRolePopup}
-              className="bg-blue-500 text-white px-4 py-2 rounded mb-4"
-            >
-              User
-            </button>
-            <button
-              onClick={closeRolePopup}
-              className="bg-green-500 text-white px-4 py-2 rounded"
-            >
-              Admin
-            </button>
+          <div className="bg-white rounded-3xl shadow-lg w-full max-w-md p-6 drop-shadow-2xl">
+            <div className="text-left">
+              <button
+                onClick={closeRolePopup}
+                className="text-indigo-600 text-xl font-bold"
+              >
+                &#8592;
+              </button>
+            </div>
+            <h2 className="text-center text-indigo-600 font-bold text-sm">
+              LOG IN
+            </h2>
+            <h2 className="text-3xl font-bold text-left text-indigo-700">
+              Smart Presence
+            </h2>
+            <p className="text-left font-bold text-neutral-700">
+              Enter your log in details to <br />
+              access your account
+            </p>
+            <form className="mt-8 space-y-6">
+              <div className="rounded-md shadow-sm space-y-4">
+                <div>
+                  <label htmlFor="username" className="sr-only">
+                    Username
+                  </label>
+                  <input
+                    id="username"
+                    name="username"
+                    type="text"
+                    autoComplete="username"
+                    required
+                    className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-neutral-900 bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    placeholder="Type your username"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="password" className="sr-only text-black">
+                    Password
+                  </label>
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    autoComplete="current-password"
+                    required
+                    className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-neutral-900 bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    placeholder="Type your password"
+                  />
+                </div>
+              </div>
+              <div className="flex justify-between items-center">
+                <div></div>
+                <div className="text-sm">
+                  <a
+                    href="#"
+                    className="font-medium text-neutral-500 hover:text-indigo-500"
+                  >
+                    Forgot password?
+                  </a>
+                </div>
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  className="relative flex justify-center items-center w-80 -px-10 py-4 text-sm font-medium text-white bg-[#4942E4] border border-transparent rounded-3xl group hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  LOGIN
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}
