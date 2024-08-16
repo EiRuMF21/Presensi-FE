@@ -7,14 +7,14 @@ const Login: React.FC = () => {
     setShowForm(true);
   };
 
-  const handleBackClick = () => {
+  const handleCloseModal = () => {
     setShowForm(false);
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-400 to-blue-500 px-4 sm:px-6 lg:px-8">
-      <div className="w-full max-w-md p-6 space-y-8 bg-white rounded-lg shadow-md">
-        {!showForm ? (
+    <div className="relative">
+      <div className="flex items-center justify-center min-h-screen bg-transparent px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-md p-6 space-y-8 bg-white rounded-lg shadow-md">
           <div className="text-center">
             <h2 className="text-xl font-bold text-indigo-600 mb-6">LOG IN</h2>
             <div
@@ -30,11 +30,15 @@ const Login: React.FC = () => {
               <p>USER</p>
             </div>
           </div>
-        ) : (
-          <>
+        </div>
+      </div>
+
+      {showForm && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
             <div className="text-left">
               <button
-                onClick={handleBackClick}
+                onClick={handleCloseModal}
                 className="text-indigo-600 text-xl font-bold"
               >
                 &#8592;
@@ -101,9 +105,9 @@ const Login: React.FC = () => {
                 </button>
               </div>
             </form>
-          </>
-        )}
-      </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
