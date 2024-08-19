@@ -1,72 +1,149 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Dashboard: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-800 to-purple-700 p-4">
-      <div className="flex items-center justify-between p-4">
-        <button className="text-white text-3xl">&#9776;</button>
-        <div className="text-white text-center">
-          <h1 className="text-xl font-bold">Smart Presence</h1>
-        </div>
-        <div className="w-8"></div>
-      </div>
-
-      <div className="flex flex-col items-center mt-4">
-        <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white">
-          <img src="https://via.placeholder.com/150" alt="User Avatar" />
-        </div>
-        <h2 className="text-white mt-4 text-lg font-bold">Username</h2>
-        <p className="text-white">KETUA of Smart Presence</p>
-      </div>
-
-      <div className="mt-8 bg-white p-6 rounded-lg shadow-md text-center">
-        <p className="text-indigo-600 font-bold text-lg">
-          Hallo Username!! Selamat Bekerja
-        </p>
-        <div className="flex justify-between mt-6">
-          <button className="bg-indigo-600 text-white py-2 px-6 rounded-lg font-bold w-32">
-            MASUK
-          </button>
-          <button className="bg-indigo-600 text-white py-2 px-6 rounded-lg font-bold w-32">
-            KELUAR
-          </button>
+    <div className="min-h-screen bg-gray-100">
+      {/* Navbar */}
+      <div className="bg-white shadow-md py-4 px-6 flex items-center justify-between">
+        <div className="text-lg font-bold">Smart Presence</div>
+        <div className="flex items-center space-x-4">
+          <Link to="/profile" className="text-gray-600">
+            <img
+              src="/path/to/user-image.png" // Replace with user image path
+              alt="User Profile"
+              className="w-8 h-8 rounded-full"
+            />
+          </Link>
         </div>
       </div>
 
-      <div className="mt-6 space-y-4">
-        <div className="flex items-center bg-white p-4 rounded-lg shadow-md">
-          <div className="bg-gray-200 p-3 rounded-full">
-            <i className="text-indigo-600 text-xl">&#128340;</i>
+      {/* Main Content */}
+      <div className="p-4 md:flex md:space-x-4">
+        {/* Mobile View */}
+        <div className="md:hidden">
+          <div className="bg-blue-500 text-white p-4 rounded-md mb-4">
+            <h1 className="text-xl">Selamat Datang! Username</h1>
           </div>
-          <div className="ml-4">
-            <h3 className="text-neutral-800 font-bold">History</h3>
-            <p className="text-neutral-500">
-              Summary data for each of your attendance
-            </p>
+          <div className="flex space-x-4 mb-4">
+            <div className="bg-cyan-500 text-white p-4 rounded-md flex-1">
+              <p>Absen Masuk</p>
+              <p>07:00:00</p>
+            </div>
+            <div className="bg-blue-600 text-white p-4 rounded-md flex-1">
+              <p>Face Scan</p>
+            </div>
+          </div>
+          <div className="bg-gray-600 text-white p-4 rounded-md mb-4">
+            <p>Absen Keluar</p>
+            <p>15:30:31</p>
+          </div>
+          <div className="flex space-x-4 mb-4">
+            <Link
+              to="/history"
+              className="bg-blue-500 text-white p-4 rounded-md flex-1 text-center"
+            >
+              History
+            </Link>
+            <Link
+              to="/cuti"
+              className="bg-blue-500 text-white p-4 rounded-md flex-1 text-center"
+            >
+              Cuti
+            </Link>
+            <Link
+              to="/profile"
+              className="bg-blue-500 text-white p-4 rounded-md flex-1 text-center"
+            >
+              Profile
+            </Link>
+          </div>
+          <div className="bg-white p-4 rounded-md mb-4 shadow">
+            <h2 className="text-blue-500">Absensi Bulan Agustus</h2>
+            <div className="grid grid-cols-2 gap-4 mt-4">
+              <div className="bg-blue-100 p-4 rounded-md text-center">
+                <p className="text-lg font-bold">Hadir</p>
+                <p>28 hari</p>
+              </div>
+              <div className="bg-blue-100 p-4 rounded-md text-center">
+                <p className="text-lg font-bold">Terlambat</p>
+                <p>5 hari</p>
+              </div>
+              <div className="bg-blue-100 p-4 rounded-md text-center">
+                <p className="text-lg font-bold">Izin</p>
+                <p>1 hari</p>
+              </div>
+              <div className="bg-blue-100 p-4 rounded-md text-center">
+                <p className="text-lg font-bold">Sakit</p>
+                <p>3 hari</p>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="flex items-center bg-white p-4 rounded-lg shadow-md">
-          <div className="bg-gray-200 p-3 rounded-full">
-            <i className="text-indigo-600 text-xl">&#128276;</i>
-          </div>
-          <div className="ml-4">
-            <h3 className="text-neutral-800 font-bold">Notification</h3>
-            <p className="text-neutral-500">
-              Summary data for each of your attendance
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-center bg-white p-4 rounded-lg shadow-md">
-          <div className="bg-gray-200 p-3 rounded-full">
-            <i className="text-indigo-600 text-xl">&#128172;</i>
-          </div>
-          <div className="ml-4">
-            <h3 className="text-neutral-800 font-bold">Message</h3>
-            <p className="text-neutral-500">
-              Summary data for each of your attendance
-            </p>
+        {/* Desktop View */}
+        <div className="hidden md:block w-full">
+          <div className="flex space-x-4">
+            <div className="w-1/4 bg-white p-4 shadow rounded-md">
+              <ul>
+                <li className="mb-4">
+                  <Link to="/dashboard" className="flex items-center space-x-2">
+                    <span>Dashboard</span>
+                  </Link>
+                </li>
+                <li className="mb-4">
+                  <Link to="/profile" className="flex items-center space-x-2">
+                    <span>Profile</span>
+                  </Link>
+                </li>
+                <li className="mb-4">
+                  <Link to="/grades" className="flex items-center space-x-2">
+                    <span>Grades</span>
+                  </Link>
+                </li>
+                <li className="mb-4">
+                  <Link to="/messages" className="flex items-center space-x-2">
+                    <span>Messages</span>
+                  </Link>
+                </li>
+                <li className="mb-4">
+                  <Link
+                    to="/preferences"
+                    className="flex items-center space-x-2"
+                  >
+                    <span>Preferences</span>
+                  </Link>
+                </li>
+                <li className="mb-4">
+                  <Link to="/logout" className="flex items-center space-x-2">
+                    <span>Log out</span>
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div className="w-3/4">
+              <div className="bg-white p-4 shadow rounded-md mb-4">
+                <h1 className="text-xl">FAISAL MAULUD FAJRI</h1>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-blue-500 text-white p-4 rounded-md">
+                  <h2>Komunikasi</h2>
+                  <p>Pesan</p>
+                </div>
+                <div className="bg-red-500 text-white p-4 rounded-md">
+                  <h2>Profil Anda</h2>
+                  <p>Profil</p>
+                </div>
+                <div className="bg-green-500 text-white p-4 rounded-md">
+                  <h2>Preferensi</h2>
+                  <p>Pengaturan</p>
+                </div>
+                <div className="bg-yellow-500 text-white p-4 rounded-md">
+                  <h2>Performa</h2>
+                  <p>Nilai</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

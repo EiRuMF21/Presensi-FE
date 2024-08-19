@@ -167,76 +167,88 @@ const Home: React.FC = () => {
       {/* Popup Login */}
       {isRolePopupOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <div className="bg-white rounded-3xl shadow-lg w-full max-w-md p-6 drop-shadow-2xl">
-            <div className="text-left">
+          <div className="bg-white rounded-3xl shadow-lg w-full max-w-md p-8">
+            <div className="flex justify-between items-center">
               <button
                 onClick={closeRolePopup}
-                className="text-indigo-600 text-xl font-bold"
+                className="text-indigo-600 text-2xl font-bold"
               >
                 &#8592;
               </button>
+              <h2 className=" flex flex-wrap text-indigo-600 font-bold text-center text-lg">LOG IN</h2>
             </div>
-            <h2 className="text-center text-indigo-600 font-bold text-sm">
-              LOG IN
-            </h2>
-            <h2 className="text-3xl font-bold text-left text-indigo-700">
+            <h2 className="text-3xl font-bold text-left text-indigo-700 mt-4">
               Smart Presence
             </h2>
-            <p className="text-left font-bold text-neutral-700">
+            <p className="text-left font-bold text-neutral-700 mt-2">
               Enter your log in details to <br />
               access your account
             </p>
             <form className="mt-8 space-y-6">
-              <div className="rounded-md shadow-sm space-y-4">
+              <div className="rounded-md space-y-4">
                 <div>
                   <label htmlFor="username" className="sr-only">
                     Username
                   </label>
-                  <input
-                    id="username"
-                    name="username"
-                    type="text"
-                    autoComplete="username"
-                    required
-                    className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-neutral-900 bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    placeholder="Type your username"
-                  />
+                  <div className="relative">
+                    <input
+                      id="username"
+                      name="username"
+                      type="text"
+                      autoComplete="username"
+                      required
+                      className="appearance-none rounded-md relative block w-full px-3 py-2 pl-10 border border-gray-300 placeholder-gray-500 text-neutral-900 bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      placeholder="Type your username"
+                    />
+                    <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <img
+                        src="https://img.icons8.com/ios-filled/24/cccccc/gender-neutral-user.png"
+                        alt="User Icon"
+                      />
+                    </span>
+                  </div>
                 </div>
                 <div>
-                  <label htmlFor="password" className="sr-only text-black">
+                  <label htmlFor="password" className="sr-only">
                     Password
                   </label>
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    autoComplete="current-password"
-                    required
-                    className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-neutral-900 bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    placeholder="Type your password"
-                  />
-                </div>
-              </div>
-              <div className="flex justify-between items-center">
-                <div></div>
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-medium text-neutral-500 hover:text-indigo-500"
-                  >
-                    Forgot password?
-                  </a>
+                  <div className="relative">
+                    <input
+                      id="password"
+                      name="password"
+                      type="password"
+                      autoComplete="current-password"
+                      required
+                      className="appearance-none rounded-md relative block w-full px-3 py-2 pl-10 border border-gray-300 placeholder-gray-500 text-neutral-900 bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      placeholder="Type your password"
+                    />
+                    <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <img
+                        src="https://img.icons8.com/ios-filled/24/cccccc/lock.png"
+                        alt="Lock Icon"
+                      />
+                    </span>
+                  </div>
                 </div>
               </div>
               <div>
                 <button
                   type="submit"
-                  className="relative flex justify-center items-center w-80 -px-10 py-4 text-sm font-medium text-white bg-[#4942E4] border border-transparent rounded-3xl group hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                  LOGIN
+                  Log In
                 </button>
               </div>
             </form>
+            <div className="mt-6 text-center text-sm">
+              <span className="text-neutral-500">Forgot password?&nbsp;</span>
+              <a
+                href="#"
+                className="text-indigo-600 hover:text-indigo-500 font-bold"
+              >
+                Reset it here
+              </a>
+            </div>
           </div>
         </div>
       )}
