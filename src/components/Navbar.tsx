@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 interface NavbarProps {
-  onLoginClick: () => void; // Tambahkan prop ini untuk event klik login
+  onLoginClick: () => void;
 }
 
 const Navbar: React.FC<NavbarProps> = ({ onLoginClick }) => {
@@ -17,7 +17,7 @@ const Navbar: React.FC<NavbarProps> = ({ onLoginClick }) => {
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });
     }
-    setIsMenuOpen(false); // Menutup menu mobile setelah klik
+    setIsMenuOpen(false);
   };
 
   useEffect(() => {
@@ -46,49 +46,50 @@ const Navbar: React.FC<NavbarProps> = ({ onLoginClick }) => {
           <div className="flex items-center">
             <a
               href="#"
-              className="text-lg font-bold tracking-wide text-gray-800 font-sans"
+              className="text-lg font-bold tracking-wide text-neutral-200 font-sans"
             >
               SMART PRESENCE
             </a>
           </div>
 
           {/* Menu Desktop */}
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex space-x-24">
             <button
               onClick={() => scrollToSection("home")}
-              className="text-gray-700 hover:text-black text-sm font-medium"
+              className="text-sm font-medium text-neutral-200 hover:text-black"
             >
               Home
             </button>
             <button
               onClick={() => scrollToSection("about")}
-              className="text-gray-700 hover:text-black text-sm font-medium"
+              className="text-sm font-medium text-neutral-200 hover:text-black"
             >
               About
             </button>
             <button
-              onClick={() => scrollToSection("other")}
-              className="text-gray-700 hover:text-black text-sm font-medium"
+              onClick={() => scrollToSection("features")}
+              className="text-sm font-medium text-neutral-200 hover:text-black"
             >
-              Other
+              Features
             </button>
           </div>
 
-          {/* Tombol Login */}
-          <div className="hidden md:flex items-center">
+          {/* Tombol Login untuk Desktop */}
+          <div className="hidden md:flex items-center space-x-4">
             <button
-              onClick={onLoginClick} // Menghubungkan event klik login
-              className="text-sm text-blue-600 border border-blue-600 px-4 py-2 rounded-full hover:bg-blue-600 hover:text-white transition duration-300"
+              onClick={onLoginClick}
+              className="text-sm border px-4 py-2 rounded-full border-neutral-200 text-neutral-200 hover:bg-slate-500 hover:text-white transition duration-300"
             >
               Login
             </button>
           </div>
 
           {/* Tombol Menu Mobile */}
-          <div className="-mr-2 flex md:hidden">
+          <div className="flex md:hidden items-center space-x-4">
             <button
               onClick={toggleMenu}
               className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-black hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white"
+              aria-label="Toggle Menu"
             >
               <svg
                 className="block h-6 w-6"
@@ -116,25 +117,25 @@ const Navbar: React.FC<NavbarProps> = ({ onLoginClick }) => {
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <button
               onClick={() => scrollToSection("home")}
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-700 hover:text-white"
+              className="block px-3 py-2 rounded-md text-base font-medium text-blue-700 hover:bg-blue-700 hover:text-white"
             >
               Home
             </button>
             <button
               onClick={() => scrollToSection("about")}
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-700 hover:text-white"
+              className="block px-3 py-2 rounded-md text-base font-medium text-blue-700 hover:bg-blue-700 hover:text-white"
             >
               About
             </button>
             <button
-              onClick={() => scrollToSection("other")}
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-700 hover:text-white"
+              onClick={() => scrollToSection("features")}
+              className="block px-3 py-2 rounded-md text-base font-medium text-blue-700 hover:bg-blue-700 hover:text-white"
             >
-              Other
+              Features
             </button>
             <button
-              onClick={onLoginClick} // Tambahkan onClick ke menu mobile
-              className="block px-3 py-2 rounded-md text-base font-medium text-blue-600 border border-blue-600 hover:bg-blue-600 hover:text-white transition duration-300"
+              onClick={onLoginClick}
+              className="block px-3 py-2 rounded-md text-base font-medium text-blue-600 border border-blue-500 hover:bg-blue-500 hover:text-white transition duration-300"
             >
               Login
             </button>

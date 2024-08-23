@@ -2,16 +2,13 @@ import React from "react";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-[#] text-white py-16 w-full">
+    <footer className="bg-[#] text-white py-12 w-full">
       <div className="container mx-auto px-8 lg:px-16">
         {/* Top Section - Main Content */}
         <div className="w-full text-center mb-12">
           <h2 className="text-4xl font-bold mb-4">Smart Presence</h2>
           <p className="max-w-2xl mx-auto mb-8 text-lg leading-relaxed">
-            DashTail is a developer-friendly, ready-to-use admin template
-            designed for building attractive, scalable, and high-performing web
-            applications, powered by the cutting-edge technologies of Next.js
-            and Tailwind CSS.
+            
           </p>
 
           {/* Social Media Icons */}
