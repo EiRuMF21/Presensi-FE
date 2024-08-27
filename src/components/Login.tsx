@@ -7,13 +7,13 @@ const Login: React.FC<{ closeRolePopup: () => void }> = ({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-      <div className="bg-gradient-to-t from-[#121212] to-[#424242] from- rounded-3xl shadow-lg w-full max-w-md p-8">
+      <div className="bg-[#FFFFFF] from- rounded-3xl shadow-2xl w-full max-w-md p-8">
         <div className="flex justify-between items-center">
           <button
             onClick={closeRolePopup}
             className="text-[#1E88E5] text-2xl font-bold"
           >
-            ;
+            &#8592;
           </button>
           <h2 className="text-[#1E88E5] font-bold text-center text-lg w-full">
             LOG IN
@@ -22,7 +22,7 @@ const Login: React.FC<{ closeRolePopup: () => void }> = ({
         <h2 className="text-3xl font-bold text-left text-[#1E88E5] mt-4">
           Smart Presence
         </h2>
-        <p className="text-left font-bold text-neutral-200 mt-2">
+        <p className="text-left font-bold text-black mt-2">
           Enter your log in details to <br />
           access your account
         </p>
@@ -89,18 +89,12 @@ const Login: React.FC<{ closeRolePopup: () => void }> = ({
               </div>
             </div>
           </div>
-          <div className="mt-6 flex justify-between items-center text-sm">
+          <div className="mt-6 flex justify-between items-center text-right text-sm">
             <a
               href="#"
               className="text-[#1E88E5] hover:text-indigo-500 font-bold"
             >
               Forgot password?
-            </a>
-            <a
-              href="#"
-              className="text-[#1E88E5] hover:text-indigo-500 font-bold"
-            >
-              Register
             </a>
           </div>
           <div>
