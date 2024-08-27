@@ -4,7 +4,7 @@ const Register: React.FC = () => {
   return (
     <div className="flex w-full min-h-screen">
       {/* Left Side - Welcome Section */}
-      <div className="flex-1 bg-[#1E88E5] flex flex-col justify-center p-20">
+      <div className="flex-1 bg-[#1E88E5] flex flex-col justify-center p-16">
         <h1 className="text-white text-6xl font-semibold">Welcome'</h1>
         <p className="text-white text-md mt-6 max-w-md">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
@@ -15,13 +15,30 @@ const Register: React.FC = () => {
           pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
           culpa qui officia deserunt mollit anim id est laborum.
         </p>
+
+        <svg
+          width="385"
+          height="288"
+          viewBox="0 0 385 288"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className=""
+        >
+          <circle cx="66.5" cy="294.5" r="221.5" fill="#D9D9D9" />
+          <circle cx="106.5" cy="25.5" r="25.5" fill="#D9D9D9" />
+          <circle cx="287.5" cy="129.5" r="25.5" fill="#D9D9D9" />
+          <circle cx="185" cy="40" r="11" fill="#D9D9D9" />
+          <circle cx="374" cy="155" r="11" fill="#D9D9D9" />
+          <circle cx="313" cy="238" r="11" fill="#D9D9D9" />
+          <circle cx="280" cy="51" r="11" fill="#D9D9D9" />
+        </svg>
       </div>
 
       {/* Right Side - Register Form */}
       <div className="flex-1 bg-[#CCCBCB] flex flex-col justify-center items-center p-0">
-        <div className="bg-[#D9D9D9] rounded-lg p-16 shadow-lg max-w-md w-full">
-          <h2 className="text-3xl max-w-2xl font-bold text-[#212121] mb-4">
-            Register <br/> <span className="text-[#1E88E5]">Here!</span>
+        <div className="bg-[#D9D9D9] rounded-3xl p-16 shadow-lg max-w-md w-full">
+          <h2 className="text-4xl max-w-2xl font-bold text-[#212121] mb-4">
+            Register <br /> <span className="text-[#1E88E5]">Here!</span>
           </h2>
           <form className="space-y-4">
             <div>
