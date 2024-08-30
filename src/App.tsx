@@ -5,11 +5,11 @@ import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import Register from "./components/Register"
 import DashboardAdmin from "./pages/DashboardAdmin";
-import PermissionRequests from "./components/SubmissionIzin";
-import SubmissionCuti from "./components/SubmissionCuti";
-import SubmissionPengajuan from "./components/SubmissionPengajuan";
+import PermissionRequests from "./components/Submission/SubmissionIzin";
+import SubmissionCuti from "./components/Submission/SubmissionCuti";
+import SubmissionDinas from "./components/Submission/SubmissionDinas";
 import "./index.css";
-import SubmissionSakit from "./components/SubmissionSakit";
+import SubmissionSakit from "./components/Submission/SubmissionSakit";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -19,10 +19,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path="/dash" element={<Dashboard />} />
         <Route path="/register" element={<Register />} />
         <Route path="/admin" element={<DashboardAdmin />} />
-        <Route path="/SubmissionIzin" element={<PermissionRequests/>} />
-        <Route path="/SubmissionSakit" element={<SubmissionSakit/>} />
-        <Route path="/SubmissionCuti" element={<SubmissionCuti/>} />
-        <Route path="/SubmissionPengajuan" element={<SubmissionPengajuan/>} />
+        <Route path="/Submissionizin" element={<PermissionRequests/>} />
+        <Route path="/Submissionsakit" element={<SubmissionSakit/>} />
+        <Route path="/Submissioncuti" element={<SubmissionCuti/>} />
+        <Route path="/Submissiondinas" element={<SubmissionDinas/>} />
       </Routes>
     </Router>
   </React.StrictMode>

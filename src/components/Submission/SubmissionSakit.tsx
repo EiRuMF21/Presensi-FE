@@ -1,6 +1,6 @@
 import React from 'react';
 
-const App: React.FC = () => {
+const SubmissionSakit: React.FC = () => {
   const users = [
     { name: 'Kinan Doe', email: 'KinanDoe@gmail.com', position: 'Position...', phone: '085555555555', date: '26 August 2024' },
     { name: 'Abbysya', email: 'Abbysya00@gmail.com', position: 'Position...', phone: '08343224444', date: '23 August 2024' },
@@ -18,14 +18,14 @@ const App: React.FC = () => {
   return (
     <div className="bg-gray-900 text-gray-200 min-h-screen flex items-center justify-center">
       <div className="bg-white rounded-md shadow-lg w-full max-w-5xl">
-        {/* Hgieader */}
+        {/* Header */}
         <div className="bg-gray-200 p-4 rounded-t-md flex items-center space-x-2">
           <button className="text-gray-600">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
-          <h1 className="text-xl text-gray-800">PERMISSION SUBMISSION</h1>
+          <h1 className="text-xl text-gray-800">SICK LEAVE REQUEST</h1>
         </div>
 
         {/* Table */}
@@ -81,4 +81,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default SubmissionSakit;
