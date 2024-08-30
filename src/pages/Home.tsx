@@ -1,18 +1,24 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import Login from "../components/Login";  
+import Login from "../components/Login";
 
 const Home: React.FC = () => {
-
   const navigate = useNavigate();
- 
+  const location = useLocation();
+  const [isRolePopupOpen, setIsRolePopupOpen] = useState(false);
+
+  useEffect(() => {
+    // Cek apakah ada state untuk membuka popup
+    if (location.state?.openRolePopup) {
+      setIsRolePopupOpen(true);
+    }
+  }, [location.state]);
 
   const handleRegisterClick = () => {
     navigate("/register");
   };
-  const [isRolePopupOpen, setIsRolePopupOpen] = useState(false);
 
   const openRolePopup = () => {
     setIsRolePopupOpen(true);
