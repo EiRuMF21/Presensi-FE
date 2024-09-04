@@ -1,7 +1,7 @@
 import React from "react";
 import {
-  LineChart,
-  Line,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   Tooltip,
@@ -9,38 +9,93 @@ import {
 } from "recharts";
 
 const data = [
-  { name: "Name 1", position: 50 },
-  { name: "Name 2", position: 0 },
-  { name: "Name 3", position: 100 },
-  { name: "Name 4", position: 45 },
-  { name: "Name 5", position: 100 },
-  { name: "Name 6", position: 120 },
-  { name: "Name 7", position: 200 },
-  { name: "Name 8", position: 150 },
-  { name: "Name 9", position: 155 },
-  { name: "Name 10", position: 170 },
-  { name: "Name 11", position: 180 },
-  { name: "Name 12", position: 70 },
+  {
+    name: "Week 1",
+    line1: 100,
+    line2: 10,
+    line3: 30,
+    line4: 20,
+    line5: 10,
+    line6: 5,
+  },
+  {
+    name: "Week 2",
+    line1: 10,
+    line2: 60,
+    line3: 45,
+    line4: 30,
+    line5: 20,
+    line6: 15,
+  },
+  {
+    name: "Week 3",
+    line1: 90,
+    line2: 70,
+    line3: 60,
+    line4: 45,
+    line5: 35,
+    line6: 25,
+  },
+  {
+    name: "Week 4",
+    line1: 95,
+    line2: 20,
+    line3: 70,
+    line4: 60,
+    line5: 50,
+    line6: 40,
+  },
+];
 
-  // Tambahkan lebih banyak data sesuai kebutuhan
+const colors = [
+  "#8884d8",
+  "#82ca9d",
+  "#ffc658",
+  "#ff7300",
+  "#0088FE",
+  "#00C49F",
 ];
 
 const AttendanceChart: React.FC = () => {
   return (
     <div className="bg-[#05073C] p-4 rounded-lg">
-      <h2 className="text-white mb-4">Attendance Statistics for August</h2>
-      <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={data}>
+      <h2 className="text-white mb-4 text-xl font-bold">
+        Statistics for August
+      </h2>
+      <ResponsiveContainer width="100%" height={400}>
+        <AreaChart data={data}>
+          <defs>
+            {colors.map((color, index) => (
+              <linearGradient
+                key={`gradient${index + 1}`}
+                id={`colorGradient${index + 1}`}
+                x1="0"
+                y1="0"
+                x2="0"
+                y2="1"
+              >
+                <stop offset="5%" stopColor={color} stopOpacity={0.8} />
+                <stop offset="95%" stopColor={color} stopOpacity={0.1} />
+              </linearGradient>
+            ))}
+          </defs>
           <XAxis dataKey="name" tick={{ fill: "#FFFFFF" }} />
           <YAxis tick={{ fill: "#FFFFFF" }} />
           <Tooltip />
-          <Line
-            type="monotone"
-            dataKey="position"
-            stroke="#C5FFF8"
-            dot={{ r: 4 }}
-          />
-        </LineChart>
+          {["line1", "line2", "line3", "line4", "line5", "line6"].map(
+            (line, index) => (
+              <Area
+                key={line}
+                type="monotone"
+                dataKey={line}
+                stroke={colors[index]}
+                fill={`url(#colorGradient${index + 1})`}
+                fillOpacity={1}
+                stackId="1"
+              />
+            )
+          )}
+        </AreaChart>
       </ResponsiveContainer>
     </div>
   );
