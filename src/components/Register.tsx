@@ -2,18 +2,13 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import backgroundSvg from "/public/image/register.svg";
 
-
-
-
 const Register: React.FC = () => {
-
   const navigate = useNavigate();
 
   const openRolePopup = () => {
     navigate("/", { state: { openRolePopup: true } });
   };
 
-    
   return (
     <div className="flex w-full min-h-screen">
       {/* Bagian Kiri Welcome Section */}
@@ -50,7 +45,7 @@ const Register: React.FC = () => {
 
       {/* Bagian Kanan Register */}
       <div className="flex-[1] bg-[#CCCBCB] flex flex-col justify-center items-center p-6 lg:px-0 z-10 relative">
-        <div className="bg-[#D9D9D9] rounded-3xl p-8 md:py-8 md:px-16 shadow-lg max-w-md w-full">
+        <div className="bg-[#D9D9D9] rounded-3xl p-8 md:py-20 md:px-16 shadow-lg max-w-md w-full gap-y-10">
           <h2 className="text-4xl font-bold text-[#212121] mb-4">
             Register <br /> <span className="text-[#1E88E5]">Here!</span>
           </h2>
@@ -97,14 +92,6 @@ const Register: React.FC = () => {
             </div>
             <div>
               <button
-                type="button"
-                className="w-full bg-[#1E88E5] text-white p-1 rounded-full mt-4"
-              >
-                Choose File
-              </button>
-            </div>
-            <div>
-              <button
                 type="submit"
                 className="w-full bg-[#1E88E5] text-white p-2 rounded-xl mt-2"
               >
@@ -114,7 +101,11 @@ const Register: React.FC = () => {
             <div className="text-center mt-4">
               <span className="text-sm text-gray-600">
                 Already have an account?{" "}
-                <a href="#" onClick={openRolePopup} className="text-[#1E88E5] hover:underline">
+                <a
+                  href="#"
+                  onClick={openRolePopup}
+                  className="text-[#1E88E5] hover:underline"
+                >
                   Click here
                 </a>
               </span>

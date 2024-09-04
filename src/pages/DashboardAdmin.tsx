@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import NavbarAdmin from "../components/NavbarAdmin";
 import SidebarAdmin from "../components/SidebarAdmin";
 import AttendanceChart from "../components/charts/AttendanceChart";
-import PermissionChart from "../components/charts/PermissionChart";
-import SickChart from "../components/charts/SickChart";
-import HolidayChart from "../components/charts/HolidayChart";
-import ServiceChart from "../components/charts/ServiceChart";
+import Legend from "../components/Legend.tsx"; // Import the Legend component
 
 const DashboardAdmin: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -35,18 +32,7 @@ const DashboardAdmin: React.FC = () => {
         {/* Main Content */}
         <div className="flex-grow p-4 bg-gradient-to-t from-[#A0DEFF] via-[#CAF4FF] to-[#5AB2FF] overflow-y-auto">
           <AttendanceChart />
-          <div className="mt-10">
-            <PermissionChart />
-          </div>
-          <div className="mt-10">
-            <SickChart />
-          </div>
-          <div className="mt-10">
-            <HolidayChart />
-          </div>
-          <div className="mt-10">
-            <ServiceChart />
-          </div>
+          <Legend /> {/* Add the Legend component below the chart */}
         </div>
       </div>
     </div>

@@ -58,8 +58,8 @@ const colors = [
 
 const AttendanceChart: React.FC = () => {
   return (
-    <div className="bg-[#05073C] p-4 rounded-lg">
-      <h2 className="text-white mb-4 text-xl font-bold">
+    <div className="bg-[#FFFFFF] p-4 rounded-lg">
+      <h2 className="text-black mb-4 text-xl font-bold">
         Statistics for August
       </h2>
       <ResponsiveContainer width="100%" height={400}>
@@ -79,8 +79,8 @@ const AttendanceChart: React.FC = () => {
               </linearGradient>
             ))}
           </defs>
-          <XAxis dataKey="name" tick={{ fill: "#FFFFFF" }} />
-          <YAxis tick={{ fill: "#FFFFFF" }} />
+          <XAxis dataKey="name" tick={{ fill: "#00000" }} />
+          <YAxis tick={{ fill: "#00000" }} />
           <Tooltip />
           {["line1", "line2", "line3", "line4", "line5", "line6"].map(
             (line, index) => (
