@@ -48,12 +48,12 @@ const data = [
 ];
 
 const colors = [
-  "#8884d8",
-  "#82ca9d",
-  "#ffc658",
-  "#ff7300",
-  "#0088FE",
-  "#00C49F",
+  "#6100FF",
+  "#97E0FF",
+  "#9FFFC6",
+  "#FDFF92",
+  "#FF9900",
+  "#FF9AEF",
 ];
 
 const AttendanceChart: React.FC = () => {
