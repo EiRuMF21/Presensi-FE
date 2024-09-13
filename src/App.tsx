@@ -28,7 +28,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           element={<Register />}
         />
         <Route
-          path="/Login"
+          path="/login"
           element={<Login />}
         />
         <Route

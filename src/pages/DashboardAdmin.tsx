@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import NavbarAdmin from "../components/admin/NavAdmin";
+import NavbarAdmin from "../components/admin/NavbarAdmin";
 import SidebarAdmin from "../components/admin/SidebarAdmin";
 import AttendanceChart from "../components/admin/AttendanceChart";
 import Legend from "../components/admin/Legend";
