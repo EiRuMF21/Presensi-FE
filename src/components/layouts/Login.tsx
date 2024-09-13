@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import backgroundSvg from "/public/image/register.svg";
 import backgroundLogSvg from "/public/image/log.svg";
 
@@ -7,19 +7,19 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
 
   const openRolePopup = () => {
-    navigate("/", { state: { openRolePopup: true } });
+    navigate("/", {state: {openRolePopup: true}});
   };
 
   return (
     <div className="flex w-full min-h-screen">
       {/* Bagian Kiri Welcome Section */}
       <div className="flex-[1.7] bg-[#1E88E5] flex flex-col justify-center p-6 md:py-10 relative">
-        <div className="flex flex-col lg:flex-row items-center lg:items-start relative">
+        <div className="relative flex flex-col items-center lg:flex-row lg:items-start">
           <div className="flex flex-col -ml-8 md:max-w-3xl">
-            <h1 className="text-white text-4xl md:text-8xl ml-24 md:-mt-32 font-semibold">
+            <h1 className="ml-24 text-4xl font-semibold text-white md:text-8xl md:-mt-32">
               Welcome
             </h1>
-            <p className="text-white text-md mt-4 md:mt-10 ml-24">
+            <p className="mt-4 ml-24 text-white text-md md:mt-10">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -31,7 +31,7 @@ const Login: React.FC = () => {
           </div>
           <div className="absolute md:-top-52 md:right-52 ">
             <div
-              style={{ backgroundImage: `url(${backgroundLogSvg})` }}
+              style={{backgroundImage: `url(${backgroundLogSvg})`}}
               className="w-[100px] h-[100px] lg:w-[250px] lg:h-[200px] object-contain"
             >
               {" "}
@@ -40,8 +40,8 @@ const Login: React.FC = () => {
         </div>
 
         <div
-          className="bg-no-repeat absolute inset-0 bg-left-bottom h-full w-full"
-          style={{ backgroundImage: `url(${backgroundSvg})` }}
+          className="absolute inset-0 w-full h-full bg-left-bottom bg-no-repeat"
+          style={{backgroundImage: `url(${backgroundSvg})`}}
         ></div>
       </div>
 
@@ -80,7 +80,7 @@ const Login: React.FC = () => {
                 Login
               </button>
             </div>
-            <div className="text-center mt-4"></div>
+            <div className="mt-4 text-center"></div>
           </form>
         </div>
       </div>

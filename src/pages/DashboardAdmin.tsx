@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import NavbarAdmin from "../components/NavbarAdmin";
-import SidebarAdmin from "../components/SidebarAdmin";
-import AttendanceChart from "../components/charts/AttendanceChart";
-import Legend from "../components/Legend";
+import React, {useState} from "react";
+import NavbarAdmin from "../components/admin/NavAdmin";
+import SidebarAdmin from "../components/admin/SidebarAdmin";
+import AttendanceChart from "../components/admin/AttendanceChart";
+import Legend from "../components/admin/Legend";
 
 const DashboardAdmin: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -22,7 +22,7 @@ const DashboardAdmin: React.FC = () => {
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex flex-col flex-1 overflow-hidden">
           {/* Hamburger Button for Mobile */}
           <button
             className="md:hidden bg-[#29b6f6] text-white py-2 px-4 rounded m-4 self-start"
@@ -32,7 +32,7 @@ const DashboardAdmin: React.FC = () => {
           </button>
 
           {/* Chart and Legend */}
-          <div className="flex-1 overflow-y-auto p-4">
+          <div className="flex-1 p-4 overflow-y-auto">
             <AttendanceChart />
             <Legend />
           </div>
