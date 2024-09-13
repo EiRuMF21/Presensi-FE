@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 interface User {
   name: string;
@@ -121,25 +122,27 @@ const Izin: React.FC = () => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen py-10">
-      <div className="max-w-7xl mx-auto bg-white shadow-lg rounded-lg">
+    <div className="bg-gray-200  min-h-screen">
+      <div className="w-full h-full mx-auto bg-white shadow-lg rounded-lg">
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center">
             <button className="text-gray-600">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
+              <a href="/admin" className="text-gray-600">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </a>
             </button>
             <h1 className="ml-4 text-2xl font-bold text-gray-800">
               PERMISSION SUBMISSION
@@ -147,83 +150,79 @@ const Izin: React.FC = () => {
           </div>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="min-w-full bg-white">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase">
-                  User
-                </th>
-                <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase">
-                  Position
-                </th>
-                <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase">
-                  Phone
-                </th>
-                <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase">
-                  Date
-                </th>
-                <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase">
-                  Submission
-                </th>
-                <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase">
-                  Description
-                </th>
-              </tr>
-            </thead>
-            <tbody className="text-gray-600 text-sm font-light">
-              {users.map((user, index) => (
-                <tr
-                  key={index}
-                  className="border-b border-gray-200 hover:bg-gray-100"
-                >
-                  <td className="py-3 px-6 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <div className="bg-gray-400 rounded-full w-10 h-10"></div>
-                      <div className="ml-4">
-                        <p className="font-bold text-gray-900">{user.name}</p>
-                        <p className="text-sm text-gray-500">{user.email}</p>
-                      </div>
+        <table className="min-w-full bg-gradient-to-b from-[#1E88E5] via-[#A0DEFF] via-[#CAF4FF] to-[#A0DEFF]">
+          <thead className="bg-transparent">
+            <tr>
+              <th className="py-3 px-6 text-left text-xs font-medium text-black uppercase">
+                User
+              </th>
+              <th className="py-3 px-6 text-left text-xs font-medium text-black uppercase">
+                Position
+              </th>
+              <th className="py-3 px-6 text-left text-xs font-medium text-black uppercase">
+                Phone
+              </th>
+              <th className="py-3 px-6 text-left text-xs font-medium text-black uppercase">
+                Date
+              </th>
+              <th className="py-3 px-6 text-left text-xs font-medium text-black uppercase">
+                Submission
+              </th>
+              <th className="py-3 px-6 text-left text-xs font-medium text-black uppercase">
+                Description
+              </th>
+            </tr>
+          </thead>
+          <tbody className="text-gray-600 text-sm font-light bg-transparent">
+            {users.map((user, index) => (
+              <tr
+                key={index}
+                className="border-b border-gray-200 hover:bg-gray-100"
+              >
+                <td className="py-3 px-6 whitespace-nowrap">
+                  <div className="flex items-center">
+                    <div className="bg-gray-400 rounded-full w-10 h-10"></div>
+                    <div className="ml-4">
+                      <p className="font-bold text-gray-900">{user.name}</p>
+                      <p className="text-sm text-black">{user.email}</p>
                     </div>
-                  </td>
-                  <td className="py-3 px-6">{user.position}</td>
-                  <td className="py-3 px-6">{user.phone}</td>
-                  <td className="py-3 px-6">{user.date}</td>
-                  <td className="py-3 px-6">
-                    {user.status ? (
-                      <span className="text-gray-500 italic">
-                        {user.status}
-                      </span>
-                    ) : (
-                      <div className="flex">
-                        <button
-                          className="px-4 py-1 bg-green-500 text-white rounded-full hover:bg-green-600 transition duration-150"
-                          onClick={() => handleAccept(index)}
-                        >
-                          Accept
-                        </button>
-                        <button
-                          className="ml-2 px-4 py-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition duration-150"
-                          onClick={() => handleDecline(index)}
-                        >
-                          Decline
-                        </button>
-                      </div>
-                    )}
-                  </td>
-                  <td className="py-3 px-6">
-                    <button
-                      className="px-4 py-1 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition duration-150"
-                      onClick={() => handleDetail(user)}
-                    >
-                      Detail
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                  </div>
+                </td>
+                <td className="py-3 px-6">{user.position}</td>
+                <td className="py-3 px-6">{user.phone}</td>
+                <td className="py-3 px-6">{user.date}</td>
+                <td className="py-3 px-6">
+                  {user.status ? (
+                    <span className="text-gray-500 italic">{user.status}</span>
+                  ) : (
+                    <div className="flex">
+                      <button
+                        className="px-4 py-1 bg-green-500 text-white rounded-full hover:bg-green-600 transition duration-150"
+                        onClick={() => handleAccept(index)}
+                      >
+                        Accept
+                      </button>
+                      <button
+                        className="ml-2 px-4 py-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition duration-150"
+                        onClick={() => handleDecline(index)}
+                      >
+                        Decline
+                      </button>
+                    </div>
+                  )}
+                </td>
+                <td className="py-3 px-6">
+                  <button
+                    className="px-4 py-1 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition duration-150"
+                    onClick={() => handleDetail(user)}
+                  >
+                    Detail
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       {/* Modal */}
@@ -258,13 +257,13 @@ const Izin: React.FC = () => {
 
             {/* Category */}
             <div className="mb-4">
-              <p className="text-gray-500">Category</p>
+              <p className="text-black">Category</p>
               <p className="text-black font-semibold">Permission</p>
             </div>
 
             {/* From */}
             <div className="mb-4">
-              <p className="text-gray-500">From</p>
+              <p className="text-black">From</p>
               <p className="text-black font-semibold">{selectedUser.name}</p>
             </div>
 

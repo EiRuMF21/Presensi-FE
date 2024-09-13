@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import Dashboard from "./pages/Dashboard";
-import Register from "./components/Register"
+import Home from "./pages/LandingPage";
+import Register from "./components/Register";
+import Login from "./components/Login";
 import DashboardAdmin from "./pages/DashboardAdmin";
 import PermissionRequests from "./components/Submission/SubmissionIzin";
 import SubmissionCuti from "./components/Submission/SubmissionCuti";
@@ -16,13 +16,13 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/dash" element={<Dashboard />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/Login" element={<Login />} />
         <Route path="/admin" element={<DashboardAdmin />} />
-        <Route path="/Submissionizin" element={<PermissionRequests/>} />
-        <Route path="/Submissionsakit" element={<SubmissionSakit/>} />
-        <Route path="/Submissioncuti" element={<SubmissionCuti/>} />
-        <Route path="/Submissiondinas" element={<SubmissionDinas/>} />
+        <Route path="/Submissionizin" element={<PermissionRequests />} />
+        <Route path="/Submissionsakit" element={<SubmissionSakit />} />
+        <Route path="/Submissioncuti" element={<SubmissionCuti />} />
+        <Route path="/Submissiondinas" element={<SubmissionDinas />} />
       </Routes>
     </Router>
   </React.StrictMode>

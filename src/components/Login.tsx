@@ -1,124 +1,88 @@
-import React, { useState } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import backgroundSvg from "/public/image/register.svg";
+import backgroundLogSvg from "/public/image/log.svg";
 
-const Login: React.FC<{ closeRolePopup: () => void }> = ({
-  closeRolePopup,
-}) => {
-  const [showPassword, setShowPassword] = useState(false);
+const Login: React.FC = () => {
+  const navigate = useNavigate();
+
+  const openRolePopup = () => {
+    navigate("/", { state: { openRolePopup: true } });
+  };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-      <div className="bg-[#FFFFFF] from- rounded-3xl shadow-2xl w-full max-w-md p-8">
-        <div className="flex justify-between items-center">
-          <button
-            onClick={closeRolePopup}
-            className="text-[#1E88E5] text-2xl font-bold"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className="w-6 h-6"
+    <div className="flex w-full min-h-screen">
+      {/* Bagian Kiri Welcome Section */}
+      <div className="flex-[1.7] bg-[#1E88E5] flex flex-col justify-center p-6 md:py-10 relative">
+        <div className="flex flex-col lg:flex-row items-center lg:items-start relative">
+          <div className="flex flex-col -ml-8 md:max-w-3xl">
+            <h1 className="text-white text-4xl md:text-8xl ml-24 md:-mt-32 font-semibold">
+              Welcome
+            </h1>
+            <p className="text-white text-md mt-4 md:mt-10 ml-24">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+              sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+          </div>
+          <div className="absolute md:-top-52 md:right-52 ">
+            <div
+              style={{ backgroundImage: `url(${backgroundLogSvg})` }}
+              className="w-[100px] h-[100px] lg:w-[250px] lg:h-[200px] object-contain"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-          </button>
-          <h2 className="text-[#1E88E5] font-bold text-center text-lg w-full">
-            LOG IN
-          </h2>
+              {" "}
+            </div>
+          </div>
         </div>
-        <h2 className="text-3xl font-bold text-left text-[#1E88E5] mt-4">
-          Smart Presence
-        </h2>
-        <p className="text-left font-bold text-black mt-2">
-          Enter your log in details to <br />
-          access your account
-        </p>
-        <form className="mt-8 space-y-6">
-          <div className="rounded-md space-y-4">
+
+        <div
+          className="bg-no-repeat absolute inset-0 bg-left-bottom h-full w-full"
+          style={{ backgroundImage: `url(${backgroundSvg})` }}
+        ></div>
+      </div>
+
+      {/* Bagian Kanan Register */}
+      <div className="flex-[1] bg-[#CCCBCB] flex flex-col justify-center items-center p-6 lg:px-0 z-10 relative">
+        <div className="bg-[#D9D9D9] rounded-3xl p-8 md:py-20 md:px-16 shadow-lg max-w-md w-full gap-y-10">
+          <h2 className="text-6xl font-bold text-[#212121] mb-4">
+            Login <br /> <span className="text-[#1E88E5]">Here!</span>
+          </h2>
+          <form className="space-y-4">
             <div>
-              <label htmlFor="userid" className="sr-only">
-                ID
+              <label className="block text-sm font-medium text-gray-700">
+                Email
               </label>
-              <div className="relative">
-                <input
-                  id="userid"
-                  name="userid"
-                  type="text"
-                  autoComplete="userid"
-                  required
-                  className="appearance-none rounded-md relative block w-full px-3 py-2 pl-10 border border-gray-300 placeholder-gray-500 text-neutral-900 bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  placeholder="Type your ID"
-                />
-                <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <img
-                    src="https://img.icons8.com/ios-filled/24/cccccc/gender-neutral-user.png"
-                    alt="User Icon"
-                  />
-                </span>
-              </div>
+              <input
+                type="email"
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1E88E5] focus:border-[#1E88E5]"
+                placeholder="Type your Email"
+              />
             </div>
             <div>
-              <label htmlFor="password" className="sr-only">
+              <label className="block text-sm font-medium text-gray-700">
                 Password
               </label>
-              <div className="relative">
-                <input
-                  id="password"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  autoComplete="current-password"
-                  required
-                  className="appearance-none rounded-md relative block w-full px-3 py-2 pl-10 border border-gray-300 placeholder-gray-500 text-neutral-900 bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  placeholder="Type your password"
-                />
-                <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <img
-                    src="https://img.icons8.com/ios-filled/24/cccccc/lock.png"
-                    alt="Lock Icon"
-                  />
-                </span>
-                <span
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <img
-                      src="https://img.icons8.com/ios-filled/24/000000/visible.png"
-                      alt="Hide Password Icon"
-                    />
-                  ) : (
-                    <img
-                      src="https://img.icons8.com/ios-filled/24/000000/invisible.png"
-                      alt="Show Password Icon"
-                    />
-                  )}
-                </span>
-              </div>
+              <input
+                type="password"
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1E88E5] focus:border-[#1E88E5]"
+                placeholder="Type your Password"
+              />
             </div>
-          </div>
-          <div className="mt-6 flex justify-between items-center text-right text-sm">
-            <a
-              href="#"
-              className="text-[#1E88E5] hover:text-indigo-500 font-bold"
-            >
-              Forgot password?
-            </a>
-          </div>
-          <div>
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#1E88E5] hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Log In
-            </button>
-          </div>
-        </form>
+            <div>
+              <button
+                type="submit"
+                className="w-full bg-[#1E88E5] text-white p-2 rounded-xl mt-2"
+              >
+                Login
+              </button>
+            </div>
+            <div className="text-center mt-4"></div>
+          </form>
+        </div>
       </div>
     </div>
   );

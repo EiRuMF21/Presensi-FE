@@ -39,37 +39,36 @@
     return (
       <nav
         className={`${
-          isScrolled ? "bg-white/30 backdrop-blur-lg shadow-lg" : "bg-transparent"
+          isScrolled
+            ? "bg-[#1E88E5]/40 backdrop-blur-lg shadow-lg"
+            : "bg-[#1E88E5]"
         } fixed top-0 w-full z-50 transition duration-300`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center">
-              <a
-                href="#"
-                className="text-lg font-bold tracking-wide text-[#212121] font-sans"
-              >
-                SMART PRESENCE
-              </a>
+            <div className="flex  items-center">
+              <h1 className="text-lg font-bold tracking-wide text-[#FFFFFF] font-sans">
+                SMART ATTANDANCE
+              </h1>
             </div>
 
             {/* Menu Desktop */}
-            <div className="hidden md:flex space-x-20">
+            <div className="hidden lg:flex space-x-20">
               <button
                 onClick={() => scrollToSection("home")}
-                className="text-sm font-medium text-[#212121] hover:text-black"
+                className="relative text-sm font-medium text-[#FFFFFF]  before:absolute before:top-5 before:left-0 before:w-0 before:h-[2px] before:bg-white before:transition-all before:duration-300 hover:before:w-full"
               >
                 Home
               </button>
               <button
                 onClick={() => scrollToSection("about")}
-                className="text-sm font-medium text-[#212121] hover:text-black"
+                className="relative text-sm font-medium text-[#FFFFFF]  before:absolute before:top-5 before:left-0 before:w-0 before:h-[2px] before:bg-white before:transition-all before:duration-300 hover:before:w-full"
               >
                 About
               </button>
               <button
                 onClick={() => scrollToSection("features")}
-                className="text-sm font-medium text-[#212121] hover:text-black"
+                className="relative text-sm font-medium text-[#FFFFFF]  before:absolute before:top-5 before:left-0 before:w-0 before:h-[2px] before:bg-white before:transition-all before:duration-300 hover:before:w-full"
               >
                 Features
               </button>
@@ -79,13 +78,13 @@
             <div className="hidden md:flex items-center space-x-4">
               <button
                 onClick={onRegisterClick}
-                className="text-sm px-4 py-2 rounded-full border border-[#212121] text-[#FFFFFF] bg-black hover:bg-[#535353] hover:text-white transition duration-300"
+                className="text-sm px-4 py-2 rounded-full border border-[#212121] text-[#121212] font-semibold hover:bg-[#FFFFFF] hover:text-black transition duration-300"
               >
                 Register
               </button>
               <button
                 onClick={onLoginClick}
-                className="text-sm px-4 py-2 rounded-full border border-[#1E88E5] text-[#212121] hover:bg-[#1E88E5] hover:text-white transition duration-300"
+                className="text-sm px-6 py-2 rounded-full border border-[#FFFFFF] text-[#212121] bg-white hover:bg-[#121212] hover:text-white transition duration-300"
               >
                 Login
               </button>

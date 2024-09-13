@@ -2,37 +2,40 @@ import React, { useState } from "react";
 import NavbarAdmin from "../components/NavbarAdmin";
 import SidebarAdmin from "../components/SidebarAdmin";
 import AttendanceChart from "../components/charts/AttendanceChart";
-import Legend from "../components/Legend.tsx"; // Import the Legend component
+import Legend from "../components/Legend";
 
 const DashboardAdmin: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <div className="flex flex-col md:sticky min-h-screen drop-shadow-2xl">
+    <div className="flex flex-col h-screen">
       <NavbarAdmin />
 
-      {/* Hamburger Button for Mobile */}
-      <button
-        className="md:hidden bg-[#29b6f6] text-white py-2 px-4 rounded m-4"
-        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-      >
-        {isSidebarOpen ? "Close Menu" : "Open Menu"}
-      </button>
-
-      <div className="flex flex-grow">
+      <div className="flex flex-1 overflow-hidden bg-gradient-to-t from-[#A0DEFF] via-[#CAF4FF] to-[#5AB2FF]">
         {/* Sidebar */}
         <div
           className={`${
             isSidebarOpen ? "block" : "hidden"
-          } md:block fixed top-0 left-0 md:h-screen md:sticky md:top-0 bg-[#05073C] text-white w-72 p-4  z-50`}
+          } md:block w-64 flex-shrink-0  border-r border-blue-300 mt-10`}
         >
           <SidebarAdmin />
         </div>
 
         {/* Main Content */}
-        <div className="flex-grow p-4 bg-gradient-to-t from-[#A0DEFF] via-[#CAF4FF] to-[#5AB2FF] overflow-y-auto">
-          <AttendanceChart />
-          <Legend /> {/* Add the Legend component below the chart */}
+        <div className="flex-1 flex flex-col overflow-hidden">
+          {/* Hamburger Button for Mobile */}
+          <button
+            className="md:hidden bg-[#29b6f6] text-white py-2 px-4 rounded m-4 self-start"
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          >
+            {isSidebarOpen ? "Close Menu" : "Open Menu"}
+          </button>
+
+          {/* Chart and Legend */}
+          <div className="flex-1 overflow-y-auto p-4">
+            <AttendanceChart />
+            <Legend />
+          </div>
         </div>
       </div>
     </div>
