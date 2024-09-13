@@ -28,8 +28,8 @@ const Register: React.FC = () => {
           </div>
           <div className="absolute md:-top-52 md:right-52">
             <div
-              style={{ backgroundImage: `url(${backgroundLogSvg})` }}
-              className="w-[100px] h-[100px] lg:w-[250px] lg:h-[200px] object-contain"
+              className="bg-no-repeat absolute inset-0 bg-left-bottom h-full w-full"
+              style={{ backgroundImage: `url(${backgroundSvg})` }}
             />
           </div>
         </div>
@@ -43,60 +43,60 @@ const Register: React.FC = () => {
       {/* Bagian Kanan Register */}
       <div className="flex-[1] bg-[#CCCBCB] flex flex-col justify-center items-center p-6 lg:px-0 z-10 relative">
         <div className="bg-[#D9D9D9] rounded-3xl p-8 md:py-20 md:px-16 shadow-lg max-w-md w-full gap-y-10">
-        <div className="max-w-md w-full">
-          <h2 className="text-4xl font-bold text-[#212121] mb-8">
-            Register <br /> <span className="text-[#1E88E5]">Here!</span>
-          </h2>
-          <form className="space-y-6">
-            <div className="border-b-[3px] border-black focus-within:border-[#1E88E5]">
-              <input
-                type="text"
-                className="block w-full p-2 text-gray-900 placeholder-gray-500 bg-transparent border-none focus:outline-none focus:ring-0"
-                placeholder="Name"
-              />
-            </div>
-            <div className="border-b-[3px] border-black focus-within:border-[#1E88E5]">
-              <input
-                type="text"
-                className="block w-full p-2 text-gray-900 placeholder-gray-500 bg-transparent border-none focus:outline-none focus:ring-0"
-                placeholder="Phone No"
-              />
-            </div>
-            <div className="border-b-[3px] border-black focus-within:border-[#1E88E5]">
-              <input
-                type="email"
-                className="block w-full p-2 text-gray-900 placeholder-gray-500 bg-transparent border-none focus:outline-none focus:ring-0"
-                placeholder="Email"
-              />
-            </div>
-            <div className="border-b-[3px] border-black focus-within:border-[#1E88E5]">
-              <input
-                type="password"
-                className="block w-full p-2 text-gray-900 placeholder-gray-500 bg-transparent border-none focus:outline-none focus:ring-0"
-                placeholder="Password"
-              />
-            </div>
-            <div>
-              <button
-                type="submit"
-                className="w-full bg-[#1E88E5] text-white p-3 rounded-xl mt-4 hover:bg-[#1976D2] transition-colors duration-300"
-              >
-                Register
-              </button>
-            </div>
-            <div className="text-center mt-4">
-              <span className="text-sm text-gray-600">
-                Already have an account?{" "}
-                <a
-                  href="#"
-                  onClick={openRolePopup}
-                  className="text-[#1E88E5] hover:underline"
+          <div className="max-w-md w-full">
+            <h2 className="text-4xl font-bold text-[#212121] mb-8">
+              Register <br /> <span className="text-[#1E88E5]">Here!</span>
+            </h2>
+            <form className="space-y-6">
+              <div className="border-b-[3px] border-black focus-within:border-[#1E88E5]">
+                <input
+                  type="text"
+                  className="block w-full p-2 text-gray-900 placeholder-gray-500 bg-transparent border-none focus:outline-none focus:ring-0"
+                  placeholder="Name"
+                />
+              </div>
+              <div className="border-b-[3px] border-black focus-within:border-[#1E88E5]">
+                <input
+                  type="text"
+                  className="block w-full p-2 text-gray-900 placeholder-gray-500 bg-transparent border-none focus:outline-none focus:ring-0"
+                  placeholder="Phone No"
+                />
+              </div>
+              <div className="border-b-[3px] border-black focus-within:border-[#1E88E5]">
+                <input
+                  type="email"
+                  className="block w-full p-2 text-gray-900 placeholder-gray-500 bg-transparent border-none focus:outline-none focus:ring-0"
+                  placeholder="Email"
+                />
+              </div>
+              <div className="border-b-[3px] border-black focus-within:border-[#1E88E5]">
+                <input
+                  type="password"
+                  className="block w-full p-2 text-gray-900 placeholder-gray-500 bg-transparent border-none focus:outline-none focus:ring-0"
+                  placeholder="Password"
+                />
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  className="w-full bg-[#1E88E5] text-white p-3 rounded-xl mt-4 hover:bg-[#1976D2] transition-colors duration-300"
                 >
-                  Click here
-                </a>
-              </span>
-            </div>
-          </form>
+                  Register
+                </button>
+              </div>
+              <div className="text-center mt-4">
+                <span className="text-sm text-gray-600">
+                  Already have an account?{" "}
+                  <a
+                    href="#"
+                    onClick={openRolePopup}
+                    className="text-[#1E88E5] hover:underline"
+                  >
+                    Click here
+                  </a>
+                </span>
+              </div>
+            </form>
           </div>
         </div>
       </div>
