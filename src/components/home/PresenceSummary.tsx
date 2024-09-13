@@ -86,8 +86,8 @@ const PresenceSummary: React.FC = () => {
   ];
 
   return (
-    <div className="flex items-center justify-center md:w-3/6">
-      <div className="w-full md:w-3/6">
+    <div className="flex items-center justify-center max-w-screen-md">
+      <div className="w-full lg:w-3/5">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
           {summaries.map((summary, index) => (
             <SummaryCard

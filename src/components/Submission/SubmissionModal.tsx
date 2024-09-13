@@ -26,13 +26,13 @@ const SubmissionModal: React.FC<SubmissionModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white rounded-lg p-6 w-80">
-        <div className="flex justify-between items-center mb-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center text-black bg-black bg-opacity-50">
+      <div className="p-6 bg-white rounded-lg w-80">
+        <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-bold">{title}</h2>
           <button
             onClick={onClose}
-            className="text-gray-500"
+            className="text-red-600"
           >
             X
           </button>
@@ -40,11 +40,11 @@ const SubmissionModal: React.FC<SubmissionModalProps> = ({
 
         {/* Category Selection */}
         <div className="mb-4">
-          <label className="block text-sm text-gray-700 font-semibold">
+          <label className="block text-sm font-semibold text-black">
             Category
           </label>
           <select
-            className="w-full mt-1 p-2 border rounded"
+            className="w-full p-2 mt-1 text-black bg-white border rounded"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
@@ -64,23 +64,23 @@ const SubmissionModal: React.FC<SubmissionModalProps> = ({
 
         {/* From Input */}
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
+          <label className="block mb-2 text-sm font-semibold text-black">
             From
           </label>
           <input
             type="text"
-            className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+            className="w-full px-3 py-2 leading-tight text-black bg-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
             placeholder="Enter the start time"
           />
         </div>
 
         {/* Description Textarea */}
         <div className="mb-4">
-          <label className="block text-sm text-gray-700 font-semibold">
+          <label className="block text-sm font-semibold text-black">
             Description
           </label>
           <textarea
-            className="w-full mt-1 p-2 border rounded"
+            className="w-full p-2 mt-1 text-black bg-white border rounded"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Enter your reason"
@@ -90,7 +90,7 @@ const SubmissionModal: React.FC<SubmissionModalProps> = ({
         {/* Submit Button */}
         <button
           onClick={handleSubmit}
-          className="bg-blue-500 text-white font-semibold py-2 px-4 rounded w-full"
+          className="w-full px-4 py-2 font-semibold text-white bg-blue-500 rounded"
         >
           Send
         </button>
