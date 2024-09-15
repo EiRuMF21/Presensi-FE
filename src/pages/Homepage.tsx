@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import NavbarHome from "../components/home/NavHome";
+import NavbarHome from "../components/home/NavbarHome";
 import PresenceSummary from "../components/home/PresenceSummary";
 import ProfileCard from "../components/home/ProfileCard";
 import CalendarDay from "../components/calendar/CalendarDay";

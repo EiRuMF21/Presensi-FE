@@ -27,13 +27,13 @@ const ProfileCard: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-between max-w-4xl p-6 mx-auto mt-6 bg-white rounded-lg shadow-lg">
+    <div className="flex flex-col items-center justify-between w-full p-2 mx-auto mt-6 bg-white rounded-lg shadow-lg max-w-7xl md:flex-row">
       {/* Left Section: Profile */}
-      <div className="flex items-center">
+      <div className="flex items-center mb-6 md:mb-0">
         <img
           src="https://via.placeholder.com/80"
           alt="Profile"
-          className="object-cover w-20 h-20 mr-6 rounded-full"
+          className="object-cover w-24 h-24 mr-6 rounded-full"
         />
         <div>
           <h2 className="text-2xl font-bold text-gray-700">NAME</h2>
@@ -42,7 +42,7 @@ const ProfileCard: React.FC = () => {
       </div>
 
       {/* Right Section: Check-In/Submission Buttons */}
-      <div className="flex space-x-4">
+      <div className="flex flex-col md:space-y-2">
         {/* Check-In/Check-Out Button */}
         <button
           onClick={isCheckIn ? goToCheckInPage : goToCheckOutPage}
