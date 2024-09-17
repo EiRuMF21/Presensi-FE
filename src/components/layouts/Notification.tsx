@@ -8,11 +8,11 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({isOpen}) => {
   if (!isOpen) return null;
 
   return (
-    <div className="absolute right-0 mt-2 w-72 bg-gray-800 text-white rounded-lg shadow-lg p-4 z-10">
-      <h3 className="font-bold text-lg mb-2">Notifikasi</h3>
+    <div className="absolute right-0 z-10 p-4 mt-2 text-white bg-gray-800 rounded-lg shadow-lg w-72">
+      <h3 className="mb-2 text-lg font-bold">Notifikasi</h3>
       <div className="space-y-2">
         <div className="flex items-start space-x-2">
-          <div className="w-2 h-2 bg-white rounded-full mt-2"></div>
+          <div className="w-2 h-2 mt-2 bg-white rounded-full"></div>
           <div>
             <p className="text-sm">
               Your password has been successfully changed.
@@ -23,7 +23,7 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({isOpen}) => {
           </div>
         </div>
         <div className="flex items-start space-x-2">
-          <div className="w-2 h-2 bg-white rounded-full mt-2"></div>
+          <div className="w-2 h-2 mt-2 bg-white rounded-full"></div>
           <div>
             <p className="text-sm">Thank you for applying for leave.</p>
             <span className="text-xs text-gray-400">
@@ -32,7 +32,7 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({isOpen}) => {
           </div>
         </div>
         <div className="flex items-start space-x-2">
-          <div className="w-2 h-2 bg-white rounded-full mt-2"></div>
+          <div className="w-2 h-2 mt-2 bg-white rounded-full"></div>
           <div>
             <p className="text-sm">Thank you for applying for permission.</p>
             <span className="text-xs text-gray-400">
@@ -41,7 +41,7 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({isOpen}) => {
           </div>
         </div>
         <div className="flex items-start space-x-2">
-          <div className="w-2 h-2 bg-white rounded-full mt-2"></div>
+          <div className="w-2 h-2 mt-2 bg-white rounded-full"></div>
           <div>
             <p className="text-sm">Thank you for applying for sick leave.</p>
             <span className="text-xs text-gray-400">
@@ -52,7 +52,7 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({isOpen}) => {
       </div>
       <a
         href="#"
-        className="block mt-4 text-sm text-blue-400 text-center"
+        className="block mt-4 text-sm text-center text-blue-400"
       >
         view all notifikasi
       </a>

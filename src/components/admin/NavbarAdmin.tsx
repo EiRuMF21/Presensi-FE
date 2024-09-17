@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import NotificationPanel from "../home/Notification"; // Sesuaikan path jika perlu
+import NotificationPanel from "../layouts/Notification"; // Sesuaikan path jika perlu
 
 const NavbarAdmin: React.FC = () => {
   const [isProfileDropdownOpen, setProfileDropdownOpen] = useState(false);

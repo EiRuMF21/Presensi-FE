@@ -6,7 +6,7 @@ import Register from "./components/layouts/Register";
 import Login from "./components/layouts/Login";
 import DashboardAdmin from "./pages/Dashboard";
 import Homepage from "./pages/Homepage";
-import ProfileSettings from "./components/home/ProfileSetting";
+import ProfileSettings from "./components/layouts/ProfileSetting";
 import CheckInPage from "./components/home/CheckIn";
 import CheckOutPage from "./components/home/CheckOut";
 import SubmissionTable from "./components/Submission/SubmissionData";

@@ -41,7 +41,7 @@ const ProfileCard: React.FC = () => {
         </div>
       </div>
 
-      {/* Right Section: Check-In/Submission Buttons */}
+      {/* Right Section: ATTENDANCE/Submission Buttons */}
       <div className="flex flex-col md:space-y-2">
         {/* Check-In/Check-Out Button */}
         <button
@@ -62,7 +62,7 @@ const ProfileCard: React.FC = () => {
 
         {/* Submission Button */}
         <button
-          className="flex items-center justify-center px-6 py-3 font-bold text-blue-500 bg-white border border-blue-500 rounded-full shadow-lg"
+          className="flex items-center justify-center px-6 py-3 mt-2 font-bold text-blue-500 bg-white border border-blue-500 rounded-full shadow-lg"
           onClick={() => openSubmissionModal("Submission")}
         >
           <img

@@ -1,10 +1,12 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {ArrowLeft, Search} from "lucide-react";
+import {ArrowLeft, Search, ChevronDown, ChevronUp} from "lucide-react";
 
 const SubmissionTable: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [filter, setFilter] = useState<string | null>(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
   const submissionData = [
@@ -100,11 +102,13 @@ const SubmissionTable: React.FC = () => {
     },
   ];
 
-  const filteredData = submissionData.filter((item) =>
-    Object.values(item).some((value) =>
-      value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredData = submissionData
+    .filter((item) =>
+      Object.values(item).some((value) =>
+        value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+      )
     )
-  );
+    .filter((item) => (filter ? item.submission === filter : true));
 
   const itemsPerPage = 10;
   const pageCount = Math.ceil(filteredData.length / itemsPerPage);
@@ -134,15 +138,88 @@ const SubmissionTable: React.FC = () => {
               PERMISSION SUBMISSION
             </h1>
           </div>
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="w-full py-2 pl-10 pr-4 border border-gray-300 rounded-full md:w-80"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <Search className="absolute left-3 top-2.5 text-gray-400" />
+          <div className="flex items-center space-x-4">
+            <div className="relative flex-grow">
+              <input
+                type="text"
+                placeholder="Search..."
+                className="w-full py-2 pl-10 pr-4 border border-gray-300 rounded-full"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <Search className="absolute left-3 top-2.5 text-gray-400" />
+            </div>
+            <div className="relative">
+              <button
+                onClick={() => setIsDropdownOpen((prev) => !prev)}
+                className="flex items-center px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-full"
+              >
+                {filter ? filter : "Filter"}
+                {isDropdownOpen ? (
+                  <ChevronUp className="ml-2" />
+                ) : (
+                  <ChevronDown className="ml-2" />
+                )}
+              </button>
+              {isDropdownOpen && (
+                <div className="absolute right-0 z-10 w-48 mt-2 bg-white border border-gray-300 rounded-lg shadow-lg">
+                  <div
+                    onClick={() => {
+                      setFilter("Sick");
+                      setIsDropdownOpen(false);
+                    }}
+                    className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                  >
+                    Sick
+                  </div>
+                  <div
+                    onClick={() => {
+                      setFilter("Duty");
+                      setIsDropdownOpen(false);
+                    }}
+                    className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                  >
+                    Duty
+                  </div>
+                  <div
+                    onClick={() => {
+                      setFilter("Holiday");
+                      setIsDropdownOpen(false);
+                    }}
+                    className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                  >
+                    Holiday
+                  </div>
+                  <div
+                    onClick={() => {
+                      setFilter("Office Duty");
+                      setIsDropdownOpen(false);
+                    }}
+                    className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                  >
+                    Office Duty
+                  </div>
+                  <div
+                    onClick={() => {
+                      setFilter("WFH");
+                      setIsDropdownOpen(false);
+                    }}
+                    className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                  >
+                    WFH
+                  </div>
+                  <div
+                    onClick={() => {
+                      setFilter(null);
+                      setIsDropdownOpen(false);
+                    }}
+                    className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                  >
+                    All
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
