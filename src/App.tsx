@@ -7,9 +7,8 @@ import Login from "./components/layouts/Login";
 import DashboardAdmin from "./pages/Dashboard";
 import Homepage from "./pages/Homepage";
 import ProfileSettings from "./components/layouts/ProfileSetting";
-import CheckInPage from "./components/home/CheckIn";
-import CheckOutPage from "./components/home/CheckOut";
-import SubmissionTable from "./components/Submission/SubmissionData";
+import AttendancePage from "./components/home/AttendancePage";
+import SubmissionTable from "./components/submission/SubmissionData";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -41,12 +40,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           element={<ProfileSettings />}
         />
         <Route
-          path="/check-in"
-          element={<CheckInPage />}
-        />
-        <Route
-          path="/check-out"
-          element={<CheckOutPage />}
+          path="/attendance"
+          element={<AttendancePage />}
         />
         <Route
           path="/allsubmission"
