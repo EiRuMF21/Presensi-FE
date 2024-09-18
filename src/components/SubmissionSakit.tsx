@@ -9,7 +9,7 @@ interface User {
   status: string;
 }
 
-const App: React.FC = () => {
+const Sakit: React.FC = () => {
   const initialUsers: User[] = [
     { name: 'Kinan Doe', email: 'KinanDoe@gmail.com', position: 'Position...', phone: '085555555555', date: '26 August 2024', status: '' },
     { name: 'Abbysya', email: 'Abbysya00@gmail.com', position: 'Position...', phone: '08343224444', date: '23 August 2024', status: '' },
@@ -135,22 +135,44 @@ const App: React.FC = () => {
       {/* Modal */}
       {selectedUser && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-8 w-96 relative">
-            <h2 className="text-2xl font-bold mb-4">User Details</h2>
-            <p className='text-black'><strong>Name:</strong> {selectedUser.name}</p>
-            <p className='text-black'><strong>Email:</strong> {selectedUser.email}</p>
-            <p className='text-black'><strong>Position:</strong> {selectedUser.position}</p>
-            <p className='text-black'><strong>Phone:</strong> {selectedUser.phone}</p>
-            <p className='text-black'><strong>Date:</strong> {selectedUser.date}</p>
-            <p className='text-black'><strong>Status:</strong> {selectedUser.status || 'Pending'}</p>
-            <button
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-              onClick={closeModal}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
+          <div className="bg-white rounded-lg w-80 p-6 px-10 relative shadow-md">
+            
+            {/* Back Arrow and Submission Title */}
+            <div className="flex items-center mb-6">
+              <button
+                className="text-gray-600"
+                onClick={closeModal}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <h2 className="ml-4 text-xl font-bold text-gray-800">Submission</h2>
+            </div>
+
+            {/* Horizontal Line */}
+            <hr className="border-black mb-4" />
+
+            {/* Category */}
+            <div className="mb-4">
+              <p className="text-gray-500">Category</p>
+              <p className="text-black font-semibold">Permission</p>
+            </div>
+
+            {/* From */}
+            <div className="mb-4">
+              <p className="text-gray-500">From</p>
+              <p className="text-black font-semibold">{selectedUser.name}</p>
+            </div>
+
+            {/* Description */}
+            <div className="mb-4">
+              <p className="text-gray-500">Description</p>
+              <textarea 
+                className="w-full h-24 border border-gray-300 rounded-md p-2 text-gray-800 resize-none"
+                placeholder="Description..."
+              ></textarea>
+            </div>
           </div>
         </div>
       )}
@@ -158,4 +180,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default Sakit;

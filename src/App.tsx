@@ -10,6 +10,7 @@ import SubmissionCuti from "./components/SubmissionCuti";
 import SubmissionPengajuan from "./components/SubmissionPengajuan";
 import "./index.css";
 import SubmissionSakit from "./components/SubmissionSakit";
+import RecapTable from "./components/RecapTable";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -23,6 +24,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path="/SubmissionSakit" element={<SubmissionSakit/>} />
         <Route path="/SubmissionCuti" element={<SubmissionCuti/>} />
         <Route path="/SubmissionPengajuan" element={<SubmissionPengajuan/>} />
+        <Route path="/RecapTable" element={<RecapTable/>} />
       </Routes>
     </Router>
   </React.StrictMode>
