@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 
 interface User {
   name: string;
@@ -99,7 +99,7 @@ const Dinas: React.FC = () => {
   const handleAccept = (index: number) => {
     setUsers((prevUsers) =>
       prevUsers.map((user, i) =>
-        i === index ? { ...user, status: "you accept the submission" } : user
+        i === index ? {...user, status: "you accept the submission"} : user
       )
     );
   };
@@ -107,7 +107,7 @@ const Dinas: React.FC = () => {
   const handleDecline = (index: number) => {
     setUsers((prevUsers) =>
       prevUsers.map((user, i) =>
-        i === index ? { ...user, status: "you decline the submission" } : user
+        i === index ? {...user, status: "you decline the submission"} : user
       )
     );
   };
@@ -121,12 +121,15 @@ const Dinas: React.FC = () => {
   };
 
   return (
-    <div className="bg-gray-200  min-h-screen">
-      <div className="w-full h-full mx-auto bg-white shadow-lg rounded-lg">
+    <div className="min-h-screen bg-gray-200">
+      <div className="w-full h-full mx-auto bg-white rounded-lg shadow-lg">
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center">
             <button className="text-gray-600">
-              <a href="/admin" className="text-gray-600">
+              <a
+                href="/admin"
+                className="text-gray-600"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -149,60 +152,60 @@ const Dinas: React.FC = () => {
           </div>
         </div>
 
-        <table className="min-w-full bg-gradient-to-b from-[#1E88E5] via-[#A0DEFF] via-[#CAF4FF] to-[#A0DEFF]">
+        <table className="min-w-full bg-white">
           <thead className="bg-transparent">
             <tr>
-              <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase">
+              <th className="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">
                 User
               </th>
-              <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase">
+              <th className="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">
                 Position
               </th>
-              <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase">
+              <th className="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">
                 Phone
               </th>
-              <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase">
+              <th className="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">
                 Date
               </th>
-              <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase">
+              <th className="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">
                 Submission
               </th>
-              <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase">
+              <th className="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">
                 Description
               </th>
             </tr>
           </thead>
-          <tbody className="text-gray-600 text-sm font-light">
+          <tbody className="text-sm font-light text-gray-600">
             {users.map((user, index) => (
               <tr
                 key={index}
                 className="border-b border-gray-200 hover:bg-gray-100"
               >
-                <td className="py-3 px-6 whitespace-nowrap">
+                <td className="px-6 py-3 whitespace-nowrap">
                   <div className="flex items-center">
-                    <div className="bg-gray-400 rounded-full w-10 h-10"></div>
+                    <div className="w-10 h-10 bg-gray-400 rounded-full"></div>
                     <div className="ml-4">
                       <p className="font-bold text-gray-900">{user.name}</p>
                       <p className="text-sm text-gray-500">{user.email}</p>
                     </div>
                   </div>
                 </td>
-                <td className="py-3 px-6">{user.position}</td>
-                <td className="py-3 px-6">{user.phone}</td>
-                <td className="py-3 px-6">{user.date}</td>
-                <td className="py-3 px-6">
+                <td className="px-6 py-3">{user.position}</td>
+                <td className="px-6 py-3">{user.phone}</td>
+                <td className="px-6 py-3">{user.date}</td>
+                <td className="px-6 py-3">
                   {user.status ? (
-                    <span className="text-gray-500 italic">{user.status}</span>
+                    <span className="italic text-gray-500">{user.status}</span>
                   ) : (
                     <div className="flex">
                       <button
-                        className="px-4 py-1 bg-green-500 text-white rounded-full hover:bg-green-600 transition duration-150"
+                        className="px-4 py-1 text-white transition duration-150 bg-green-500 rounded-full hover:bg-green-600"
                         onClick={() => handleAccept(index)}
                       >
                         Accept
                       </button>
                       <button
-                        className="ml-2 px-4 py-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition duration-150"
+                        className="px-4 py-1 ml-2 text-white transition duration-150 bg-red-500 rounded-full hover:bg-red-600"
                         onClick={() => handleDecline(index)}
                       >
                         Decline
@@ -210,9 +213,9 @@ const Dinas: React.FC = () => {
                     </div>
                   )}
                 </td>
-                <td className="py-3 px-6">
+                <td className="px-6 py-3">
                   <button
-                    className="px-4 py-1 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition duration-150"
+                    className="px-4 py-1 text-white transition duration-150 bg-blue-500 rounded-full hover:bg-blue-600"
                     onClick={() => handleDetail(user)}
                   >
                     Detail
@@ -226,11 +229,14 @@ const Dinas: React.FC = () => {
 
       {/* Modal */}
       {selectedUser && (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg w-80 p-6 px-10 relative shadow-md">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+          <div className="relative p-6 px-10 bg-white rounded-lg shadow-md w-80">
             {/* Back Arrow and Submission Title */}
             <div className="flex items-center mb-6">
-              <button className="text-gray-600" onClick={closeModal}>
+              <button
+                className="text-gray-600"
+                onClick={closeModal}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -252,25 +258,25 @@ const Dinas: React.FC = () => {
             </div>
 
             {/* Horizontal Line */}
-            <hr className="border-black mb-4" />
+            <hr className="mb-4 border-black" />
 
             {/* Category */}
             <div className="mb-4">
               <p className="text-gray-500">Category</p>
-              <p className="text-black font-semibold">Permission</p>
+              <p className="font-semibold text-black">Permission</p>
             </div>
 
             {/* From */}
             <div className="mb-4">
               <p className="text-gray-500">From</p>
-              <p className="text-black font-semibold">{selectedUser.name}</p>
+              <p className="font-semibold text-black">{selectedUser.name}</p>
             </div>
 
             {/* Description */}
             <div className="mb-4">
               <p className="text-gray-500">Description</p>
               <textarea
-                className="w-full h-24 border border-gray-300 rounded-md p-2 text-gray-800 resize-none"
+                className="w-full h-24 p-2 text-gray-800 border border-gray-300 rounded-md resize-none"
                 placeholder="Description..."
               ></textarea>
             </div>

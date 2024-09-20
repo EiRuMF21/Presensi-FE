@@ -2,55 +2,66 @@ import React from "react";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-[#] text-white py-12 w-full">
-      <div className="container mx-auto px-8 lg:px-16">
+    <footer className="bg-[#] text-white py-8 w-full">
+      <div className="container px-8 mx-auto lg:px-16">
         {/* Top Section - Main Content */}
-        <div className="w-full text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4">Smart Presence</h2>
-          <p className="max-w-2xl mx-auto mb-8 text-lg leading-relaxed">
-            
-          </p>
+        <div className="w-full mb-12 text-center">
+          <h2 className="mb-4 text-4xl font-bold">Smart Attendance</h2>
+          <p className="max-w-2xl mx-auto mb-8 text-lg leading-relaxed"></p>
 
           {/* Social Media Icons */}
           <div className="flex justify-center space-x-6">
-            <a href="#" target="_blank" rel="noopener noreferrer">
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <img
                 src="https://img.icons8.com/ios-filled/50/ffffff/facebook-new.png"
                 alt="Facebook"
                 className="w-8 h-8"
               />
             </a>
-            <a href="#" target="_blank" rel="noopener noreferrer">
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <img
                 src="https://img.icons8.com/ios-filled/50/ffffff/github.png"
                 alt="GitHub"
                 className="w-8 h-8"
               />
             </a>
-            <a href="#" target="_blank" rel="noopener noreferrer">
-              <img
-                src="https://img.icons8.com/ios-filled/50/ffffff/linkedin.png"
-                alt="LinkedIn"
-                className="w-8 h-8"
-              />
-            </a>
-            <a href="#" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://youtube.com/@xpplg3?si=BGNnuJeEGWshm7Bu"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <img
                 src="https://img.icons8.com/ios-filled/50/ffffff/youtube-play.png"
                 alt="YouTube"
                 className="w-8 h-8"
               />
             </a>
-            <a href="#" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://www.instagram.com/rplthreee_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <img
-                src="https://img.icons8.com/ios-filled/50/ffffff/dribbble.png"
+                src="https://img.icons8.com/?size=100&id=85154&format=png&color=FFFFFF"
                 alt="Dribbble"
                 className="w-8 h-8"
               />
             </a>
-            <a href="#" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://www.tiktok.com/@rplthree?is_from_webapp=1&sender_device=pc"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <img
-                src="https://img.icons8.com/ios-filled/50/ffffff/behance.png"
+                src="https://img.icons8.com/?size=100&id=soupkpLfTkZi&format=png&color=FFFFFF"
                 alt="Behance"
                 className="w-8 h-8"
               />
@@ -59,14 +70,14 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-gray-400 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-sm text-center md:text-left mb-4 md:mb-0">
+        <div className="flex flex-col items-center justify-between pt-8 border-t border-gray-400 md:flex-row">
+          <p className="mb-4 text-sm text-center md:text-left md:mb-0">
             © {new Date().getFullYear()} Smart Presences. All rights reserved.
           </p>
           <p className="text-sm text-center md:text-right">
             Hand-crafted & Made by{" "}
             <a
-              href="https://example.com"
+              href="https://xii-rpl3.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-400 hover:underline"
