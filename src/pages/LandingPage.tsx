@@ -15,7 +15,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center max-sm:px-0 lg:px-0 bg-gradient-to-t from-[#121212] to-[#424242] ">
+    <div className="flex flex-col items-center max-sm:px-0 lg:px-0 bg-gradient-to-t from-[#121212] to-[#424242]">
       {/* Halaman 1 (Home Section) */}
       <Navbar
         onLoginClick={handleLoginClick}

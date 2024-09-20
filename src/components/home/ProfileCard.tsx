@@ -65,7 +65,7 @@ const ProfileCard: React.FC = () => {
         <button
           onClick={handleAttendance}
           className={`${
-            isCheckIn ? "bg-blue-500" : "bg-green-500"
+            isCheckIn ? "bg-blue-500" : "bg-red-500"
           } text-white font-bold py-3 px-6 rounded-full shadow-lg flex items-center justify-center`}
         >
           {isCheckIn ? "ATTENDANCE" : "ATTENDANCE"}

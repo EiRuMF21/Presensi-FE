@@ -1,13 +1,16 @@
 import React, {useState} from "react";
-import {ArrowLeft, Search, ChevronDown} from "lucide-react";
+import {useNavigate} from "react-router-dom";
+import {ArrowLeft, Search, ChevronDown, ChevronUp} from "lucide-react";
 import * as Dialog from "@radix-ui/react-dialog";
 
 const SubmissionTable: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [filter, setFilter] = useState<string>("ALL");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isApprovalDialogOpen, setIsApprovalDialogOpen] = useState(false);
   const [selectedSubmission, setSelectedSubmission] = useState<any>(null);
+  const navigate = useNavigate();
 
   const submissionData = [
     {
@@ -112,36 +115,33 @@ const SubmissionTable: React.FC = () => {
     },
   ];
 
-  const filteredData = submissionData.filter((item) =>
-    filter === "ALL" ? true : item.submission === filter
+  const filteredData = submissionData.filter(
+    (item) => filter === "ALL" || item.submission === filter
   );
 
   const itemsPerPage = 10;
   const pageCount = Math.ceil(filteredData.length / itemsPerPage);
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filteredData.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const handleApprovalClick = (submission: any) => {
     setSelectedSubmission(submission);
     setIsApprovalDialogOpen(true);
   };
 
-  const handleApprove = () => {
-    // Implement approval logic here
-    setIsApprovalDialogOpen(false);
-  };
-
-  const handleDecline = () => {
-    // Implement decline logic here
-    setIsApprovalDialogOpen(false);
-  };
+  const handleApprove = () => setIsApprovalDialogOpen(false);
+  const handleDecline = () => setIsApprovalDialogOpen(false);
 
   return (
     <div className="fixed w-full h-full p-6 text-black bg-white">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center">
-          <ArrowLeft className="mr-2 cursor-pointer" />
+          <ArrowLeft
+            className="mr-2 cursor-pointer"
+            onClick={() => navigate("/admin")}
+          />
           <h1 className="text-xl font-bold">PERMISSION SUBMISSION</h1>
         </div>
         <div className="flex items-center space-x-4">
@@ -156,18 +156,35 @@ const SubmissionTable: React.FC = () => {
             <Search className="absolute left-3 top-2.5 text-gray-400" />
           </div>
           <div className="relative">
-            <select
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-              className="py-2 pl-4 pr-10 bg-white border rounded-full appearance-none"
+            <button
+              onClick={() => setIsDropdownOpen((prev) => !prev)}
+              className="flex items-center px-4 py-2 text-gray-700 bg-white border-b border-gray-300 rounded-full"
             >
-              <option value="ALL">ALL</option>
-              <option value="Sick">Sick</option>
-              <option value="WFH">WFH</option>
-              <option value="Duty">Duty</option>
-              <option value="Office Trip">Office Trip</option>
-            </select>
-            <ChevronDown className="absolute ml-2 right-3 top-2.5 text-gray-400" />
+              {filter || "Filter"}
+              {isDropdownOpen ? (
+                <ChevronUp className="ml-2" />
+              ) : (
+                <ChevronDown className="ml-2" />
+              )}
+            </button>
+            {isDropdownOpen && (
+              <div className="absolute right-0 z-10 w-48 mt-2 bg-white border-b border-gray-300 rounded-lg shadow-lg">
+                {["Sick", "Duty", "Holiday", "Office Duty", "WFH", "ALL"].map(
+                  (option) => (
+                    <div
+                      key={option}
+                      onClick={() => {
+                        setFilter(option);
+                        setIsDropdownOpen(false);
+                      }}
+                      className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                    >
+                      {option}
+                    </div>
+                  )
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -217,7 +234,10 @@ const SubmissionTable: React.FC = () => {
 
       <div className="flex items-center justify-between mt-4">
         <div>
-          Showing {indexOfFirstItem + 1} out of {filteredData.length} entries
+          Showing{" "}
+          {Math.min((currentPage - 1) * itemsPerPage + 1, filteredData.length)}{" "}
+          - {Math.min(currentPage * itemsPerPage, filteredData.length)} of{" "}
+          {filteredData.length}
         </div>
         <div className="flex space-x-2">
           <button
