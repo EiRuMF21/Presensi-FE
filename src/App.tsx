@@ -11,10 +11,9 @@ import Register from "./components/layouts/Register";
 import Login from "./components/layouts/Login";
 import DashboardAdmin from "./pages/Dashboard";
 import Homepage from "./pages/Homepage";
-import ProfileSettings from "./components/home/ProfileSetting";
-import CheckInPage from "./components/home/CheckIn";
-import CheckOutPage from "./components/home/CheckOut";
-import PermissionRequests from "./components/Submission/SubmissionData";
+import ProfileSettings from "./components/layouts/ProfileSetting";
+import AttendancePage from "./components/home/AttendancePage";
+import SubmissionTable from "./components/Submission/SubmissionData";
 import RecapTable from "./components/admin/RecapTable";
 import ProtectedRoute from "./ProtectedRouteComponent";
 import "./index.css";
@@ -37,14 +36,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <DashboardAdmin />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/admin" element={<DashboardAdmin />} />
+        <Route path="/home" element={<Homepage />} />
         <Route
           path="/profile"
           element={
@@ -53,38 +48,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/check-in"
-          element={
-            <ProtectedRoute>
-              <CheckInPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/check-out"
-          element={
-            <ProtectedRoute>
-              <CheckOutPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/SubmissionData"
-          element={
-            <ProtectedRoute>
-              <PermissionRequests />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/Recap"
-          element={
-            <ProtectedRoute>
-              <RecapTable />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/attendance" element={<AttendancePage />} />
+        <Route path="/datasubmission" element={<SubmissionTable />} />
+        <Route path="/recap" element={<RecapTable />} />
 
         {/* Redirect ke halaman login jika mencoba mengakses rute yang tidak ada */}
         <Route path="*" element={<Navigate to="/login" replace />} />

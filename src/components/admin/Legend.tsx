@@ -14,7 +14,7 @@ const Legend: React.FC = () => {
 
   return (
     <div className="p-2 text-black bg-white rounded-lg">
-      <div className="flex justify-between flex-wrap items-center gap-4">
+      <div className="flex flex-wrap items-center justify-between gap-4">
         {items.map((item, index) => (
           <div key={index} className="flex  items-center">
             <div className={`w-4 h-4 ${item.color} rounded-full mr-2`}></div>
