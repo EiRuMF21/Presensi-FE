@@ -26,9 +26,9 @@ const ProfileSettings: React.FC = () => {
   };
 
   return (
-    <div className="bg-gray-100 text-black min-h-screen items-center">
+    <div className="items-center min-h-screen text-black bg-gray-200">
       {/* Navbar */}
-      <div className="bg-white w-full py-4 flex items-center justify-between px-4 shadow-md">
+      <div className="flex items-center justify-between w-full px-4 py-4 bg-white shadow-md">
         <button
           onClick={() => navigate(-1)}
           className="text-black"
@@ -46,13 +46,13 @@ const ProfileSettings: React.FC = () => {
         />
       </div>
 
-      <div className="max-w-md mx-auto mt-8 bg-white p-6 rounded-lg shadow-md">
+      <div className="max-w-md p-6 mx-auto mt-8 bg-white rounded-lg shadow-md">
         <div className="flex justify-center mb-6">
           <div className="relative">
             <img
               src="https://img.icons8.com/ios-glyphs/96/cccccc/user--v1.png"
               alt="Profile"
-              className="w-24 h-24 rounded-full object-cover bg-gray-300"
+              className="object-cover w-24 h-24 bg-gray-300 rounded-full"
             />
             <label
               htmlFor="file-upload"
@@ -77,59 +77,65 @@ const ProfileSettings: React.FC = () => {
           className="space-y-4"
         >
           <div>
-            <label className="block text-gray-700">Name</label>
+            <label className="block font-semibold text-gray-600">Name</label>
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleInputChange}
-              className="w-full p-2 border rounded text-white"
+              className="w-full p-2 text-black bg-white border rounded"
             />
           </div>
           <div>
-            <label className="block text-gray-700">Email</label>
+            <label className="block font-semibold text-gray-600">Email</label>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleInputChange}
-              className="w-full p-2 border rounded text-white"
+              className="w-full p-2 text-black bg-white border rounded"
             />
           </div>
           <div>
-            <label className="block text-gray-700">Number Telephone</label>
+            <label className="block font-semibold text-gray-600">
+              Number Telephone
+            </label>
             <input
               type="text"
               name="position"
               value={formData.NumberTelephone}
               onChange={handleInputChange}
-              className="w-full p-2 border rounded text-white"
+              className="w-full p-2 text-black bg-white border rounded"
             />
           </div>
           <div>
-            <label className="block text-gray-700">Division of Work</label>
+            <label className="block font-semibold text-gray-600">
+              Division of Work
+            </label>
             <input
               type="text"
               name="division"
               value={formData.position}
               onChange={handleInputChange}
-              className="w-full p-2 border rounded text-white"
+              className="w-full p-2 text-black bg-white border rounded"
             />
           </div>
           <div>
-            <label className="block text-gray-700">Year of Employment</label>
+            <label className="block font-semibold text-gray-600">
+              Year of Employment
+            </label>
             <input
               type="text"
               name="yearOfEmployment"
               value={formData.YearOfEmployment}
               onChange={handleInputChange}
-              className="w-full p-2 border rounded text-white"
+              className="w-full p-2 text-black bg-white border rounded"
             />
           </div>
 
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded"
+            className="w-full px-4 py-2 font-semibold text-white bg-blue-500 rounded"
           >
             Confirm
           </button>

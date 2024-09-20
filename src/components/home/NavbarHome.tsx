@@ -17,8 +17,15 @@ const NavbarHome: React.FC = () => {
   };
 
   return (
-    <nav className="flex items-center justify-between px-8 py-4 text-black bg-white shadow-lg">
-      <h1 className="text-lg font-bold tracking-wide">SMART ATTENDANCE</h1>
+    <nav className="flex items-center justify-between text-black bg-white shadow-lg sm:px-6 lg:px-8">
+      <div className="flex items-center justify-between h-16">
+        <img
+          src="/image/logoSA.png" // Ganti ini dengan URL logo Anda
+          alt="Logo"
+          className="w-10" // Sesuaikan tinggi logo sesuai kebutuhan Anda
+        />
+      </div>
+
       <div className="relative flex items-center space-x-4">
         <div className="relative">
           <img

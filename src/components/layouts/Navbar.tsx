@@ -13,6 +13,7 @@ const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onRegisterClick }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -43,6 +44,7 @@ const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onRegisterClick }) => {
         isScrolled
           ? "bg-[#1E88E5]/40 backdrop-blur-lg shadow-lg"
           : "bg-[#1E88E5]"
+      
       } fixed top-0 w-full z-50 transition duration-300`}
     >
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -54,7 +56,7 @@ const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onRegisterClick }) => {
           </div>
 
           {/* Menu Desktop */}
-          <div className="hidden space-x-20 md:flex">
+          <div className="hidden space-x-20 lg:flex">
             <button
               onClick={() => scrollToSection("home")}
               className="relative text-sm font-medium text-[#FFFFFF] hover:text-white before:absolute before:left-0 before:bottom-[-4px] before:w-0 before:h-[1px] before:bg-white before:transition-all before:duration-300 hover:before:w-full"

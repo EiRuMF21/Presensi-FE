@@ -9,15 +9,13 @@ import {
 import Home from "./pages/LandingPage";
 import Register from "./components/layouts/Register";
 import Login from "./components/layouts/Login";
-import DashboardAdmin from "./pages/DashboardAdmin";
+import DashboardAdmin from "./pages/Dashboard";
 import Homepage from "./pages/Homepage";
 import ProfileSettings from "./components/home/ProfileSetting";
 import CheckInPage from "./components/home/CheckIn";
 import CheckOutPage from "./components/home/CheckOut";
-import PermissionRequests from "./components/Submission/SubmissionIzin";
-import SubmissionCuti from "./components/Submission/SubmissionCuti";
-import SubmissionDinas from "./components/Submission/SubmissionDinas";
-import SubmissionSakit from "./components/Submission/SubmissionSakit";
+import PermissionRequests from "./components/Submission/SubmissionData";
+import RecapTable from "./components/admin/RecapTable";
 import ProtectedRoute from "./ProtectedRouteComponent";
 import "./index.css";
 
@@ -72,7 +70,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           }
         />
         <Route
-          path="/Submissionizin"
+          path="/SubmissionData"
           element={
             <ProtectedRoute>
               <PermissionRequests />
@@ -80,26 +78,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           }
         />
         <Route
-          path="/Submissionsakit"
+          path="/Recap"
           element={
             <ProtectedRoute>
-              <SubmissionSakit />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/Submissioncuti"
-          element={
-            <ProtectedRoute>
-              <SubmissionCuti />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/Submissiondinas"
-          element={
-            <ProtectedRoute>
-              <SubmissionDinas />
+              <RecapTable />
             </ProtectedRoute>
           }
         />

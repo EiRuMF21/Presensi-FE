@@ -1,29 +1,27 @@
+// Legend.tsx
 import React from "react";
 
 const Legend: React.FC = () => {
-  const legendItems = [
-    {label: "Attendance", color: "#8884d8"},
-    {label: "Permission", color: "#82ca9d"},
-    {label: "Sick", color: "#ffc658"},
-    {label: "Holiday", color: "#ff7300"},
-    {label: "Office Duty", color: "#0088FE"},
-    {label: "WFH", color: "#00C49F"},
+  const items = [
+    { color: "bg-blue-500", label: "View All" },
+    { color: "bg-green-300", label: "Attendance" },
+    { color: "bg-pink-300", label: "Permission" },
+    { color: "bg-orange-300", label: "Sick" },
+    { color: "bg-blue-300", label: "Holiday" },
+    { color: "bg-yellow-300", label: "Office duty" },
+    { color: "bg-purple-300", label: "WFH" },
   ];
 
   return (
-    <div className="flex flex-wrap gap-4 p-4 mt-4 bg-white rounded-lg shadow-md">
-      {legendItems.map((item, index) => (
-        <div
-          key={index}
-          className="flex items-center"
-        >
-          <div
-            className="w-4 h-4 mr-2"
-            style={{backgroundColor: item.color}}
-          ></div>
-          <span className="font-semibold text-black">{item.label}</span>
-        </div>
-      ))}
+    <div className="p-2 text-black bg-white rounded-lg">
+      <div className="flex justify-between flex-wrap items-center gap-4">
+        {items.map((item, index) => (
+          <div key={index} className="flex  items-center">
+            <div className={`w-4 h-4 ${item.color} rounded-full mr-2`}></div>
+            <span>{item.label}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

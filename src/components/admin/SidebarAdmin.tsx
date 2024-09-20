@@ -1,40 +1,58 @@
-import {} from "react";
+// SidebarAdmin.tsx
+import React, { useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 const SidebarAdmin: React.FC = () => {
+  const [isUserManagementOpen, setIsUserManagementOpen] = useState(true);
+
   return (
-    <div className="bg-[#FFFFFF] text-black h-screen w-64 p-4 rounded-2xl">
-      <h2 className="text-black font-semibold text-lg mb-4">USER MANAGEMENT</h2>
-      <button className="bg-[#29b6f6] text-white py-2 px-4 rounded w-full mb-4">
-        <a className="text-white" href="../Submission/SubmissionCuti.tsx">
-          User Data
-        </a>
-      </button>
-      <h2 className="text-black font-semibold text-lg mb-4">SUBMISSION</h2>
-      <button className="bg-[#29b6f6] text-white py-2 px-4 rounded w-full mb-4">
-        <a className="text-white" href="/Submissionizin">
-          Permission
-        </a>
-      </button>
-      <button className="bg-[#29b6f6] text-white py-2 px-4 rounded w-full mb-4">
-        <a className="text-white" href="/Submissionsakit">
-          Sick
-        </a>
-      </button>
-      <button className="bg-[#29b6f6] text-white py-2 px-4 rounded w-full mb-4">
-        <a className="text-white" href="/Submissioncuti">
-          Office Trip
-        </a>
-      </button>
-      <button className="bg-[#29b6f6] text-white py-2 px-4 rounded w-full mb-4">
-        <a className="text-white" href="/Submissionizin">
-          Office Duty
-        </a>
-      </button>
-      <button className="bg-[#29b6f6] text-white py-2 px-4 rounded w-full">
-        <a className="text-white" href="/Recap">
-          Recap
-        </a>
-      </button>
+    <div className="h-[45rem] -mt-10 bg-white shadow-md">
+      <div className="p-4 border-b-[3px] border-gray-800">
+        <h1 className="text-xl font-bold text-black">SMART ATTENDANCE ADMIN</h1>
+      </div>
+      <nav className="mt-4">
+        <button
+          className="flex items-center justify-between w-full px-4 py-2 text-left hover:bg-gray-100"
+          onClick={() => setIsUserManagementOpen(!isUserManagementOpen)}
+        >
+          <span className="font-semibold text-black">USER MANAGEMENT</span>
+          {isUserManagementOpen ? (
+            <ChevronUp size={20} />
+          ) : (
+            <ChevronDown size={20} />
+          )}
+        </button>
+        {isUserManagementOpen && (
+          <div className="ml-4">
+            <button className="w-full px-4 py-2 text-left hover:bg-gray-100">
+              <a className="text-black" href="/manageuser">
+                Manage User
+              </a>
+            </button>
+            <button className="w-full px-4 py-2 text-left hover:bg-gray-100">
+              <a className="text-black" href="/userdata">
+                User Data
+              </a>
+            </button>
+            <button className="w-full px-4 py-2 text-left hover:bg-gray-100">
+              <a className="text-black" href="/facedata">
+                Face Data
+              </a>
+            </button>
+          </div>
+        )}
+
+        <button className="w-full px-4 py-2 font-semibold text-left hover:bg-gray-100">
+          <a className="text-black" href="/Submissiondata">
+            SUBMISSION
+          </a>
+        </button>
+        <button className="w-full px-4 py-2 font-semibold text-left hover:bg-gray-100">
+          <a className="text-black" href="/Recap">
+            RECAP
+          </a>
+        </button>
+      </nav>
     </div>
   );
 };
