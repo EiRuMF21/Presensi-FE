@@ -68,7 +68,7 @@ const ProfileCard: React.FC = () => {
             isCheckIn ? "bg-blue-500" : "bg-green-500"
           } text-white font-bold py-3 px-6 rounded-full shadow-lg flex items-center justify-center`}
         >
-          {isCheckIn ? "CHECK IN" : "CHECK OUT"}
+          {isCheckIn ? "ATTENDANCE" : "ATTENDANCE"}
           <img
             src={`https://img.icons8.com/ios-filled/24/ffffff/${
               isCheckIn ? "globe" : "exit"

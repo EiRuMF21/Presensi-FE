@@ -74,7 +74,7 @@ const AttendancePage = () => {
         stream.getTracks().forEach((track) => track.stop());
       }
 
-      navigate("/homepage");
+      navigate("/home");
     }
   };
 

@@ -32,7 +32,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           element={<DashboardAdmin />}
         />
         <Route
-          path="/homepage"
+          path="/home"
           element={<Homepage />}
         />
         <Route
