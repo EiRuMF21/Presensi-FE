@@ -13,8 +13,8 @@ const Legend: React.FC = () => {
   ];
 
   return (
-    <div className="p-4 text-black bg-white rounded-lg shadow-md">
-      <div className="flex flex-wrap items-center gap-4">
+    <div className="p-2 text-black bg-white rounded-lg">
+      <div className="flex flex-wrap items-center justify-between gap-4">
         {items.map((item, index) => (
           <div
             key={index}

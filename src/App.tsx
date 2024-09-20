@@ -9,6 +9,7 @@ import Homepage from "./pages/Homepage";
 import ProfileSettings from "./components/layouts/ProfileSetting";
 import AttendancePage from "./components/home/AttendancePage";
 import SubmissionTable from "./components/submission/SubmissionData";
+import RecapTable from "./components/admin/RecapTable";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -44,8 +45,12 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           element={<AttendancePage />}
         />
         <Route
-          path="/allsubmission"
+          path="/datasubmission"
           element={<SubmissionTable />}
+        />
+        <Route
+          path="/recap"
+          element={<RecapTable />}
         />
       </Routes>
     </Router>

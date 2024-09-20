@@ -6,11 +6,11 @@ const SidebarAdmin: React.FC = () => {
   const [isUserManagementOpen, setIsUserManagementOpen] = useState(true);
 
   return (
-    <div className="h-full bg-white shadow-md">
-      <div className="p-4 border-b border-gray-200">
+    <div className="h-[45rem] -mt-10 bg-white shadow-md">
+      <div className="p-4 border-b-[3px] border-gray-800">
         <h1 className="text-xl font-bold text-black">SMART ATTENDANCE ADMIN</h1>
       </div>
-      <nav className="mt-2">
+      <nav className="mt-4">
         <button
           className="flex items-center justify-between w-full px-4 py-2 text-left hover:bg-gray-100"
           onClick={() => setIsUserManagementOpen(!isUserManagementOpen)}
@@ -50,10 +50,11 @@ const SidebarAdmin: React.FC = () => {
             </button>
           </div>
         )}
+
         <button className="w-full px-4 py-2 font-semibold text-left hover:bg-gray-100">
           <a
             className="text-black"
-            href="/allsubmission"
+            href="/datasubmission"
           >
             SUBMISSION
           </a>
