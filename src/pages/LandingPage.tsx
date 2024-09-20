@@ -15,7 +15,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center max-sm:px-0 lg:px-0 bg-gradient-to-t from-[#121212] to-[#424242] ">
+    <div className="flex flex-col items-center max-sm:px-0 lg:px-0 bg-gradient-to-t from-[#121212] to-[#424242]">
       {/* Halaman 1 (Home Section) */}
       <Navbar
         onLoginClick={handleLoginClick}
@@ -25,7 +25,7 @@ const Home: React.FC = () => {
         id="home"
         className="flex-grow w-full min-h-screen bg-[#FFFFFF]"
       >
-        <div className="w-full max-w-3xl p-2 mx-auto mt-24">
+        <div className="w-full max-w-3xl p-2 mx-auto mt-48">
           <div className="mt-24 text-center">
             <h1 className="text-6xl font-bold text-[#212121] mb-5">Digital</h1>
             <h1 className="text-6xl font-bold text-[#212121] mb-5">

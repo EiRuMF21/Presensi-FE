@@ -43,7 +43,7 @@ const SidebarAdmin: React.FC = () => {
         )}
 
         <button className="w-full px-4 py-2 font-semibold text-left hover:bg-gray-100">
-          <a className="text-black" href="/Submissiondata">
+          <a className="text-black" href="/datasubmission">
             SUBMISSION
           </a>
         </button>

@@ -1,20 +1,38 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import {useNavigate} from "react-router-dom";
 import SubmissionModal from "../Submission/SubmissionModal";
 
 const ProfileCard: React.FC = () => {
-  const [isCheckIn] = useState(true);
+  const [isCheckIn, setIsCheckIn] = useState(true); // Mengontrol apakah check-in atau check-out
   const [modalTitle, setModalTitle] = useState("");
   const [isSubmissionModalOpen, setIsSubmissionModalOpen] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
 
   const navigate = useNavigate();
 
-  const goToCheckInPage = () => {
-    navigate("/check-in");
-  };
+  // Mengubah state isCheckIn berdasarkan waktu
+  useEffect(() => {
+    const currentHour = currentTime.getHours();
+    if (currentHour >= 16) {
+      setIsCheckIn(false); // Jam lebih dari 4 sore: check-out
+    } else {
+      setIsCheckIn(true); // Sebelum jam 4 sore: check-in
+    }
 
-  const goToCheckOutPage = () => {
-    navigate("/check-out");
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000); // Update setiap detik
+
+    return () => clearInterval(interval);
+  }, [currentTime]);
+
+  // Fungsi untuk navigasi ke halaman attendance berdasarkan waktu
+  const handleAttendance = () => {
+    if (isCheckIn) {
+      navigate("/attendance");
+    } else {
+      navigate("/attendance");
+    }
   };
 
   const openSubmissionModal = (title: string) => {
@@ -41,13 +59,13 @@ const ProfileCard: React.FC = () => {
         </div>
       </div>
 
-      {/* Right Section: Check-In/Submission Buttons */}
+      {/* Right Section: ATTENDANCE/Submission Buttons */}
       <div className="flex flex-col md:space-y-2">
         {/* Check-In/Check-Out Button */}
         <button
-          onClick={isCheckIn ? goToCheckInPage : goToCheckOutPage}
+          onClick={handleAttendance}
           className={`${
-            isCheckIn ? "bg-blue-500" : "bg-green-500"
+            isCheckIn ? "bg-blue-500" : "bg-red-500"
           } text-white font-bold py-3 px-6 rounded-full shadow-lg flex items-center justify-center`}
         >
           {isCheckIn ? "ATTENDANCE" : "ATTENDANCE"}
@@ -62,7 +80,7 @@ const ProfileCard: React.FC = () => {
 
         {/* Submission Button */}
         <button
-          className="flex items-center justify-center px-6 py-3 font-bold text-blue-500 bg-white border border-blue-500 rounded-full shadow-lg"
+          className="flex items-center justify-center px-6 py-3 mt-2 font-bold text-blue-500 bg-white border border-blue-500 rounded-full shadow-lg"
           onClick={() => openSubmissionModal("Submission")}
         >
           <img
