@@ -6,7 +6,7 @@ const SidebarAdmin: React.FC = () => {
   const [isUserManagementOpen, setIsUserManagementOpen] = useState(true);
 
   return (
-    <div className="h-[45rem] -mt-10 bg-white shadow-md">
+    <div className="h-[45rem] -mt-6 bg-white shadow-md">
       <div className="p-4 border-b-[3px] border-gray-800">
         <h1 className="text-xl font-bold text-black">SMART ATTENDANCE ADMIN</h1>
       </div>

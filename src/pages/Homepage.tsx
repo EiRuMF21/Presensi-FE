@@ -61,7 +61,7 @@ const Homepage: React.FC = () => {
 
           {/* Bagian Kalender */}
           <div className="p-6 mt-6 bg-white rounded-lg shadow-md">
-            <div className="flex justify-between mb-4">
+            <div className="flex justify-between p-2 mb-2 -mt-6 -ml-6 border-b-2">
               {/* MonthYearSelector sebagai pop-up */}
               <MonthYearSelector
                 initialMonth={currentDate.toLocaleString("default", {
@@ -120,9 +120,11 @@ const Homepage: React.FC = () => {
           <CalendarModal
             isOpen={isCalendarModalOpen}
             onClose={closeCalendarModal}
-            selectedDay={selectedDay}
-            checkInTime={checkInTimes[selectedDay]}
-            checkOutTime={checkOutTimes[selectedDay]}
+            date={`${selectedDay} ${currentDate.toLocaleString("default", {
+              month: "long",
+            })}, ${currentDate.getFullYear()}`} // Construct a readable date string
+            checkInTime={checkInTimes[selectedDay] || undefined} // Convert null to undefined
+            checkOutTime={checkOutTimes[selectedDay] || undefined} // Convert null to undefined
           />
         )}
       </div>

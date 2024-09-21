@@ -16,16 +16,12 @@ const NavbarAdmin: React.FC = () => {
     navigate("/profile");
   };
 
-  const handleSubmissionClick = () => {
-    navigate("/submissions"); // Navigasi ke halaman submission table
-  };
-
   return (
     <>
       <nav className="flex items-center justify-between text-black bg-white shadow-lg sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <img
-            src="/image/logoSA.png" // Ganti dengan URL logo Anda
+            src="/image/logoSA.png"
             alt="Logo"
             className="w-10"
           />
@@ -56,12 +52,6 @@ const NavbarAdmin: React.FC = () => {
                 onClick={handleProfileClick}
               >
                 Profile
-              </button>
-              <button
-                className="block w-full px-4 py-2 text-left hover:bg-gray-200"
-                onClick={handleSubmissionClick} // Navigasi ke halaman submission
-              >
-                Submissions
               </button>
               <button
                 className="block w-full px-4 py-2 text-left hover:bg-gray-200"

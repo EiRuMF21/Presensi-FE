@@ -28,7 +28,7 @@ const SubmissionModal: React.FC<SubmissionModalProps> = ({isOpen, onClose}) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center text-black bg-black bg-opacity-50">
       <div className="overflow-hidden bg-white rounded-lg w-96">
         {/* Header */}
-        <div className="flex items-center p-4 bg-gray-100">
+        <div className="flex items-center p-4 bg-white border-b-2">
           <button
             onClick={onClose}
             className="mr-4"

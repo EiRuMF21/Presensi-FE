@@ -174,7 +174,7 @@ const lineMappings = {
 
 const AttendanceChart: React.FC = () => {
   const [mode, setMode] = useState("weekly");
-  const [visibleLines, setVisibleLines] = useState(lineMappings["View All"]);
+  const [visibleLines] = useState(lineMappings["View All"]);
 
   const getData = () => {
     switch (mode) {

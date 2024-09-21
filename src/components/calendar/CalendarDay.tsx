@@ -23,7 +23,7 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
   hovered,
 }) => {
   if (day === 0) {
-    return <div className="empty-day"></div>; // Hari kosong di grid kalender
+    return <div className="empty-day"></div>;
   }
 
   return (

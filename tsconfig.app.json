@@ -23,5 +23,9 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+  "include": [
+    "src",
+    "src/components/calendar/CalendarControl.tsx",
+    "src/components/calendar/CalendarControl.tsx"
+  ]
 }

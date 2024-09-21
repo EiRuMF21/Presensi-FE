@@ -60,7 +60,7 @@ const SubmissionTable: React.FC = () => {
       division: "Division - Position",
       phone: "0854545454",
       date: "1 August 2024",
-      submission: "Sick",
+      submission: "Office Duty",
       status: "Pending",
     },
     {
@@ -100,7 +100,7 @@ const SubmissionTable: React.FC = () => {
       division: "Division - Position",
       phone: "0898635472",
       date: "15 July 2024",
-      submission: "Holiday",
+      submission: "On Leave",
       status: "Pending",
     },
     {
@@ -110,7 +110,7 @@ const SubmissionTable: React.FC = () => {
       division: "Division - Position",
       phone: "0809876543",
       date: "15 July 2024",
-      submission: "Holiday",
+      submission: "On Leave",
       status: "Pending",
     },
   ];
@@ -169,7 +169,7 @@ const SubmissionTable: React.FC = () => {
             </button>
             {isDropdownOpen && (
               <div className="absolute right-0 z-10 w-48 mt-2 bg-white border-b border-gray-300 rounded-lg shadow-lg">
-                {["Sick", "Duty", "Holiday", "Office Duty", "WFH", "ALL"].map(
+                {["Sick", "Duty", "On Leave", "Office Duty", "WFH", "ALL"].map(
                   (option) => (
                     <div
                       key={option}
@@ -219,7 +219,7 @@ const SubmissionTable: React.FC = () => {
               <td className="p-2">
                 <button
                   className={`px-3 py-1 rounded-full text-white ${
-                    item.status === "Approved" ? "bg-gray-500" : "bg-green-500"
+                    item.status === "Approved" ? "bg-green-500" : "bg-blue-500"
                   }`}
                   onClick={() => handleApprovalClick(item)}
                   disabled={item.status === "Approved"}
