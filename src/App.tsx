@@ -26,16 +26,16 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-
+        <Route path="/profile" element={<ProfileSettings />} />
         {/* Halaman yang dilindungi: hanya bisa diakses jika sudah login */}
-        <Route
+        {/* <Route
           path="/home"
           element={
             <ProtectedRoute>
               <Homepage />
             </ProtectedRoute>
           }
-        />
+        /> */}
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<DashboardAdmin />} />

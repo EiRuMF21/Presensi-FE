@@ -53,7 +53,7 @@ const PresenceSummary: React.FC = () => {
       icon: "https://img.icons8.com/ios-filled/50/000000/user.png",
       days: "0 Days",
       color: "#F97316",
-      large: false,
+      large: true,
     },
     {
       label: "Sick",
