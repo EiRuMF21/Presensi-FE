@@ -4,20 +4,21 @@ import SidebarAdmin from "../components/admin/SidebarAdmin";
 import AttendanceChart from "../components/admin/AttendanceChart";
 import Legend from "../components/admin/Legend";
 
+// Pemetaan label untuk garis di grafik
 const lineMappings: Record<string, string[]> = {
   "View All": [
     "Attendance",
     "Permission",
     "Sick",
-    "OnLeave",
-    "OfficeDuty",
+    "On Leave",
+    "Office Duty",
     "WFH",
   ],
   Attendance: ["Attendance"],
   Permission: ["Permission"],
   Sick: ["Sick"],
-  OnLeave: ["OnLeave"],
-  "OfficeDuty": ["OfficeDuty"],
+  "On Leave": ["On Leave"],
+  "Office Duty": ["Office Duty"],
   WFH: ["WFH"],
 };
 
@@ -26,7 +27,18 @@ const DashboardAdmin: React.FC = () => {
   const [visibleLines, setVisibleLines] = useState(lineMappings["View All"]);
 
   const handleFilterSelect = (label: keyof typeof lineMappings) => {
+    // Mengatur visibleLines berdasarkan label yang dipilih
     setVisibleLines(lineMappings[label]);
+  };
+
+  const toggleLineVisibility = (label: string) => {
+    // Jika label sudah ada di visibleLines, hilangkan garisnya
+    if (visibleLines.includes(label)) {
+      setVisibleLines(visibleLines.filter((line) => line !== label));
+    } else {
+      // Jika label belum ada, tambahkan garisnya
+      setVisibleLines([...visibleLines, label]);
+    }
   };
 
   return (
@@ -52,11 +64,14 @@ const DashboardAdmin: React.FC = () => {
 
           <div className="flex-1 p-4 overflow-y-auto">
             <div className="bg-white rounded-lg shadow-md p-4 mb-4">
-              <AttendanceChart visibleLines={visibleLines} toggleLineVisibility={function (label: string): void {
-                throw new Error("Function not implemented.");
-              } }  />
+              {/* Pass the visibleLines and toggleLineVisibility to AttendanceChart */}
+              <AttendanceChart
+                visibleLines={visibleLines}
+                toggleLineVisibility={toggleLineVisibility}
+              />
             </div>
             <div className="bg-white rounded-lg shadow-md p-4">
+              {/* Pass the handleFilterSelect function to Legend */}
               <Legend onFilterSelect={handleFilterSelect} />
             </div>
           </div>
