@@ -1,6 +1,6 @@
 // SidebarAdmin.tsx
 import React, { useState } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronRight } from "lucide-react";
 
 const SidebarAdmin: React.FC = () => {
   const [isUserManagementOpen, setIsUserManagementOpen] = useState(true);
@@ -17,9 +17,9 @@ const SidebarAdmin: React.FC = () => {
         >
           <span className="font-semibold text-black">USER MANAGEMENT</span>
           {isUserManagementOpen ? (
-            <ChevronUp size={20} />
+            <ChevronDown size={23} className="text-black " />
           ) : (
-            <ChevronDown size={20} />
+            <ChevronRight size={23} className="text-black" />
           )}
         </button>
         {isUserManagementOpen && (

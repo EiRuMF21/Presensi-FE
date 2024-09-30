@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   AreaChart,
   Area,
@@ -8,239 +8,159 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+import { ChevronDown } from "lucide-react";
+
 type DataPoint = {
-  name: string;
-  line1: number;
-  line2: number;
-  line3: number;
-  line4: number;
-  line5: number;
-  line6: number;
+  date: string;
+  Attendance: number;
+  Permission: number;
+  Sick: number;
+  OnLeave: number;
+  OfficeDuty: number;
+  WFH: number;
 };
 
-const monthlyData = [
-  {
-    name: "June",
-    line1: 100,
-    line2: 10,
-    line3: 30,
-    line4: 20,
-    line5: 10,
-    line6: 5,
-  },
-  {
-    name: "July",
-    line1: 80,
-    line2: 20,
-    line3: 50,
-    line4: 30,
-    line5: 75,
-    line6: 10,
-  },
-  {
-    name: "August",
-    line1: 50,
-    line2: 70,
-    line3: 30,
-    line4: 20,
-    line5: 10,
-    line6: 5,
-  },
-  {
-    name: "September",
-    line1: 80,
-    line2: 20,
-    line3: 50,
-    line4: 30,
-    line5: 15,
-    line6: 10,
-  },
-];
-
-const weeklyData = [
-  {
-    name: "Week 1",
-    line1: 100,
-    line2: 10,
-    line3: 30,
-    line4: 20,
-    line5: 10,
-    line6: 5,
-  },
-  {
-    name: "Week 2",
-    line1: 10,
-    line2: 60,
-    line3: 45,
-    line4: 30,
-    line5: 20,
-    line6: 15,
-  },
-  {
-    name: "Week 3",
-    line1: 100,
-    line2: 10,
-    line3: 30,
-    line4: 20,
-    line5: 10,
-    line6: 5,
-  },
-  {
-    name: "Week 4",
-    line1: 10,
-    line2: 60,
-    line3: 45,
-    line4: 30,
-    line5: 20,
-    line6: 15,
-  },
-];
-
-const dailyData = [
-  {
-    name: "Day 1",
-    line1: 10,
-    line2: 85,
-    line3: 15,
-    line4: 10,
-    line5: 5,
-    line6: 2,
-  },
-  {
-    name: "Day 2",
-    line1: 40,
-    line2: 78,
-    line3: 25,
-    line4: 15,
-    line5: 8,
-    line6: 3,
-  },
-  {
-    name: "Day 3",
-    line1: 10,
-    line2: 5,
-    line3: 15,
-    line4: 10,
-    line5: 40,
-    line6: 2,
-  },
-  {
-    name: "Day 4",
-    line1: 40,
-    line2: 10,
-    line3: 25,
-    line4: 15,
-    line5: 8,
-    line6: 3,
-  },
-  {
-    name: "Day 5",
-    line1: 10,
-    line2: 5,
-    line3: 15,
-    line4: 10,
-    line5: 5,
-    line6: 2,
-  },
-  {
-    name: "Day 6",
-    line1: 100,
-    line2: 10,
-    line3: 55,
-    line4: 15,
-    line5: 8,
-    line6: 3,
-  },
-];
-
-const colors = [
-  "#6100FF",
-  "#97E0FF",
-  "#9FFFC6",
-  "#FDFF92",
-  "#FF9900",
-  "#FF9AEF",
-];
-
-const lineMappings = {
-  "View All": ["line1", "line2", "line3", "line4", "line5", "line6"],
-  Attendance: ["line1"],
-  Permission: ["line2"],
-  Sick: ["line3"],
-  Holiday: ["line4"],
-  "Office duty": ["line5"],
-  WFH: ["line6"],
+const generateRandomData = (): DataPoint[] => {
+  return Array.from({ length: 31 }, (_, i) => ({
+    date: `${i + 1}`,
+    Attendance: Math.floor(Math.random() * 100),
+    Permission: Math.floor(Math.random() * 50),
+    Sick: Math.floor(Math.random() * 30),
+    OnLeave: Math.floor(Math.random() * 20),
+    OfficeDuty: Math.floor(Math.random() * 40),
+    WFH: Math.floor(Math.random() * 60),
+  }));
 };
 
-const AttendanceChart: React.FC = () => {
-  const [mode, setMode] = useState("weekly");
-  const [visibleLines, setVisibleLines] = useState(lineMappings["View All"]);
+const colors = {
+  Attendance: "#9FFFC6",
+  Permission: "#FF9AEF",
+  Sick: "#FF9900",
+  OnLeave: "#97E0FF",
+  OfficeDuty: "#FF0A0A",
+  WFH: "#6100FF",
+};
 
-  const getData = () => {
-    switch (mode) {
-      case "monthly":
-        return monthlyData;
-      case "daily":
-        return dailyData;
-      case "weekly":
-      default:
-        return weeklyData;
+type AttendanceChartProps = {
+  visibleLines: string[];
+  toggleLineVisibility: (label: string) => void; // Tambahkan jika diperlukan
+};
+
+const AttendanceChart: React.FC<AttendanceChartProps> = ({ visibleLines }) => {
+  const [year, setYear] = useState(2024);
+  const [month, setMonth] = useState(1);
+  const [data, setData] = useState<DataPoint[]>([]);
+  const [isYearDropdownOpen, setIsYearDropdownOpen] = useState(false);
+  const [isMonthDropdownOpen, setIsMonthDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    setData(generateRandomData());
+  }, [year, month]);
+
+  const years = Array.from({ length: 5 }, (_, i) => 2024 + i);
+  const months = [
+    "Januari",
+    "Februari",
+    "Maret",
+    "April",
+    "Mei",
+    "Juni",
+    "Juli",
+    "Agustus",
+    "September",
+    "Oktober",
+    "November",
+    "Desember",
+  ];
+
+  const getVisibleLines = () => {
+    if (visibleLines.includes("View All")) {
+      return Object.keys(colors);
     }
+    return visibleLines;
   };
-
   return (
-    <div className="bg-white p-4 rounded-lg flex flex-col">
-      <div className="flex justify-end mb-4">
-        <select
-          className="border-b-2 border-black bg-transparent text-black text-lg font-semibold focus:outline-none focus:border-[#020617] cursor-pointer"
-          value={mode}
-          onChange={(e) => setMode(e.target.value)}
-        >
-          <option value="daily">Day</option>
-          <option value="weekly">Week</option>
-          <option value="monthly">Month</option>
-        </select>
+    <div className="bg-white p-6 rounded-lg shadow-lg flex flex-col space-y-6">
+      <h2 className="text-2xl font-bold text-gray-800">Grafik Kehadiran</h2>
+      <div className="flex space-x-4">
+        <div className="relative">
+          <button
+            onClick={() => setIsYearDropdownOpen(!isYearDropdownOpen)}
+            className="flex items-center justify-between w-32 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Tahun: {year}
+            <ChevronDown className="w-5 h-5 ml-2" aria-hidden="true" />
+          </button>
+          {isYearDropdownOpen && (
+            <div className="absolute left-0 z-10 w-32 mt-2 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
+              <div className="py-1" role="menu" aria-orientation="vertical">
+                {years.map((y) => (
+                  <button
+                    key={y}
+                    onClick={() => {
+                      setYear(y);
+                      setIsYearDropdownOpen(false);
+                    }}
+                    className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                    role="menuitem"
+                  >
+                    {y}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+        <div className="relative">
+          <button
+            onClick={() => setIsMonthDropdownOpen(!isMonthDropdownOpen)}
+            className="flex items-center justify-between w-40 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Bulan: {months[month - 1]}
+            <ChevronDown className="w-5 h-5 ml-2" aria-hidden="true" />
+          </button>
+          {isMonthDropdownOpen && (
+            <div className="absolute left-0 z-10 w-40 mt-2 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
+              <div className="py-1" role="menu" aria-orientation="vertical">
+                {months.map((m, index) => (
+                  <button
+                    key={m}
+                    onClick={() => {
+                      setMonth(index + 1);
+                      setIsMonthDropdownOpen(false);
+                    }}
+                    className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                    role="menuitem"
+                  >
+                    {m}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
-      <div className="flex-grow">
-        <ResponsiveContainer width="100%" height={400}>
-          <AreaChart data={getData()}>
-            <defs>
-              {colors.map((color, index) => (
-                <linearGradient
-                  key={`gradient${index + 1}`}
-                  id={`colorGradient${index + 1}`}
-                  x1="0"
-                  y1="0"
-                  x2="0"
-                  y2="1"
-                >
-                  <stop offset="5%" stopColor={color} stopOpacity={0.4} />
-                  <stop offset="95%" stopColor={color} stopOpacity={0} />
-                </linearGradient>
-              ))}
-            </defs>
-            <XAxis dataKey="name" tick={{ fill: "#000000" }} />
+      <div className="flex-grow" style={{ height: "400px" }}>
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart data={data}>
+            <XAxis dataKey="date" tick={{ fill: "#000000" }} />
             <YAxis tick={{ fill: "#000000" }} />
             <Tooltip />
-            {["line1", "line2", "line3", "line4", "line5", "line6"].map(
-              (line, index) =>
-                visibleLines.includes(line) && (
-                  <Area
-                    key={line}
-                    type="monotone"
-                    dataKey={line}
-                    stroke={colors[index]}
-                    fill={`url(#colorGradient${index + 1})`}
-                    fillOpacity={0.4}
-                  />
-                )
-            )}
+            {getVisibleLines().map((key) => (
+              <Area
+                key={key}
+                type="monotone"
+                dataKey={key}
+                stroke={colors[key as keyof typeof colors]}
+                fill={colors[key as keyof typeof colors]}
+                fillOpacity={0.2}
+                strokeWidth={2}
+              />
+            ))}
           </AreaChart>
         </ResponsiveContainer>
       </div>
-
-      <div className="mt-4"></div>
     </div>
   );
 };
