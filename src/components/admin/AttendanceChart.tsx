@@ -15,8 +15,8 @@ type DataPoint = {
   Attendance: number;
   Permission: number;
   Sick: number;
-  Holiday: number;
-  "Office duty": number;
+  OnLeave: number;
+  OfficeDuty: number;
   WFH: number;
 };
 
@@ -26,19 +26,19 @@ const generateRandomData = (): DataPoint[] => {
     Attendance: Math.floor(Math.random() * 100),
     Permission: Math.floor(Math.random() * 50),
     Sick: Math.floor(Math.random() * 30),
-    Holiday: Math.floor(Math.random() * 20),
-    "Office duty": Math.floor(Math.random() * 40),
+    OnLeave: Math.floor(Math.random() * 20),
+    OfficeDuty: Math.floor(Math.random() * 40),
     WFH: Math.floor(Math.random() * 60),
   }));
 };
 
 const colors = {
-  Attendance: "#6100FF",
-  Permission: "#97E0FF",
-  Sick: "#9FFFC6",
-  Holiday: "#FDFF92",
-  "Office duty": "#FF9900",
-  WFH: "#FF9AEF",
+  Attendance: "#9FFFC6",
+  Permission: "#FF9AEF",
+  Sick: "#FF9900",
+  OnLeave: "#97E0FF",
+  OfficeDuty: "#FF0A0A",
+  WFH: "#6100FF",
 };
 
 type AttendanceChartProps = {
@@ -73,6 +73,12 @@ const AttendanceChart: React.FC<AttendanceChartProps> = ({ visibleLines }) => {
     "Desember",
   ];
 
+  const getVisibleLines = () => {
+    if (visibleLines.includes("View All")) {
+      return Object.keys(colors);
+    }
+    return visibleLines;
+  };
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg flex flex-col space-y-6">
       <h2 className="text-2xl font-bold text-gray-800">Grafik Kehadiran</h2>
@@ -141,21 +147,17 @@ const AttendanceChart: React.FC<AttendanceChartProps> = ({ visibleLines }) => {
             <XAxis dataKey="date" tick={{ fill: "#000000" }} />
             <YAxis tick={{ fill: "#000000" }} />
             <Tooltip />
-            {visibleLines.map(
-              (
-                key // Gunakan visibleLines dari props
-              ) => (
-                <Area
-                  key={key}
-                  type="monotone"
-                  dataKey={key}
-                  stroke={colors[key as keyof typeof colors]}
-                  fill={colors[key as keyof typeof colors]}
-                  fillOpacity={0.2}
-                  strokeWidth={2}
-                />
-              )
-            )}
+            {getVisibleLines().map((key) => (
+              <Area
+                key={key}
+                type="monotone"
+                dataKey={key}
+                stroke={colors[key as keyof typeof colors]}
+                fill={colors[key as keyof typeof colors]}
+                fillOpacity={0.2}
+                strokeWidth={2}
+              />
+            ))}
           </AreaChart>
         </ResponsiveContainer>
       </div>
