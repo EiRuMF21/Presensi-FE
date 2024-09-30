@@ -181,3 +181,4 @@ const Sakit: React.FC = () => {
 };
 
 export default Sakit;
+

@@ -181,3 +181,4 @@ const Izin: React.FC = () => {
 };    
 
 export default Izin;
+

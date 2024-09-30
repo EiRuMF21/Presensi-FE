@@ -1,0 +1,92 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import SubmissionModal from "../Submission/SubmissionModal";
+
+const ProfileCard: React.FC = () => {
+  const [isCheckIn] = useState(true);
+  const [modalTitle, setModalTitle] = useState("");
+  const [isSubmissionModalOpen, setIsSubmissionModalOpen] = useState(false);
+
+  const navigate = useNavigate();
+
+  const goToCheckInPage = () => {
+    navigate("/check-in");
+  };
+
+  const goToCheckOutPage = () => {
+    navigate("/check-out");
+  };
+
+  const openSubmissionModal = (title: string) => {
+    setModalTitle(title);
+    setIsSubmissionModalOpen(true);
+  };
+
+  const closeSubmissionModal = () => {
+    setIsSubmissionModalOpen(false);
+  };
+
+  return (
+    <div className="flex items-center justify-between max-w-4xl p-6 mx-auto mt-6 bg-white rounded-lg shadow-lg">
+      {/* Left Section: Profile */}
+      <div className="flex items-center">
+        <img
+          src="https://via.placeholder.com/80"
+          alt="Profile"
+          className="object-cover w-20 h-20 mr-6 rounded-full"
+        />
+        <div>
+          <h2 className="text-2xl font-bold text-gray-700">NAME</h2>
+          <p className="text-gray-500">POSITION</p>
+        </div>
+      </div>
+
+      {/* Right Section: Check-In/Submission Buttons */}
+      <div className="flex space-x-4">
+        {/* Check-In/Check-Out Button */}
+        <button
+          onClick={isCheckIn ? goToCheckInPage : goToCheckOutPage}
+          className={`${
+            isCheckIn ? "bg-blue-500" : "bg-green-500"
+          } text-white font-bold py-3 px-6 rounded-full shadow-lg flex items-center justify-center`}
+        >
+          {isCheckIn ? "ATTENDANCE" : "ATTENDANCE"}
+          <img
+            src={`https://img.icons8.com/ios-filled/24/ffffff/${
+              isCheckIn ? "globe" : "exit"
+            }.png`}
+            alt={isCheckIn ? "Globe Icon" : "Exit Icon"}
+            className="ml-2"
+          />
+        </button>
+
+        {/* Submission Button */}
+        <button
+          className="flex items-center justify-center px-6 py-3 font-bold text-blue-500 bg-white border border-blue-500 rounded-full shadow-lg"
+          onClick={() => openSubmissionModal("Submission")}
+        >
+          <img
+            src="https://img.icons8.com/ios-filled/24/000000/upload.png"
+            alt="Submission Icon"
+            className="mr-2"
+          />
+          SUBMISSION
+        </button>
+      </div>
+
+      {/* Submission Modal */}
+      {isSubmissionModalOpen && (
+        <SubmissionModal
+          isOpen={isSubmissionModalOpen}
+          onClose={closeSubmissionModal}
+          title={modalTitle}
+          selectedDay={null}
+          checkInTime={null}
+          checkOutTime={null}
+        />
+      )}
+    </div>
+  );
+};
+
+export default ProfileCard;
