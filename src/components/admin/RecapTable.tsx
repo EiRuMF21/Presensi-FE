@@ -21,7 +21,6 @@ const RecapTable: React.FC = () => {
   ];
   const weeks = ["ALL", "WEEK 1", "WEEK 2", "WEEK 3"];
   const divisions = ["ALL DIVISION", "DIV 1", "DIV 2", "DIV 3"];
-
   const [selectedYear, setSelectedYear] = useState<string>("2024");
   const [selectedMonth, setSelectedMonth] = useState<string>("ALL MONTH");
   const [selectedWeek, setSelectedWeek] = useState<string>("ALL WEEK");

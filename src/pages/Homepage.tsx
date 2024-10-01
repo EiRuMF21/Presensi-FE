@@ -52,7 +52,7 @@ const Homepage: React.FC = () => {
   };
 
   return (
-    <div className="bg-gradient-to-t from-[#A0DEFF] via-[#CAF4FF] to-[#5AB2FF] overflow-hidden min-h-screen p-4">
+    <div className="bg-gradient-to-t from-[#A0DEFF] via-[#CAF4FF] to-[#5AB2FF] overflow-hidden min-h-screen">
       <NavbarHome />
 
       <div className="grid grid-cols-1 gap-6 mt-6 lg:grid-cols-3">
