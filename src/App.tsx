@@ -16,6 +16,7 @@ import AttendancePage from "./components/home/AttendancePage";
 import SubmissionTable from "./components/Submission/SubmissionData";
 import RecapTable from "./components/admin/RecapTable";
 import ProtectedRoute from "./ProtectedRouteComponent";
+import UserDataTable from "./components/admin/UserData";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -26,6 +27,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/admin" element={<DashboardAdmin />} />
+        <Route path="/home" element={<Homepage />} />
+        <Route path="/attendance" element={<AttendancePage />} />
+        <Route path="/datasubmission" element={<SubmissionTable />} />
+        
 
         {/* Halaman yang dilindungi: hanya bisa diakses jika sudah login */}
         <Route
@@ -36,10 +42,16 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             </ProtectedRoute>
           }
         />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/admin" element={<DashboardAdmin />} />
-        <Route path="/home" element={<Homepage />} />
+
+        <Route
+          path="/recap"
+          element={
+            <ProtectedRoute>
+              <RecapTable />
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="/profile"
           element={
@@ -48,9 +60,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             </ProtectedRoute>
           }
         />
-        <Route path="/attendance" element={<AttendancePage />} />
-        <Route path="/datasubmission" element={<SubmissionTable />} />
-        <Route path="/recap" element={<RecapTable />} />
 
         {/* Redirect ke halaman login jika mencoba mengakses rute yang tidak ada */}
         <Route path="*" element={<Navigate to="/login" replace />} />
