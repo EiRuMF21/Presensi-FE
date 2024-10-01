@@ -48,7 +48,7 @@ const SidebarAdmin: React.FC = () => {
           </a>
         </button>
         <button className="w-full px-4 py-2 font-semibold text-left hover:bg-gray-100">
-          <a className="text-black" href="/Recap">
+          <a className="text-black" href="/recap">
             RECAP
           </a>
         </button>

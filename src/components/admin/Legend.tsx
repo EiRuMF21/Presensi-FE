@@ -13,7 +13,7 @@ const Legend: React.FC<LegendProps> = ({ onFilterSelect }) => {
     { name: "Sick", color: "bg-orange-200" },
     { name: "On Leave", color: "bg-sky-200" },
     { name: "Office Duty", color: "bg-[#FF0A0A]" },
-    { name: "WFH", color: "bg-purple-200" },
+    { name: "WFH", color: "bg-[#6100FF]" },
   ];
 
   const [activeLabel, setActiveLabel] = useState("View All");

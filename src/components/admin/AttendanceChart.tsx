@@ -15,8 +15,8 @@ type DataPoint = {
   Attendance: number;
   Permission: number;
   Sick: number;
-  OnLeave: number;
-  OfficeDuty: number;
+  "On Leave": number;
+  "Office Duty": number;
   WFH: number;
 };
 
@@ -26,8 +26,8 @@ const generateRandomData = (): DataPoint[] => {
     Attendance: Math.floor(Math.random() * 100),
     Permission: Math.floor(Math.random() * 50),
     Sick: Math.floor(Math.random() * 30),
-    OnLeave: Math.floor(Math.random() * 20),
-    OfficeDuty: Math.floor(Math.random() * 40),
+    "On Leave": Math.floor(Math.random() * 20),
+    "Office Duty": Math.floor(Math.random() * 40),
     WFH: Math.floor(Math.random() * 60),
   }));
 };
@@ -36,8 +36,8 @@ const colors = {
   Attendance: "#9FFFC6",
   Permission: "#FF9AEF",
   Sick: "#FF9900",
-  OnLeave: "#97E0FF",
-  OfficeDuty: "#FF0A0A",
+  "On Leave": "#97E0FF",
+  "Office Duty": "#FF0A0A",
   WFH: "#6100FF",
 };
 
