@@ -31,7 +31,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path="/home" element={<Homepage />} />
         <Route path="/attendance" element={<AttendancePage />} />
         <Route path="/datasubmission" element={<SubmissionTable />} />
-        
+        <Route path="/userdata" element={<UserDataTable />} />
 
         {/* Halaman yang dilindungi: hanya bisa diakses jika sudah login */}
         <Route
