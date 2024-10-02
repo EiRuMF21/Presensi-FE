@@ -21,6 +21,7 @@ const RecapTable: React.FC = () => {
   ];
   const weeks = ["ALL", "WEEK 1", "WEEK 2", "WEEK 3"];
   const divisions = ["ALL DIVISION", "DIV 1", "DIV 2", "DIV 3"];
+
   const [selectedYear, setSelectedYear] = useState<string>("2024");
   const [selectedMonth, setSelectedMonth] = useState<string>("ALL MONTH");
   const [selectedWeek, setSelectedWeek] = useState<string>("ALL WEEK");
@@ -28,11 +29,15 @@ const RecapTable: React.FC = () => {
     useState<string>("ALL DIVISION");
 
   const handleBack = () => {
-    navigate(-1); // This will navigate to the previous page
+    navigate(-1); // Navigate to the previous page
   };
 
+  // Filter logic for month display
+  const displayedMonths =
+    selectedMonth === "ALL MONTH" ? months : [selectedMonth];
+
   return (
-    <div className="p-6 bg-white">
+    <div className="fixed w-full h-full p-6 bg-white ">
       {/* Header */}
       <div className="flex items-center justify-start mb-6">
         <button
@@ -117,7 +122,7 @@ const RecapTable: React.FC = () => {
             </tr>
           </thead>
           <tbody className="text-sm font-normal text-black">
-            {months.map((month) => (
+            {displayedMonths.map((month) => (
               <tr
                 key={month}
                 className="border-t"
@@ -126,7 +131,7 @@ const RecapTable: React.FC = () => {
                   {selectedYear}
                 </td>
                 <td className="px-6 py-4 text-center border-b-2 border-black">
-                  {selectedMonth}
+                  {month}
                 </td>
                 <td className="px-6 py-4 text-center border-b-2 border-black">
                   {selectedWeek}

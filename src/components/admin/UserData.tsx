@@ -72,7 +72,7 @@ const initialUsers: User[] = [
   },
 ];
 
-const UserRegistrationTable: React.FC = () => {
+const UserData: React.FC = () => {
   const [users, setUsers] = useState<User[]>(initialUsers);
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
@@ -102,18 +102,20 @@ const UserRegistrationTable: React.FC = () => {
           />
           <h1 className="text-xl font-semibold">USER REGISTRATION</h1>
         </div>
-      </div>
 
-      {/* Search bar */}
-      <div className="relative mb-4">
-        <input
-          type="text"
-          placeholder="Search..."
-          className="w-full p-2 pl-10 border rounded-md"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <Search className="absolute text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
+        {/* Middle section: Search bar in the center */}
+        <div className="flex justify-center flex-1">
+          <div className="flex items-center px-4 py-2 bg-gray-200 rounded-2xl w-80">
+            <Search className="text-[#979797]" />
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full ml-2 text-black bg-transparent outline-none"
+            />
+          </div>
+        </div>
       </div>
 
       {/* Table */}
@@ -171,4 +173,4 @@ const UserRegistrationTable: React.FC = () => {
   );
 };
 
-export default UserRegistrationTable;
+export default UserData;

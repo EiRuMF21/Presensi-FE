@@ -1,117 +1,166 @@
 import React, {useState} from "react";
-import {ArrowLeft} from "lucide-react";
 import {useNavigate} from "react-router-dom";
+import {ChevronLeft, Search} from "lucide-react";
+import axios from "axios";
 
 interface User {
   id: number;
   name: string;
   email: string;
+  registrationDate: string;
   position: string;
   division: string;
   remainingDaysOff: number;
+  phone: number;
   password: string;
+  address: string;
 }
 
 const initialUsers: User[] = [
   {
     id: 1,
     name: "Kinan Doe",
-    email: "KinanDoe@gmail.com",
+    email: "Kinan@gmail.com",
+    registrationDate: "2023-01-01",
     position: "Position...",
     division: "Division...",
     remainingDaysOff: 12,
+    phone: 123456789,
     password: "pas*****",
+    address: "Address 1",
   },
   {
     id: 2,
     name: "Abbysa",
-    email: "Abbysa00@gmail.com",
+    email: "Abbysa@gmail.com",
+    registrationDate: "2023-01-01",
     position: "Position...",
     division: "Division...",
     remainingDaysOff: 12,
+    phone: 123456789,
     password: "pas*****",
+    address: "Address 2",
   },
   {
     id: 3,
     name: "Username",
-    email: "Username@gmail.com",
+    email: "User@gmail.com",
+    registrationDate: "2023-01-01",
     position: "Position...",
     division: "Division...",
     remainingDaysOff: 12,
+    phone: 123456789,
     password: "pas*****",
+    address: "Address 3",
   },
   {
     id: 4,
     name: "Aldi Manuel",
-    email: "Manuelaldi@gmail.com",
+    email: "Aldi@gmail.com",
+    registrationDate: "2023-01-01",
     position: "Position...",
     division: "Division...",
     remainingDaysOff: 12,
+    phone: 123456789,
     password: "pas*****",
+    address: "Address 4",
   },
   {
     id: 5,
     name: "Bilal",
-    email: "Bilalbilal@gmail.com",
+    email: "Bilal@gmail.com",
+    registrationDate: "2023-01-01",
     position: "Position...",
     division: "Division...",
     remainingDaysOff: 12,
+    phone: 123456789,
     password: "pas*****",
+    address: "Address 5",
   },
   {
     id: 6,
     name: "Cyd Dabir",
-    email: "DabirCyd@gmail.com",
+    email: "Cyd@gmail.com",
+    registrationDate: "2023-01-01",
     position: "Position...",
     division: "Division...",
     remainingDaysOff: 12,
+    phone: 123456789,
     password: "pas*****",
+    address: "Address 6",
   },
   {
     id: 7,
     name: "Doe Kinan",
-    email: "KinanDoe@gmail.com",
+    email: "Doe@gmail.com",
+    registrationDate: "2023-01-01",
     position: "Position...",
     division: "Division...",
     remainingDaysOff: 12,
+    phone: 123456789,
     password: "pas*****",
+    address: "Address 7",
   },
   {
     id: 8,
     name: "Elzein",
-    email: "Elzein123@gmail.com",
+    email: "Elzein@gmail.com",
+    registrationDate: "2023-01-01",
     position: "Position...",
     division: "Division...",
     remainingDaysOff: 12,
+    phone: 123456789,
     password: "pas*****",
+    address: "Address 8",
   },
   {
     id: 9,
     name: "Ghana Hasan",
-    email: "Hasan89@gmail.com",
+    email: "GhanaHasan@gmail.com",
+    registrationDate: "2023-01-01",
     position: "Position...",
     division: "Division...",
     remainingDaysOff: 12,
+    phone: 123456789,
     password: "pas*****",
+    address: "Address 9",
   },
   {
     id: 10,
     name: "Kadeen",
-    email: "Kadeen76@gmail.com",
+    email: "Kadeen@gmail.com",
+    registrationDate: "2023-01-01",
     position: "Position...",
     division: "Division...",
     remainingDaysOff: 12,
+    phone: 123456789,
     password: "pas*****",
+    address: "Address 10",
+  },
+  {
+    id: 11,
+    name: "Kadeen",
+    email: "Kadeen@gmail.com",
+    registrationDate: "2023-01-01",
+    position: "Position...",
+    division: "Division...",
+    remainingDaysOff: 12,
+    phone: 123456789,
+    password: "pas*****",
+    address: "Address 10",
   },
 ];
 
-const UserDataTable: React.FC = () => {
+const ManageUser: React.FC = () => {
+  const navigate = useNavigate();
   const [users, setUsers] = useState<User[]>(initialUsers);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 10;
 
   const handleView = (user: User) => {
-    setSelectedUser(user); // Set selected user and open modal
+    setSelectedUser(user);
   };
 
   const handleDelete = (id: number) => {
@@ -120,18 +169,55 @@ const UserDataTable: React.FC = () => {
     }
   };
 
-  const handleCloseModal = () => {
-    setSelectedUser(null); // Close modal
+  const handleBack = () => {
+    navigate(-1);
   };
 
+  const handleSubmit = () => {
+    setSelectedUser(null);
+  };
+
+  const handlePopup = () => {
+    setSelectedUser(null);
+  };
+
+  const filteredUsers = users.filter((user) =>
+    user.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(filteredUsers.length / usersPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
   return (
-    <div className="min-h-screen bg-[#FFFFFF] py-8 px-12">
-      <ArrowLeft
-        className="mr-2 cursor-pointer"
-        onClick={() => navigate("/admin")}
-      />
-      <h1 className="mb-4 text-xl font-semibold">User Data</h1>
-      <div className="overflow-x-auto">
+    <div className="min-h-screen bg-[#FFFFFF] py-8 px-4">
+      {/* Header */}
+      <div className="flex justify-between items-center ml-14 mb-2 border-b-[3px]  py-[10px]">
+        <button
+          onClick={handleBack}
+          className="absolute left-0 top-7 z-20 text-black border-b-[3px] py-[12px] px-5 -mt-6"
+        >
+          <ChevronLeft className="w-8 h-8" />
+        </button>
+        <h2 className="-mt-8 text-lg font-bold text-black">MANAGE USER</h2>
+        <div className="flex items-center -mt-8 mr-[80vh] bg-gray-200 rounded-2xl px-4 py-2 w-80">
+          <div className="w-5 h-5 text-gray-500 " />
+          <Search className="-ml-5 text-[#979797]" />
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full ml-2 text-black bg-transparent outline-none"
+          />
+        </div>
+      </div>
+      <div className="overflow-x-auto ">
         <table className="min-w-full border-collapse table-fixed">
           <thead>
             <tr className="bg-[#FFFFFF]">
@@ -159,18 +245,22 @@ const UserDataTable: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user, index) => (
+            {currentUsers.map((user, index) => (
               <tr
                 key={user.id}
                 className="border-b"
               >
-                <td className="px-4 py-3 text-center">{index + 1}</td>
+                <td className="px-4 py-3 text-center text-black">
+                  {indexOfFirstUser + index + 1}
+                </td>
                 <td className="px-4 py-3">
                   <div className="flex items-center">
                     <div className="flex-shrink-0 w-10 h-10 bg-gray-300 rounded-full"></div>
                     <div className="ml-3">
                       <p className="font-medium text-gray-900">{user.name}</p>
-                      <p className="text-sm text-gray-500">{user.email}</p>
+                      <p className="text-sm font-normal text-gray-900">
+                        {user.email}
+                      </p>
                     </div>
                   </div>
                 </td>
@@ -218,60 +308,129 @@ const UserDataTable: React.FC = () => {
             ))}
           </tbody>
         </table>
-        <div className="mt-4 text-sm text-gray-500">
-          <p>Showing {users.length} out of 45 entries</p>
+        <div className="flex items-center justify-between mt-4">
+          <p className="text-sm text-gray-500">
+            Showing {indexOfFirstUser + 1} to{" "}
+            {Math.min(indexOfLastUser, filteredUsers.length)} out of{" "}
+            {filteredUsers.length} entries
+          </p>
+          <div className="flex space-x-2">
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="px-4 py-2 text-gray-600 transition-colors bg-gray-200 rounded-full disabled:opacity-50 hover:bg-gray-300"
+            >
+              Previous
+            </button>
+            <div className="flex items-center justify-center w-10 h-10 bg-gray-800 rounded-full">
+              <span className="font-bold text-white">{currentPage}</span>
+            </div>
+            <button
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, pageNumbers.length))
+              }
+              disabled={currentPage === pageNumbers.length}
+              className="px-4 py-2 text-gray-600 transition-colors bg-gray-200 rounded-full disabled:opacity-50 hover:bg-gray-300"
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Modal for editing user */}
       {selectedUser && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
-            <h2 className="mb-4 text-xl font-semibold">Change</h2>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-gray-700">User</label>
+          <div className="bg-white rounded-lg shadow-lg p-6 h-[40em] w-[45rem]  px-14">
+            <div className="border-b-[3px] flex  border-black pb-2">
+              <div className="flex">
+                <button
+                  onClick={handlePopup}
+                  className="left-0 z-20 text-black"
+                >
+                  <ChevronLeft className="w-8 h-8" />
+                </button>
+              </div>
+              <h2 className="text-xl flex justify-center text-black ml-[33vh] font-semibold">
+                Change
+              </h2>
+            </div>
+            <div className="mt-5 space-y-4">
+              <div className="flex justify-between border-b-[3px] pb-2 border-[#D9D9D9] px-4">
+                <h1 className="text-black">User</h1>
                 <input
                   type="text"
                   value={selectedUser.name}
                   readOnly
-                  className="w-full border-b border-gray-300 focus:outline-none"
+                  className="w-full text-black pl-4 rounded-xl focus:outline-none max-w-[40vh] h-9 bg-[#D9D9D9]"
                 />
               </div>
-              <div>
-                <label className="block text-gray-700">Password</label>
+              <div className="flex justify-between border-b-[3px] pb-2 border-[#D9D9D9] px-4">
+                <h1 className="text-black">Password</h1>
                 <input
                   type="password"
                   value={selectedUser.password}
                   readOnly
-                  className="w-full border-b border-gray-300 focus:outline-none"
+                  className="w-full text-black pl-4 rounded-xl focus:outline-none max-w-[40vh] h-9 bg-[#D9D9D9]"
                 />
               </div>
-              <div>
-                <label className="block text-gray-700">Position</label>
+              <div className="flex justify-between border-b-[3px] pb-2 border-[#D9D9D9] px-4">
+                <h1 className="text-black">Position</h1>
                 <input
                   type="text"
                   value={selectedUser.position}
                   readOnly
-                  className="w-full border-b border-gray-300 focus:outline-none"
+                  className="w-full text-black pl-4 rounded-xl focus:outline-none max-w-[40vh] h-9 bg-[#D9D9D9]"
                 />
               </div>
-              <div>
-                <label className="block text-gray-700">Division</label>
+              <div className="flex justify-between border-b-[3px] pb-2 border-[#D9D9D9] px-4">
+                <h1 className="text-black">Division</h1>
                 <input
                   type="text"
                   value={selectedUser.division}
                   readOnly
-                  className="w-full border-b border-gray-300 focus:outline-none"
+                  className="w-full text-black pl-4 rounded-xl focus:outline-none max-w-[40vh] h-9 bg-[#D9D9D9]"
                 />
+              </div>
+              <div className="flex justify-between border-b-[3px] pb-2 border-[#D9D9D9] px-4">
+                <h1 className="text-black">Remaining Days Off</h1>
+                <input
+                  type="text"
+                  value={selectedUser.remainingDaysOff}
+                  readOnly
+                  className="w-full text-black pl-4 rounded-xl focus:outline-none max-w-[40vh] h-9 bg-[#D9D9D9]"
+                />
+              </div>
+              <div className="flex justify-between   border-b-[3px] pb-2 border-[#D9D9D9] px-4">
+                <h1 className="text-black">Phone</h1>
+                <input
+                  type="text"
+                  value={selectedUser.phone}
+                  readOnly
+                  className="w-full text-black pl-4 rounded-xl focus:outline-none max-w-[40vh] h-9 bg-[#D9D9D9]"
+                />
+              </div>
+              <div className="flex justify-between border-b-[3px] pb-2 border-[#D9D9D9] px-4">
+                <h1 className="text-black">Address</h1>
+                <input
+                  type="text"
+                  value={selectedUser.address}
+                  readOnly
+                  className="w-full text-black pl-4 rounded-xl focus:outline-none max-w-[40vh] h-9 bg-[#D9D9D9]"
+                />
+              </div>
+              <div className="flex justify-between border-b-[3px] pb-2  border-[#D9D9D9] px-4">
+                <h1 className="text-black">Registration Date</h1>
+                <p className="px-20 text-black">13 September 2024</p>
               </div>
             </div>
             <div className="flex justify-end mt-6">
               <button
-                onClick={handleCloseModal}
-                className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+                type="submit"
+                onClick={handleSubmit}
+                className="px-8 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-3xl"
               >
-                Close
+                Apply
               </button>
             </div>
           </div>
@@ -281,4 +440,4 @@ const UserDataTable: React.FC = () => {
   );
 };
 
-export default UserDataTable;
+export default ManageUser;

@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {ArrowLeft, User, X} from "lucide-react";
+import {ArrowLeft, User, X, Search} from "lucide-react";
 import {useNavigate} from "react-router-dom";
 
 interface User {
@@ -32,55 +32,7 @@ const initialData: User[] = [
     division: "Division - Position",
     photoStatus: "Uploaded",
   },
-  {
-    id: 4,
-    name: "Aldi Manuel",
-    email: "Manuelaldi@gmail.com",
-    division: "Division - Position",
-    photoStatus: "Uploaded",
-  },
-  {
-    id: 5,
-    name: "Bilal",
-    email: "Bilalbilal@gmail.com",
-    division: "Division - Position",
-    photoStatus: "Uploaded",
-  },
-  {
-    id: 6,
-    name: "Cyd Dabir",
-    email: "DabirCyd@gmail.com",
-    division: "Division - Position",
-    photoStatus: "Haven't scanned yet",
-  },
-  {
-    id: 7,
-    name: "Doe Kinan",
-    email: "KinanDoe@gmail.com",
-    division: "Division - Position",
-    photoStatus: "Haven't scanned yet",
-  },
-  {
-    id: 8,
-    name: "Elzein",
-    email: "Elzein123@gmail.com",
-    division: "Division - Position",
-    photoStatus: "Uploaded",
-  },
-  {
-    id: 9,
-    name: "Ghana Hasan",
-    email: "Hasan89@gmail.com",
-    division: "Division - Position",
-    photoStatus: "Uploaded",
-  },
-  {
-    id: 10,
-    name: "Kadeen",
-    email: "Kadeen76@gmail.com",
-    division: "Division - Position",
-    photoStatus: "Haven't scanned yet",
-  },
+  //... (more user data)
 ];
 
 const Card: React.FC<{children: React.ReactNode; className?: string}> = ({
@@ -153,7 +105,44 @@ const DetailView: React.FC<{user: User; onClose: () => void}> = ({
   );
 };
 
-const Table: React.FC = () => {
+// Search Bar Component
+const SearchBar: React.FC<{
+  searchTerm: string;
+  setSearchTerm: (value: string) => void;
+}> = ({searchTerm, setSearchTerm}) => {
+  return (
+    <div className="flex items-center px-4 py-2 bg-gray-200 rounded-2xl w-80">
+      <Search className="text-gray-500" />
+      <input
+        type="text"
+        placeholder="Search..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="w-full ml-2 text-black bg-transparent outline-none"
+      />
+    </div>
+  );
+};
+
+// Filter Dropdown Component
+const FilterDropdown: React.FC<{
+  filter: string;
+  setFilter: (value: string) => void;
+}> = ({filter, setFilter}) => {
+  return (
+    <select
+      className="px-4 py-2 text-sm bg-white border border-gray-300 rounded-full"
+      value={filter}
+      onChange={(e) => setFilter(e.target.value)}
+    >
+      <option value="ALL">SCANNING ALL</option>
+      <option value="COMPLETE">COMPLETE</option>
+      <option value="HAVEN'T">HAVEN'T</option>
+    </select>
+  );
+};
+
+const FaceData: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState("ALL");
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
@@ -175,34 +164,26 @@ const Table: React.FC = () => {
     <div className="fixed w-full h-full mx-auto overflow-hidden text-black bg-white rounded-lg shadow-md">
       {/* Header */}
       <div className="flex items-center justify-between p-6 border-b">
-        {/* Tombol Kembali */}
+        {/* Back Button */}
         <div className="flex items-center space-x-4">
           <ArrowLeft
-            className="mr-2 cursor-pointer"
+            className="cursor-pointer"
             onClick={() => navigate("/admin")}
             size={24}
           />
           <h2 className="text-2xl font-semibold tracking-wide">FACE DATA</h2>
         </div>
 
-        {/* Search dan Filter */}
-        <div className="flex items-center space-x-4">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="w-64 px-4 py-2 text-sm bg-white border border-gray-300 rounded-full"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+        {/* Search and Filter */}
+        <div className="flex space-x-4">
+          <SearchBar
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
           />
-          <select
-            className="px-4 py-2 text-sm bg-white border border-gray-300 rounded-full"
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-          >
-            <option value="ALL">SCANNING ALL</option>
-            <option value="COMPLETE">COMPLETE</option>
-            <option value="HAVEN'T">HAVEN'T</option>
-          </select>
+          <FilterDropdown
+            filter={filter}
+            setFilter={setFilter}
+          />
         </div>
       </div>
 
@@ -285,4 +266,4 @@ const Table: React.FC = () => {
   );
 };
 
-export default Table;
+export default FaceData;
