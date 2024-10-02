@@ -81,7 +81,7 @@ const Home: React.FC = () => {
         id="features"
         className="py-8 md:py-16 w-full min-h-screen flex flex-col bg-[#FFFFFF]"
       >
-        <div className="flex flex-col px-4 md:flex-col md:px-12">
+        <div className="flex flex-col px-4 md:flex-row md:px-12">
           <div className="flex flex-col mb-8 space-y-6 text-center text-black md:text-left md:space-y-14 md:mb-0 md:mr-8 lg:mr-96">
             <h1 className="text-3xl font-semibold md:text-4xl">Features</h1>
             <h2 className="text-4xl font-semibold md:text-6xl">
