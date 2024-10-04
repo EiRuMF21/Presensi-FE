@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {useNavigate} from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import NotificationPanel from "../layouts/Notification";
 
 const NavbarHome: React.FC = () => {
@@ -19,11 +19,7 @@ const NavbarHome: React.FC = () => {
   return (
     <nav className="flex items-center justify-between text-black bg-white shadow-lg sm:px-6 lg:px-8">
       <div className="flex items-center justify-between h-16">
-        <img
-          src="/image/logoSA.png"
-          alt="Logo"
-          className="w-10"
-        />
+        <img src="/image/logoSA.png" alt="Logo" className="w-10" />
       </div>
 
       <div className="relative flex items-center space-x-4">

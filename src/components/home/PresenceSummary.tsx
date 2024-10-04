@@ -20,21 +20,17 @@ const SummaryCard: React.FC<SummaryCardProps> = ({
       className={`bg-white p-4 rounded-lg shadow-md text-center ${
         large ? "col-span-2" : "col-span-1"
       }`}
-      style={{borderLeft: `8px solid ${color}`}}
+      style={{ borderLeft: `8px solid ${color}` }}
     >
       {/* Dot in the corner */}
       <span
         className="absolute w-3 h-3 rounded-full top-2 right-2"
-        style={{backgroundColor: color}}
+        style={{ backgroundColor: color }}
       ></span>
 
       {/* Icon and Text */}
       <div className="flex items-center">
-        <img
-          src={icon}
-          alt={label}
-          className="w-10 h-10 mx-auto"
-        />
+        <img src={icon} alt={label} className="w-10 h-10 mx-auto" />
 
         {/* Label and Days */}
         <div>

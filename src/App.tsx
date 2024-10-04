@@ -13,10 +13,10 @@ import DashboardAdmin from "./pages/Dashboard";
 import Homepage from "./pages/Homepage";
 import ProfileSettings from "./components/layouts/ProfileSetting";
 import AttendancePage from "./components/home/AttendancePage";
-import SubmissionTable from "./components/Submission/SubmissionData";
+import SubmissionTable from "./components/admin/SubmissionData";
 import RecapTable from "./components/admin/RecapTable";
 import ProtectedRoute from "./ProtectedRouteComponent";
-import UserDataTable from "./components/admin/UserData";
+import UserManageTable from "./components/admin/UserManage";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -31,7 +31,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path="/home" element={<Homepage />} />
         <Route path="/attendance" element={<AttendancePage />} />
         <Route path="/datasubmission" element={<SubmissionTable />} />
-        <Route path="/userdata" element={<UserDataTable />} />
+        <Route path="/userdata" element={<UserManageTable />} />
 
         {/* Halaman yang dilindungi: hanya bisa diakses jika sudah login */}
         <Route
