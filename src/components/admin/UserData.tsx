@@ -73,7 +73,7 @@ const initialUsers: User[] = [
 ];
 
 const UserData: React.FC = () => {
-  const [users, setUsers] = useState<User[]>(initialUsers);
+  const [users] = useState<User[]>(initialUsers);
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 

@@ -34,7 +34,7 @@ const generateRandomData = (year: number, month: number): DataPoint[] => {
 };
 
 // Function to generate aggregated data for the whole year
-const generateYearlyData = (year: number): DataPoint[] => {
+const generateYearlyData = (_year: number): DataPoint[] => {
   const months = [
     "Januari",
     "Februari",
@@ -50,7 +50,7 @@ const generateYearlyData = (year: number): DataPoint[] => {
     "Desember",
   ];
 
-  return months.map((month, index) => {
+  return months.map((month, _index) => {
     // Aggregate random values for each month
     return {
       date: month, // Month name

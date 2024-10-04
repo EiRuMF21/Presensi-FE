@@ -16,12 +16,26 @@ const SubmissionModal: React.FC<SubmissionModalProps> = ({isOpen, onClose}) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [description, setDescription] = useState("");
+  const [file, setFile] = useState<File | null>(null); // State to hold the file
 
   if (!isOpen) return null;
 
   const handleSubmit = () => {
-    console.log({category, from, startDate, endDate, description});
+    console.log({
+      category,
+      from,
+      startDate,
+      endDate,
+      description,
+      file: file?.name || "No file selected", // Log file name if selected
+    });
     onClose();
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setFile(e.target.files[0]); // Update state with the selected file
+    }
   };
 
   return (
@@ -85,9 +99,8 @@ const SubmissionModal: React.FC<SubmissionModalProps> = ({isOpen, onClose}) => {
               </label>
               <div className="relative">
                 <input
-                  type="text"
-                  className="w-full p-2 pr-8 text-black bg-white border rounded-md"
-                  placeholder="mm / dd / yyyy"
+                  type="date"
+                  className="w-full p-2 text-black bg-white border rounded-md"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
                 />
@@ -103,9 +116,8 @@ const SubmissionModal: React.FC<SubmissionModalProps> = ({isOpen, onClose}) => {
               </label>
               <div className="relative">
                 <input
-                  type="text"
-                  className="w-full p-2 pr-8 text-black bg-white border rounded-md"
-                  placeholder="mm / dd / yyyy"
+                  type="date"
+                  className="w-full p-2 text-black bg-white border rounded-md"
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
                 />
@@ -133,7 +145,18 @@ const SubmissionModal: React.FC<SubmissionModalProps> = ({isOpen, onClose}) => {
 
           {/* Action Buttons */}
           <div className="flex space-x-4">
-            <button className="flex-1 px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600">
+            {/* Hidden file input element */}
+            <input
+              type="file"
+              id="fileInput"
+              className="hidden"
+              onChange={handleFileChange}
+            />
+            {/* Choose File button triggers the hidden file input */}
+            <button
+              className="flex-1 px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600"
+              onClick={() => document.getElementById("fileInput")?.click()}
+            >
               Choose File
             </button>
             <button
@@ -143,6 +166,11 @@ const SubmissionModal: React.FC<SubmissionModalProps> = ({isOpen, onClose}) => {
               Send
             </button>
           </div>
+
+          {/* Display selected file name */}
+          {file && (
+            <p className="text-sm text-gray-500">Selected file: {file.name}</p>
+          )}
         </div>
       </div>
     </div>

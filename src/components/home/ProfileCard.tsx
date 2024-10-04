@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
-import SubmissionModal from "../submission/SubmissionModal";
+import SubmissionModal from "./SubmissionModal";
 
 const ProfileCard: React.FC = () => {
   const [isCheckIn, setIsCheckIn] = useState(true); // Mengontrol apakah check-in atau check-out
