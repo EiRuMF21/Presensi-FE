@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import {ArrowLeft, User, X, Search} from "lucide-react";
 import {useNavigate} from "react-router-dom";
+import {ChevronLeft, Search, User} from "lucide-react";
 
 interface User {
   id: number;
@@ -32,126 +32,74 @@ const initialData: User[] = [
     division: "Division - Position",
     photoStatus: "Uploaded",
   },
-  //... (more user data)
+  {
+    id: 4,
+    name: "Aldi Manuel",
+    email: "Manuelaldi@gmail.com",
+    division: "Division - Position",
+    photoStatus: "Uploaded",
+  },
+  {
+    id: 5,
+    name: "Bilal",
+    email: "Bilalbilal@gmail.com",
+    division: "Division - Position",
+    photoStatus: "Uploaded",
+  },
+  {
+    id: 6,
+    name: "Cyd Dabir",
+    email: "DabirCyd@gmail.com",
+    division: "Division - Position",
+    photoStatus: "Haven't scanned yet",
+  },
+  {
+    id: 7,
+    name: "Doe Kinan",
+    email: "KinanDoe@gmail.com",
+    division: "Division - Position",
+    photoStatus: "Haven't scanned yet",
+  },
+  {
+    id: 8,
+    name: "Elzein",
+    email: "Elzein123@gmail.com",
+    division: "Division - Position",
+    photoStatus: "Uploaded",
+  },
+  {
+    id: 9,
+    name: "Ghana Hasan",
+    email: "Hasan89@gmail.com",
+    division: "Division - Position",
+    photoStatus: "Uploaded",
+  },
+  {
+    id: 10,
+    name: "Kadeen",
+    email: "Kadeen76@gmail.com",
+    division: "Division - Position",
+    photoStatus: "Haven't scanned yet",
+  },
 ];
 
-const Card: React.FC<{children: React.ReactNode; className?: string}> = ({
-  children,
-  className = "",
-}) => (
-  <div className={`bg-white rounded-lg shadow-md ${className}`}>{children}</div>
-);
-
-const CardHeader: React.FC<{children: React.ReactNode}> = ({children}) => (
-  <div className="px-6 py-4 border-b">{children}</div>
-);
-
-const CardContent: React.FC<{children: React.ReactNode}> = ({children}) => (
-  <div className="px-6 py-4">{children}</div>
-);
-
-const DetailView: React.FC<{user: User; onClose: () => void}> = ({
-  user,
-  onClose,
-}) => {
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold">FACE DATA</h2>
-            <button
-              onClick={onClose}
-              className="text-gray-500 hover:text-gray-700"
-            >
-              <X size={24} />
-            </button>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="flex justify-center">
-              <div className="flex items-center justify-center w-24 h-24 bg-gray-200 rounded-full">
-                <User
-                  size={48}
-                  className="text-gray-400"
-                />
-              </div>
-            </div>
-            <div>
-              <p className="text-sm text-gray-500">User</p>
-              <p className="font-medium">{user.email}</p>
-            </div>
-            <div>
-              <p className="text-sm text-gray-500">Division</p>
-              <p className="font-medium">{user.division}</p>
-            </div>
-            <div>
-              <p className="text-sm text-gray-500">Photo</p>
-              <p
-                className={`font-medium ${
-                  user.photoStatus === "Uploaded"
-                    ? "text-green-600"
-                    : "text-red-600"
-                }`}
-              >
-                {user.photoStatus}
-              </p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  );
-};
-
-// Search Bar Component
-const SearchBar: React.FC<{
-  searchTerm: string;
-  setSearchTerm: (value: string) => void;
-}> = ({searchTerm, setSearchTerm}) => {
-  return (
-    <div className="flex items-center px-4 py-2 bg-gray-200 rounded-2xl w-80">
-      <Search className="text-gray-500" />
-      <input
-        type="text"
-        placeholder="Search..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="w-full ml-2 text-black bg-transparent outline-none"
-      />
-    </div>
-  );
-};
-
-// Filter Dropdown Component
-const FilterDropdown: React.FC<{
-  filter: string;
-  setFilter: (value: string) => void;
-}> = ({filter, setFilter}) => {
-  return (
-    <select
-      className="px-4 py-2 text-sm bg-white border border-gray-300 rounded-full"
-      value={filter}
-      onChange={(e) => setFilter(e.target.value)}
-    >
-      <option value="ALL">SCANNING ALL</option>
-      <option value="COMPLETE">COMPLETE</option>
-      <option value="HAVEN'T">HAVEN'T</option>
-    </select>
-  );
-};
-
 const FaceData: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [users] = useState<User[]>(initialData);
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const [filter, setFilter] = useState("ALL");
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
+  const usersPerPage = 10;
 
-  const filteredData = initialData.filter((user) => {
-    const matchesSearch = user.name
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
+  const handleBack = () => {
+    navigate(-1);
+  };
+
+  const filteredUsers = users.filter((user) => {
+    const matchesSearch =
+      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesFilter =
       filter === "ALL" ||
       (filter === "COMPLETE" && user.photoStatus === "Uploaded") ||
@@ -160,107 +108,194 @@ const FaceData: React.FC = () => {
     return matchesSearch && matchesFilter;
   });
 
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(filteredUsers.length / usersPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
   return (
-    <div className="fixed w-full h-full mx-auto overflow-hidden text-black bg-white rounded-lg shadow-md">
+    <div className="min-h-screen bg-[#FFFFFF] py-2 px-4">
       {/* Header */}
-      <div className="flex items-center justify-between p-6 border-b">
-        {/* Back Button */}
-        <div className="flex items-center space-x-4">
-          <ArrowLeft
-            className="cursor-pointer"
-            onClick={() => navigate("/admin")}
-            size={24}
-          />
-          <h2 className="text-2xl font-semibold tracking-wide">FACE DATA</h2>
+      <div className="flex justify-between items-center mb-2 border-b-[3px] py-[10px]">
+        <button
+          onClick={handleBack}
+          className="text-black py-[12px] px-5"
+        >
+          <ChevronLeft className="w-8 h-8" />
+        </button>
+        <h2 className="text-lg font-bold text-black">FACE DATA</h2>
+        <div className="flex justify-center flex-1">
+          <div className="flex items-center px-4 py-2 bg-gray-200 rounded-2xl w-80">
+            <Search className="text-[#979797]" />
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full ml-2 text-black bg-transparent outline-none"
+            />
+          </div>
         </div>
-
-        {/* Search and Filter */}
-        <div className="flex space-x-4">
-          <SearchBar
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
-          />
-          <FilterDropdown
-            filter={filter}
-            setFilter={setFilter}
-          />
-        </div>
+        <select
+          className="px-4 py-2 text-sm text-black bg-white border border-gray-300 rounded-full"
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+        >
+          <option value="ALL">SCANNING ALL</option>
+          <option value="COMPLETE">COMPLETE</option>
+          <option value="HAVEN'T">HAVEN'T</option>
+        </select>
       </div>
 
-      {/* Table */}
-      <table className="w-full text-left border-collapse">
-        <thead>
-          <tr className="border-b bg-gray-50">
-            <th className="p-4 text-sm font-medium text-gray-600">#</th>
-            <th className="p-4 text-sm font-medium text-gray-600">USER</th>
-            <th className="p-4 text-sm font-medium text-gray-600">DIVISION</th>
-            <th className="p-4 text-sm font-medium text-gray-600">PHOTO</th>
-            <th className="p-4 text-sm font-medium text-gray-600"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredData.map((user) => (
-            <tr
-              key={user.id}
-              className="border-b hover:bg-gray-50"
-            >
-              <td className="p-4 text-gray-800">{user.id}</td>
-              <td className="p-4">
-                <p className="font-semibold text-gray-800">{user.name}</p>
-                <p className="text-sm text-gray-500">{user.email}</p>
-              </td>
-              <td className="p-4 text-gray-800">{user.division}</td>
-              <td className="p-4">
-                {user.photoStatus === "Uploaded" ? (
-                  <span className="font-semibold text-green-600">Uploaded</span>
-                ) : (
-                  <span className="font-semibold text-red-600">
-                    Haven't scanned yet
-                  </span>
-                )}
-              </td>
-              <td className="p-4">
-                <button
-                  className="px-4 py-2 text-sm text-white transition duration-200 bg-blue-600 rounded-full hover:bg-blue-700"
-                  onClick={() => setSelectedUser(user)}
-                >
-                  Detail
-                </button>
-              </td>
+      {/* Table and rest of the component remain unchanged */}
+      <div className="overflow-x-auto">
+        <table className="min-w-full border-collapse table-fixed">
+          <thead>
+            <tr className="bg-[#FFFFFF]">
+              <th className="w-12 px-4 py-2 font-semibold text-center text-gray-600">
+                #
+              </th>
+              <th className="w-1/3 px-4 py-2 font-semibold text-left text-gray-600">
+                User
+              </th>
+              <th className="w-1/4 px-4 py-2 font-semibold text-left text-gray-600">
+                Division
+              </th>
+              <th className="w-1/6 px-4 py-2 font-semibold text-left text-gray-600">
+                Photo
+              </th>
+              <th className="w-1/6 px-4 py-2 font-semibold text-center text-gray-600">
+                Action
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-
-      {/* Pagination */}
-      <div className="flex items-center justify-between p-6">
-        <span className="text-sm text-gray-600">
-          Showing 10 out of {initialData.length} entries
-        </span>
-        <div className="flex space-x-2">
-          <button className="px-3 py-1 text-sm text-gray-700 transition border border-gray-300 rounded-full hover:bg-gray-200">
-            Previous
-          </button>
-          {[1, 2, 3, 4, 5].map((page) => (
+          </thead>
+          <tbody>
+            {currentUsers.map((user, index) => (
+              <tr
+                key={user.id}
+                className="border-b"
+              >
+                <td className="px-4 py-3 text-center text-black">
+                  {indexOfFirstUser + index + 1}
+                </td>
+                <td className="px-4 py-3">
+                  <div className="flex items-center">
+                    <div className="flex-shrink-0 w-10 h-10 bg-gray-300 rounded-full"></div>
+                    <div className="ml-3">
+                      <p className="font-medium text-gray-900">{user.name}</p>
+                      <p className="text-sm font-normal text-gray-900">
+                        {user.email}
+                      </p>
+                    </div>
+                  </div>
+                </td>
+                <td className="px-4 py-3 text-gray-700">{user.division}</td>
+                <td className="px-4 py-3">
+                  <span
+                    className={
+                      user.photoStatus === "Uploaded"
+                        ? "text-green-600"
+                        : "text-red-600"
+                    }
+                  >
+                    {user.photoStatus}
+                  </span>
+                </td>
+                <td className="px-4 py-3 text-center">
+                  <button
+                    className="p-2 text-white bg-blue-500 rounded-full hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                    onClick={() => setSelectedUser(user)}
+                  >
+                    Detail
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="flex items-center justify-between mt-4">
+          <p className="text-sm text-gray-500">
+            Showing {indexOfFirstUser + 1} to{" "}
+            {Math.min(indexOfLastUser, filteredUsers.length)} out of{" "}
+            {filteredUsers.length} entries
+          </p>
+          <div className="flex space-x-2">
             <button
-              key={page}
-              className="px-3 py-1 text-sm text-gray-700 transition border border-gray-300 rounded-full hover:bg-gray-200"
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="px-4 py-2 text-gray-600 transition-colors bg-gray-200 rounded-full disabled:opacity-50 hover:bg-gray-300"
             >
-              {page}
+              Previous
             </button>
-          ))}
-          <button className="px-3 py-1 text-sm text-gray-700 transition border border-gray-300 rounded-full hover:bg-gray-200">
-            Next
-          </button>
+            <div className="flex items-center justify-center w-10 h-10 bg-gray-800 rounded-full">
+              <span className="font-bold text-white">{currentPage}</span>
+            </div>
+            <button
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, pageNumbers.length))
+              }
+              disabled={currentPage === pageNumbers.length}
+              className="px-4 py-2 text-gray-600 transition-colors bg-gray-200 rounded-full disabled:opacity-50 hover:bg-gray-300"
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Popup Detail View */}
+      {/* Modal for viewing user details */}
       {selectedUser && (
-        <DetailView
-          user={selectedUser}
-          onClose={() => setSelectedUser(null)}
-        />
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-[30rem] px-14">
+            <div className="border-b-[3px] flex border-black pb-2">
+              <div className="flex">
+                <button
+                  onClick={() => setSelectedUser(null)}
+                  className="left-0 z-20 text-black"
+                >
+                  <ChevronLeft className="w-8 h-8" />
+                </button>
+              </div>
+              <h2 className="text-xl flex justify-center text-black ml-[8vh] font-semibold">
+                FACE DATA
+              </h2>
+            </div>
+            <div className="mt-5 space-y-4">
+              <div className="flex justify-center">
+                <div className="flex items-center justify-center w-24 h-24 bg-gray-200 rounded-full">
+                  <User
+                    size={48}
+                    className="text-gray-400"
+                  />
+                </div>
+              </div>
+              <div className="flex justify-between border-b-[3px] pb-2 border-[#D9D9D9] px-4">
+                <h1 className="text-black">User</h1>
+                <p className="text-black">{selectedUser.email}</p>
+              </div>
+              <div className="flex justify-between border-b-[3px] pb-2 border-[#D9D9D9] px-4">
+                <h1 className="text-black">Division</h1>
+                <p className="text-black">{selectedUser.division}</p>
+              </div>
+              <div className="flex justify-between border-b-[3px] pb-2 border-[#D9D9D9] px-4">
+                <h1 className="text-black">Photo</h1>
+                <p
+                  className={
+                    selectedUser.photoStatus === "Uploaded"
+                      ? "text-green-600"
+                      : "text-red-600"
+                  }
+                >
+                  {selectedUser.photoStatus}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

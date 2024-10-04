@@ -152,11 +152,11 @@ const initialUsers: User[] = [
 ];
 
 const ManageUser: React.FC = () => {
-  const navigate = useNavigate();
   const [users, setUsers] = useState<User[]>(initialUsers);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [currentPage, setCurrentPage] = useState(1);
+  const navigate = useNavigate();
   const usersPerPage = 10;
 
   const handleView = (user: User) => {
@@ -197,7 +197,7 @@ const ManageUser: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#FFFFFF] py-8 px-4">
       {/* Header */}
-      <div className="flex justify-between items-center ml-14 mb-2 border-b-[3px]  py-[10px]">
+      <div className="flex justify-between items-center ml-14 mb-2 border-b-[3px] py-[10px]">
         <button
           onClick={handleBack}
           className="absolute left-0 top-7 z-20 text-black border-b-[3px] py-[12px] px-5 -mt-6"
@@ -220,7 +220,7 @@ const ManageUser: React.FC = () => {
       <div className="overflow-x-auto ">
         <table className="min-w-full border-collapse table-fixed">
           <thead>
-            <tr className="bg-[#FFFFFF]">
+            <tr className="bg-gray-200 border-b">
               <th className="w-12 px-4 py-2 font-semibold text-center text-gray-600">
                 #
               </th>

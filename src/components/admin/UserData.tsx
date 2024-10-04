@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import {ArrowLeft, Search} from "lucide-react";
 import {useNavigate} from "react-router-dom";
+import {ChevronLeft, Search} from "lucide-react";
 
 interface User {
   id: number;
@@ -74,8 +74,10 @@ const initialUsers: User[] = [
 
 const UserData: React.FC = () => {
   const [users] = useState<User[]>(initialUsers);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
+  const usersPerPage = 10;
 
   const handleAccept = (id: number) => {
     console.log(`Accepted user with id: ${id}`);
@@ -85,88 +87,128 @@ const UserData: React.FC = () => {
     console.log(`Declined user with id: ${id}`);
   };
 
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   const filteredUsers = users.filter(
     (user) =>
       user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  return (
-    <div className="fixed w-full h-full mx-auto overflow-hidden text-black bg-white rounded-lg shadow-md">
-      <div className="flex items-center justify-between p-6 border-b">
-        {/* Left section: Back to Admin */}
-        <div className="flex items-center">
-          <ArrowLeft
-            className="mr-2 cursor-pointer"
-            onClick={() => navigate("/admin")}
-          />
-          <h1 className="text-xl font-semibold">USER REGISTRATION</h1>
-        </div>
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
 
-        {/* Middle section: Search bar in the center */}
-        <div className="flex justify-center flex-1">
-          <div className="flex items-center px-4 py-2 bg-gray-200 rounded-2xl w-80">
-            <Search className="text-[#979797]" />
-            <input
-              type="text"
-              placeholder="Search..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full ml-2 text-black bg-transparent outline-none"
-            />
-          </div>
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(filteredUsers.length / usersPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
+  return (
+    <div className="min-h-screen bg-[#FFFFFF] py-8 px-4">
+      {/* Header */}
+      <div className="flex justify-between items-center ml-14 mb-2 border-b-[3px] py-[10px]">
+        <button
+          onClick={handleBack}
+          className="absolute left-0 top-7 z-20 text-black border-b-[3px] py-[12px] px-5 -mt-6"
+        >
+          <ChevronLeft className="w-8 h-8" />
+        </button>
+        <h2 className="-mt-8 text-lg font-bold text-black">
+          USER REGISTRATION
+        </h2>
+        <div className="flex items-center -mt-8 mr-[80vh] bg-gray-200 rounded-2xl px-4 py-2 w-80">
+          <Search className="-ml-5 text-[#979797]" />
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full ml-2 text-black bg-transparent outline-none"
+          />
         </div>
       </div>
 
-      {/* Table */}
-      <table className="w-full border-collapse">
-        <thead>
-          <tr className="border-b">
-            <th className="p-2 text-left">#</th>
-            <th className="p-2 text-left">NAME</th>
-            <th className="p-2 text-left">EMAIL</th>
-            <th className="p-2 text-left">PASSWORD</th>
-            <th className="p-2 text-left">ACTION</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredUsers.map((user) => (
-            <tr
-              key={user.id}
-              className="border-b"
-            >
-              <td className="p-2">{user.id}</td>
-              <td className="p-2">{user.name}</td>
-              <td className="p-2">{user.email}</td>
-              <td className="p-2">{user.password}</td>
-              <td className="p-2">
-                <button
-                  onClick={() => handleAccept(user.id)}
-                  className="px-3 py-1 mr-2 text-sm text-white bg-green-500 rounded"
-                >
-                  Accept
-                </button>
-                <button
-                  onClick={() => handleDecline(user.id)}
-                  className="px-3 py-1 text-sm text-white bg-red-500 rounded"
-                >
-                  Decline
-                </button>
-              </td>
+      <div className="overflow-x-auto">
+        <table className="min-w-full border-collapse table-fixed">
+          <thead>
+            <tr className="bg-gray-200 border-b">
+              <th className="w-12 px-4 py-2 font-semibold text-center text-gray-600">
+                #
+              </th>
+              <th className="w-1/4 px-4 py-2 font-semibold text-left text-gray-600">
+                Name
+              </th>
+              <th className="w-1/4 px-4 py-2 font-semibold text-left text-gray-600">
+                Email
+              </th>
+              <th className="w-1/4 px-4 py-2 font-semibold text-left text-gray-600">
+                Password
+              </th>
+              <th className="w-1/4 px-4 py-2 font-semibold text-center text-gray-600">
+                Action
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-
-      {/* Footer: Pagination */}
-      <div className="flex items-center justify-between mt-4">
-        <span className="text-sm text-gray-500">
-          Showing {filteredUsers.length} out of {users.length} entries
-        </span>
-        <div className="flex space-x-2">
-          <button className="px-3 py-1 border rounded">Previous</button>
-          <button className="px-3 py-1 bg-gray-200 rounded">1</button>
-          <button className="px-3 py-1 border rounded">Next</button>
+          </thead>
+          <tbody>
+            {currentUsers.map((user, index) => (
+              <tr
+                key={user.id}
+                className="border-b"
+              >
+                <td className="px-4 py-3 text-center text-black">
+                  {indexOfFirstUser + index + 1}
+                </td>
+                <td className="px-4 py-3 text-gray-700">{user.name}</td>
+                <td className="px-4 py-3 text-gray-700">{user.email}</td>
+                <td className="px-4 py-3 text-gray-700">{user.password}</td>
+                <td className="px-4 py-3 text-center">
+                  <button
+                    onClick={() => handleAccept(user.id)}
+                    className="px-3 py-1 mr-2 text-sm text-white bg-green-500 rounded hover:bg-green-600"
+                  >
+                    Accept
+                  </button>
+                  <button
+                    onClick={() => handleDecline(user.id)}
+                    className="px-3 py-1 text-sm text-white bg-red-500 rounded hover:bg-red-600"
+                  >
+                    Decline
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="flex items-center justify-between mt-4">
+          <p className="text-sm text-gray-500">
+            Showing {indexOfFirstUser + 1} to{" "}
+            {Math.min(indexOfLastUser, filteredUsers.length)} out of{" "}
+            {filteredUsers.length} entries
+          </p>
+          <div className="flex space-x-2">
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="px-4 py-2 text-gray-600 transition-colors bg-gray-200 rounded-full disabled:opacity-50 hover:bg-gray-300"
+            >
+              Previous
+            </button>
+            <div className="flex items-center justify-center w-10 h-10 bg-gray-800 rounded-full">
+              <span className="font-bold text-white">{currentPage}</span>
+            </div>
+            <button
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, pageNumbers.length))
+              }
+              disabled={currentPage === pageNumbers.length}
+              className="px-4 py-2 text-gray-600 transition-colors bg-gray-200 rounded-full disabled:opacity-50 hover:bg-gray-300"
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
     </div>

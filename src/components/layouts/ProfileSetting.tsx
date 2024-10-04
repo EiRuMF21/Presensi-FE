@@ -45,7 +45,7 @@ const ProfileSettings: React.FC = () => {
         />
       </div>
 
-      <div className="flex items-center justify-center flex-1 p-4">
+      <div className="flex items-center justify-center flex-1">
         <div className="w-full max-w-2xl p-8 bg-white shadow-lg rounded-3xl">
           <div className="flex justify-center mb-6">
             <div className="relative">

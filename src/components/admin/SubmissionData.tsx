@@ -6,10 +6,13 @@ import * as Dialog from "@radix-ui/react-dialog";
 const SubmissionTable: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [filter, setFilter] = useState<string>("ALL");
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [divisionFilter, setDivisionFilter] = useState<string>("ALL");
+  const [submissionFilter, setSubmissionFilter] = useState<string>("ALL");
+  const [isSubmissionDropdownOpen, setIsSubmissionDropdownOpen] =
+    useState(false);
+  const [isDivisionDropdownOpen, setIsDivisionDropdownOpen] = useState(false);
   const [isApprovalDialogOpen, setIsApprovalDialogOpen] = useState(false);
-  const [selectedSubmission, setSelectedSubmission] = useState<any>(null);
+  const [, setSelectedSubmission] = useState<any>(null);
   const navigate = useNavigate();
 
   const submissionData = [
@@ -17,7 +20,7 @@ const SubmissionTable: React.FC = () => {
       id: 1,
       name: "Kinan Doe",
       email: "KinanDoe@gmail.com",
-      division: "Division - Position",
+      division: "Pemasaran",
       phone: "085555555555",
       date: "26 August 2024",
       submission: "Sick",
@@ -27,7 +30,7 @@ const SubmissionTable: React.FC = () => {
       id: 2,
       name: "Abbysa",
       email: "AbbysaO0@gmail.com",
-      division: "Division - Position",
+      division: "Produksi",
       phone: "0834322444",
       date: "23 August 2024",
       submission: "Sick",
@@ -37,7 +40,7 @@ const SubmissionTable: React.FC = () => {
       id: 3,
       name: "Username",
       email: "Username@gmail.com",
-      division: "Division - Position",
+      division: "Humas",
       phone: "0876543213",
       date: "19 August 2024",
       submission: "Duty",
@@ -47,7 +50,7 @@ const SubmissionTable: React.FC = () => {
       id: 4,
       name: "Aldi Manuel",
       email: "Manuelaldi@gmail.com",
-      division: "Division - Position",
+      division: "Umum",
       phone: "0899994444",
       date: "10 August 2024",
       submission: "Office Duty",
@@ -57,7 +60,7 @@ const SubmissionTable: React.FC = () => {
       id: 5,
       name: "Bilal",
       email: "Bilalbilal@gmail.com",
-      division: "Division - Position",
+      division: "Keuangan",
       phone: "0854545454",
       date: "1 August 2024",
       submission: "Office Duty",
@@ -116,7 +119,13 @@ const SubmissionTable: React.FC = () => {
   ];
 
   const filteredData = submissionData.filter(
-    (item) => filter === "ALL" || item.submission === filter
+    (item) =>
+      (submissionFilter === "ALL" || item.submission === submissionFilter) &&
+      (divisionFilter === "ALL" || item.division === divisionFilter) &&
+      (item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.division.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.submission.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   const itemsPerPage = 10;
@@ -145,37 +154,39 @@ const SubmissionTable: React.FC = () => {
           <h1 className="text-xl font-bold">PERMISSION SUBMISSION</h1>
         </div>
         <div className="flex items-center space-x-4">
-          <div className="relative">
+          <div className="flex items-center mr-[80vh] bg-gray-200 rounded-2xl px-4 py-2 w-80">
+            <Search className="text-[#979797]" />
             <input
               type="text"
               placeholder="Search..."
-              className="py-2 pl-10 pr-4 bg-white border-b rounded-full"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full ml-2 text-black bg-transparent outline-none"
             />
-            <Search className="absolute left-3 top-2.5 text-gray-400" />
           </div>
+
+          {/* Filter for Submission */}
           <div className="relative">
             <button
-              onClick={() => setIsDropdownOpen((prev) => !prev)}
+              onClick={() => setIsSubmissionDropdownOpen((prev) => !prev)}
               className="flex items-center px-4 py-2 text-gray-700 bg-white border-b border-gray-300 rounded-full"
             >
-              {filter || "Filter"}
-              {isDropdownOpen ? (
+              {submissionFilter || "Filter Submission"}
+              {isSubmissionDropdownOpen ? (
                 <ChevronUp className="ml-2" />
               ) : (
                 <ChevronDown className="ml-2" />
               )}
             </button>
-            {isDropdownOpen && (
+            {isSubmissionDropdownOpen && (
               <div className="absolute right-0 z-10 w-48 mt-2 bg-white border-b border-gray-300 rounded-lg shadow-lg">
                 {["Sick", "Duty", "On Leave", "Office Duty", "WFH", "ALL"].map(
                   (option) => (
                     <div
                       key={option}
                       onClick={() => {
-                        setFilter(option);
-                        setIsDropdownOpen(false);
+                        setSubmissionFilter(option);
+                        setIsSubmissionDropdownOpen(false);
                       }}
                       className="px-4 py-2 cursor-pointer hover:bg-gray-100"
                     >
@@ -183,6 +194,44 @@ const SubmissionTable: React.FC = () => {
                     </div>
                   )
                 )}
+              </div>
+            )}
+          </div>
+
+          {/* Filter for Division */}
+          <div className="relative">
+            <button
+              onClick={() => setIsDivisionDropdownOpen((prev) => !prev)}
+              className="flex items-center px-4 py-2 text-gray-700 bg-white border-b border-gray-300 rounded-full"
+            >
+              {divisionFilter || "Filter Division"}
+              {isDivisionDropdownOpen ? (
+                <ChevronUp className="ml-2" />
+              ) : (
+                <ChevronDown className="ml-2" />
+              )}
+            </button>
+            {isDivisionDropdownOpen && (
+              <div className="absolute right-0 z-10 w-48 mt-2 bg-white border-b border-gray-300 rounded-lg shadow-lg">
+                {[
+                  "Pemasaran",
+                  "Produksi",
+                  "Umum",
+                  "Humas",
+                  "Keuangan",
+                  "ALL",
+                ].map((option) => (
+                  <div
+                    key={option}
+                    onClick={() => {
+                      setDivisionFilter(option);
+                      setIsDivisionDropdownOpen(false);
+                    }}
+                    className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                  >
+                    {option}
+                  </div>
+                ))}
               </div>
             )}
           </div>
@@ -236,87 +285,48 @@ const SubmissionTable: React.FC = () => {
         <div>
           Showing{" "}
           {Math.min((currentPage - 1) * itemsPerPage + 1, filteredData.length)}{" "}
-          - {Math.min(currentPage * itemsPerPage, filteredData.length)} of{" "}
-          {filteredData.length}
+          to {Math.min(currentPage * itemsPerPage, filteredData.length)} of{" "}
+          {filteredData.length} results
         </div>
         <div className="flex space-x-2">
-          <button
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-            className="px-3 py-1 border rounded"
-          >
-            Previous
-          </button>
-          {[...Array(pageCount)].map((_, i) => (
+          {Array.from({length: pageCount}, (_, i) => (
             <button
               key={i}
-              onClick={() => setCurrentPage(i + 1)}
-              className={`px-3 py-1 border rounded ${
-                currentPage === i + 1 ? "bg-gray-200" : ""
+              className={`px-3 py-1 rounded-full ${
+                i + 1 === currentPage
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-200 text-gray-600"
               }`}
+              onClick={() => setCurrentPage(i + 1)}
             >
               {i + 1}
             </button>
           ))}
-          <button
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, pageCount))
-            }
-            disabled={currentPage === pageCount}
-            className="px-3 py-1 border rounded"
-          >
-            Next
-          </button>
         </div>
       </div>
 
+      {/* Approval Dialog */}
       <Dialog.Root
         open={isApprovalDialogOpen}
         onOpenChange={setIsApprovalDialogOpen}
       >
-        <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
-        <Dialog.Content className="fixed p-6 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-lg top-1/2 left-1/2">
-          <div className="space-y-4">
-            <h2 className="text-lg font-bold">Submission</h2>
-            {selectedSubmission && (
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-2">
-                  <div>From</div>
-                  <div>{selectedSubmission.email}</div>
-                  <div>Division</div>
-                  <div>{selectedSubmission.division}</div>
-                  <div>Phone</div>
-                  <div>{selectedSubmission.phone}</div>
-                  <div>Submission</div>
-                  <div>{selectedSubmission.submission}</div>
-                  <div>Date Start</div>
-                  <div>{selectedSubmission.date}</div>
-                  <div>Date End</div>
-                  <div>{selectedSubmission.date}</div>
-                </div>
-                <div>
-                  <label>Description...</label>
-                  <textarea
-                    className="w-full p-2 bg-white border rounded"
-                    rows={3}
-                  />
-                </div>
-              </div>
-            )}
-            <div className="flex justify-end mt-4 space-x-2">
-              <button
-                className="px-4 py-2 text-white bg-red-500 rounded"
-                onClick={handleDecline}
-              >
-                Decline
-              </button>
-              <button
-                className="px-4 py-2 text-white bg-green-500 rounded"
-                onClick={handleApprove}
-              >
-                Approve
-              </button>
-            </div>
+        <Dialog.Overlay className="fixed inset-0 bg-black opacity-50" />
+        <Dialog.Content className="fixed inset-x-0 p-6 mx-auto bg-white rounded-lg top-1/3 w-96">
+          <h2 className="mb-4 text-lg font-bold">Approve Submission</h2>
+          <p>Do you want to approve this submission?</p>
+          <div className="flex justify-end mt-6 space-x-4">
+            <button
+              className="px-4 py-2 bg-gray-200 rounded"
+              onClick={handleDecline}
+            >
+              Decline
+            </button>
+            <button
+              className="px-4 py-2 text-white bg-blue-500 rounded"
+              onClick={handleApprove}
+            >
+              Approve
+            </button>
           </div>
         </Dialog.Content>
       </Dialog.Root>
