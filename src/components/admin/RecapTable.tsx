@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 
 const RecapTable: React.FC = () => {
-  
   const navigate = useNavigate();
   const years = ["2024", "2023", "2022", "2021", "2020"];
   const months = [
@@ -36,13 +35,14 @@ const RecapTable: React.FC = () => {
   return (
     <div className="p-6 bg-white">
       {/* Header */}
-      <div className="flex justify-start items-center mb-6">
+      <div className="flex justify-start items-center ml-14 mb-2 border-b-[3px]">
         <button
           onClick={handleBack}
-          className="absolute top-4 left-4 z-20 text-black"
+          className="absolute top-5 left-0 z-20 text-black border-b-[3px] px-6"
         >
           <ChevronLeft className="h-8 w-8" />
         </button>
+        <h2 className="text-black font-bold text-lg">REKAP</h2>
       </div>
 
       {/* Table */}

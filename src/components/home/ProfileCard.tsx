@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from "react";
-import {useNavigate} from "react-router-dom";
-import SubmissionModal from "../Submission/SubmissionModal";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import SubmissionModal from "./SubmissionModal";
 
 const ProfileCard: React.FC = () => {
   const [isCheckIn, setIsCheckIn] = useState(true); // Mengontrol apakah check-in atau check-out
@@ -13,10 +13,13 @@ const ProfileCard: React.FC = () => {
   // Mengubah state isCheckIn berdasarkan waktu
   useEffect(() => {
     const currentHour = currentTime.getHours();
-    if (currentHour >= 16) {
-      setIsCheckIn(false); // Jam lebih dari 4 sore: check-out
+    const currentMinutes = currentTime.getMinutes();
+
+    // Cek apakah sudah lebih dari atau sama dengan 20:50
+    if (currentHour > 10 || (currentHour === 17 && currentMinutes >= 15)) {
+      setIsCheckIn(false); // Waktu check-out
     } else {
-      setIsCheckIn(true); // Sebelum jam 4 sore: check-in
+      setIsCheckIn(true); // Waktu check-in
     }
 
     const interval = setInterval(() => {

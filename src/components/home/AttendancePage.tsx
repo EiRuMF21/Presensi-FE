@@ -1,5 +1,5 @@
-import {useState, useEffect, useRef} from "react";
-import {useNavigate} from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AttendancePage = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -91,10 +91,7 @@ const AttendancePage = () => {
     <div className="flex flex-col items-center min-h-screen text-black bg-gray-100">
       {/* Navbar */}
       <div className="flex items-center justify-between w-full px-4 py-4 bg-white shadow-md">
-        <button
-          onClick={() => navigate(-1)}
-          className="text-black"
-        >
+        <button onClick={() => navigate(-1)} className="text-black">
           <img
             src="https://img.icons8.com/ios-glyphs/30/000000/back.png"
             alt="Back Icon"
@@ -111,32 +108,32 @@ const AttendancePage = () => {
       </div>
 
       {/* Content */}
-      <div className="w-11/12 max-w-lg p-6 mt-6 bg-white rounded-lg shadow-lg">
-        <h1 className="text-2xl font-semibold text-center">
+      <div className="w-11/12 max-w-4xl p-6 mt-6 bg-white rounded-lg shadow-lg">
+        <h1 className="text-2xl font-semibold text-center md:text-3xl lg:text-4xl">
           {isCheckIn ? "Good Morning" : "Good Evening"}
         </h1>
         <div className="flex items-center justify-between mt-4">
-          <p className="text-lg">
+          <p className="text-lg md:text-xl lg:text-2xl">
             {currentTime.toLocaleDateString("en-GB", {
               day: "numeric",
               month: "long",
               year: "numeric",
             })}
           </p>
-          <p className="text-lg font-semibold">
+          <p className="text-lg font-semibold md:text-xl lg:text-2xl">
             {currentTime.toLocaleTimeString()}
           </p>
         </div>
         <p className="mt-2 text-center text-gray-600">📍 SMKN 4 Bandung</p>
 
         <div className="flex justify-center mt-6">
-          <div className="p-6 bg-gray-100 rounded-lg">
+          <div className="p-6 bg-gray-100 rounded-lg max-w-md w-full md:max-w-xl lg:max-w-2xl">
             {showCamera ? (
               <video
                 ref={videoRef}
                 autoPlay
                 playsInline
-                className="w-full h-auto rounded-lg" // Pastikan ukuran video sesuai
+                className="w-full h-auto rounded-lg"
               />
             ) : (
               <img
@@ -149,14 +146,11 @@ const AttendancePage = () => {
         </div>
 
         {/* Hidden canvas for capturing the image */}
-        <canvas
-          ref={canvasRef}
-          style={{display: "none"}}
-        />
+        <canvas ref={canvasRef} style={{ display: "none" }} />
 
         <button
           onClick={handleAttendance}
-          className={`w-full px-6 py-3 mt-6 font-bold text-white rounded-full ${
+          className={`w-full px-6 py-3 mt-6 font-bold text-white rounded-full md:text-lg lg:text-xl ${
             showCamera ? "bg-red-500" : "bg-blue-500"
           }`}
         >

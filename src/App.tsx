@@ -13,9 +13,10 @@ import DashboardAdmin from "./pages/Dashboard";
 import Homepage from "./pages/Homepage";
 import ProfileSettings from "./components/layouts/ProfileSetting";
 import AttendancePage from "./components/home/AttendancePage";
-import SubmissionTable from "./components/Submission/SubmissionData";
+import SubmissionTable from "./components/admin/SubmissionData";
 import RecapTable from "./components/admin/RecapTable";
 import ProtectedRoute from "./ProtectedRouteComponent";
+import UserManageTable from "./components/admin/UserManage";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -26,7 +27,12 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={<ProfileSettings />} />
+        <Route path="/admin" element={<DashboardAdmin />} />
+        <Route path="/home" element={<Homepage />} />
+        <Route path="/attendance" element={<AttendancePage />} />
+        <Route path="/datasubmission" element={<SubmissionTable />} />
+        <Route path="/userdata" element={<UserManageTable />} />
+
         {/* Halaman yang dilindungi: hanya bisa diakses jika sudah login */}
         {/* <Route
           path="/home"
@@ -35,11 +41,17 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               <Homepage />
             </ProtectedRoute>
           }
-        /> */}
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/admin" element={<DashboardAdmin />} />
-        <Route path="/home" element={<Homepage />} />
+        />
+
+        <Route
+          path="/recap"
+          element={
+            <ProtectedRoute>
+              <RecapTable />
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="/profile"
           element={
@@ -48,9 +60,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             </ProtectedRoute>
           }
         />
-        <Route path="/attendance" element={<AttendancePage />} />
-        <Route path="/datasubmission" element={<SubmissionTable />} />
-        <Route path="/recap" element={<RecapTable />} />
 
         {/* Redirect ke halaman login jika mencoba mengakses rute yang tidak ada */}
         <Route path="*" element={<Navigate to="/login" replace />} />
