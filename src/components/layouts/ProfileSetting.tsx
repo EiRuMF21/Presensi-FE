@@ -35,8 +35,10 @@ const ProfileSettings: React.FC = () => {
         <button onClick={() => navigate(-1)} className="text-black">
           <ArrowLeft size={24} />
         </button>
-        <h1 className="text-lg font-bold">Profile Settings</h1>
-        <Bell size={24} className="text-black" />
+        <h1 className="text-lg text-black font-bold mr-[165vh]">Profile Settings</h1>
+        <div className="flex justify-center mr-16">
+          <Bell size={24} className="text-black" />
+        </div>
       </div>
 
       <div className="flex items-center justify-center flex-1 p-4">
