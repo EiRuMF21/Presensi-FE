@@ -202,24 +202,24 @@ const initialUsers: User[] = [
 const UserDataTable: React.FC = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState<User[]>(initialUsers);
-  // const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [selectedUser, setSelectedUser] = useState<User | null>({
-    id: 0,
-    name: "",
-    email: "",
-    registrationDate: "",
-    position: "",
-    division: "",
-    remainingDaysOff: 0,
-    phone: 0,
-    password: "",
-    address: "",
-  });
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  // const [selectedUser, setSelectedUser] = useState<User | null>({
+  //   id: 0,
+  //   name: "",
+  //   email: "",
+  //   registrationDate: "",
+  //   position: "",
+  //   division: "",
+  //   remainingDaysOff: 0,
+  //   phone: 0,
+  //   password: "",
+  //   address: "",
+  // });
 
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 10; 
-  
+  const usersPerPage = 10;
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleView = (user: User) => {
     setSelectedUser(user); // Set selected user and open modal
@@ -238,41 +238,41 @@ const UserDataTable: React.FC = () => {
   };
 
   const handleBack = () => {
-    navigate("/userdata"); // This will navigate to the previous page
-};
+    navigate(-1); // This will navigate to the previous page
+  };
 
- const handleSubmit = async () => {
-   if (selectedUser) {
-     try {
-       await axios.post(`/users/${selectedUser.id}`, {
-         name: selectedUser.name,
-         position: selectedUser.position,
-         division: selectedUser.division,
-         remainingDaysOff: selectedUser.remainingDaysOff,
-         phone: selectedUser.phone,
-         address: selectedUser.address,
-       });
-       alert("User updated successfully");
-       setSelectedUser(null);
-     } catch (error) {
-       console.error("Error updating user:", error);
-       alert("Failed to update user");
-     }
-   } else {
-     alert("No user selected");
-   }
- };
-
+  const handleSubmit = async () => {
+    if (selectedUser) {
+      try {
+        await axios.post(`/users/${selectedUser.id}`, {
+          name: selectedUser.name,
+          position: selectedUser.position,
+          division: selectedUser.division,
+          remainingDaysOff: selectedUser.remainingDaysOff,
+          phone: selectedUser.phone,
+          address: selectedUser.address,
+        });
+        alert("User updated successfully");
+        setSelectedUser(null);
+      } catch (error) {
+        console.error("Error updating user:", error);
+        alert("Failed to update user");
+      }
+    } else {
+      alert("No user selected");
+    }
+  };
 
   const handlePopup = () => {
     setSelectedUser(null);
   };
 
-  const handleBoth = () => {
-    handleBack();
-    handleSubmit();
-  }
-  
+  const handleBoth = async () => {
+    await handleSubmit();
+    handlePopup();
+  };
+
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -347,9 +347,7 @@ const UserDataTable: React.FC = () => {
                   <div className="flex items-center">
                     <div className="h-10 w-10 rounded-full bg-gray-300 flex-shrink-0"></div>
                     <div className="ml-3">
-                      <p className="font-medium text-gray-900">
-                        {user.name}
-                      </p>
+                      <p className="font-medium text-gray-900">{user.name}</p>
                       <p className="font-normal text-sm text-gray-900">
                         {user.email}
                       </p>
@@ -431,7 +429,7 @@ const UserDataTable: React.FC = () => {
       </div>
 
       {/* Modal for editing user */}
-      {selectedUser && (
+      {selectedUser !== null && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded-lg shadow-lg p-6 h-[40em] w-[45rem]  px-14">
             <div className="border-b-[3px] flex  border-black pb-2">
@@ -453,14 +451,13 @@ const UserDataTable: React.FC = () => {
                 <input
                   type="text"
                   value={selectedUser.name}
-                  readOnly
                   className="w-full text-black pl-4 rounded-xl focus:outline-none max-w-[40vh] h-9 bg-[#D9D9D9]"
                 />
               </div>
               <div className="flex justify-between border-b-[3px] pb-2 border-[#D9D9D9] px-4">
                 <h1 className="text-black">Password</h1>
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   value={selectedUser.password}
                   readOnly
                   className="w-full text-black pl-4 rounded-xl focus:outline-none max-w-[40vh] h-9 bg-[#D9D9D9]"
@@ -519,8 +516,7 @@ const UserDataTable: React.FC = () => {
             <div className="mt-6 flex justify-end">
               <button
                 type="submit"
-                onClick={handleBoth   }
-                
+                onClick={handleBoth}
                 className="bg-blue-500  hover:bg-blue-600 text-white px-8 py-2 rounded-3xl"
               >
                 Apply

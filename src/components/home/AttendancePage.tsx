@@ -1,44 +1,59 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  createDetector,
+  SupportedModels,
+  FaceLandmarksDetector,
+  Keypoint,
+} from "@tensorflow-models/face-landmarks-detection";
+import "@tensorflow/tfjs-core";
+import "@tensorflow/tfjs-backend-webgl";
 
 const AttendancePage = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [showCamera, setShowCamera] = useState(false);
-  const [isCheckIn, setIsCheckIn] = useState(true); // State untuk check-in atau check-out
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [isCheckIn, setIsCheckIn] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
   const navigate = useNavigate();
 
-  // Update waktu setiap detik
+  // Update time every second
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);
-
     return () => clearInterval(interval);
   }, []);
 
-  // Fungsi untuk menentukan apakah ini waktu check-in atau check-out
+  // Determine whether it's check-in or check-out time
   useEffect(() => {
     const currentHour = currentTime.getHours();
-    if (currentHour >= 16) {
-      setIsCheckIn(false); // Sore hari (check-out)
-    } else {
-      setIsCheckIn(true); // Pagi hari (check-in)
-    }
+    setIsCheckIn(currentHour < 16);
   }, [currentTime]);
 
-  // Fungsi untuk mengaktifkan kamera
+  // Activate the camera
   const activateCamera = async () => {
     try {
       const videoStream = await navigator.mediaDevices.getUserMedia({
         video: true,
       });
+
+      console.log("Video Stream:", videoStream); // Log the video stream
+
       if (videoRef.current) {
         videoRef.current.srcObject = videoStream;
-        videoRef.current.play(); // Pastikan video mulai diputar
+        await new Promise((resolve) => {
+          if (videoRef.current) {
+            videoRef.current.onloadedmetadata = () => {
+              console.log("Video metadata loaded");
+              resolve(null);
+            };
+          }
+        });
+        videoRef.current.play(); // Ensure the video starts playing
       }
+
       setStream(videoStream);
       setShowCamera(true);
     } catch (error) {
@@ -47,7 +62,63 @@ const AttendancePage = () => {
     }
   };
 
-  // Fungsi untuk menangkap gambar dari video
+
+
+  // Load model and detect
+  const loadModelAndDetect = async () => {
+    if (!videoRef.current || !canvasRef.current) return; // Handle null case here
+
+    // Load the model
+    const model: FaceLandmarksDetector = await createDetector(
+      SupportedModels.MediaPipeFaceMesh
+    );
+
+    const detect = async () => {
+      if (videoRef.current?.readyState === 4) {
+        const predictions = await model.estimateFaces(videoRef.current);
+
+        const canvas = canvasRef.current;
+        if (!canvas) return; // Handle the case where canvas is null
+
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return; // Handle the case where context is null
+
+        if (predictions.length > 0) {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          predictions.forEach((prediction) => {
+            const keypoints: Keypoint[] = prediction.keypoints;
+            keypoints.forEach((keypoint: Keypoint) => {
+              const [x, y] = [keypoint.x, keypoint.y];
+              ctx.beginPath();
+              ctx.arc(x, y, 1, 0, 2 * Math.PI);
+              ctx.fillStyle = "red";
+              ctx.fill();
+            });
+          });
+        }
+      }
+
+      requestAnimationFrame(detect);
+    };
+
+    detect();
+  };
+
+  useEffect(() => {
+    activateCamera();
+    loadModelAndDetect();
+  }, []);
+
+  const handleAttendance = () => {
+    if (!showCamera) {
+      activateCamera();
+    } else {
+      captureImage();
+    }
+  };
+
+  // Function to capture image from video
   const captureImage = () => {
     if (videoRef.current && canvasRef.current) {
       const canvas = canvasRef.current;
@@ -59,31 +130,19 @@ const AttendancePage = () => {
         canvas.height = video.videoHeight;
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-        // Di sini kita bisa memproses gambar lebih lanjut, seperti mengirimkannya ke server
         const imageData = canvas.toDataURL("image/png");
         console.log("Captured image data:", imageData);
       }
 
-      // Simulasi berhasil check-in atau check-out
       const action = isCheckIn ? "Check-in" : "Check-out";
       console.log(`${action} at:`, currentTime.toLocaleTimeString());
       alert(`${action} successful!`);
 
-      // Hentikan stream kamera
       if (stream) {
         stream.getTracks().forEach((track) => track.stop());
       }
 
       navigate("/home");
-    }
-  };
-
-  // Fungsi untuk menangani tombol Attendance
-  const handleAttendance = () => {
-    if (!showCamera) {
-      activateCamera();
-    } else {
-      captureImage();
     }
   };
 
@@ -129,12 +188,20 @@ const AttendancePage = () => {
         <div className="flex justify-center mt-6">
           <div className="p-6 bg-gray-100 rounded-lg max-w-md w-full md:max-w-xl lg:max-w-2xl">
             {showCamera ? (
-              <video
-                ref={videoRef}
-                autoPlay
-                playsInline
-                className="w-full h-auto rounded-lg"
-              />
+              <>
+                <video
+                  ref={videoRef}
+                  className="w-full h-auto border-2 border-gray-300"
+                  autoPlay
+                  playsInline
+                  style={{ display: showCamera ? "block" : "none" }}
+                />
+                <canvas
+                  ref={canvasRef}
+                  className="absolute top-0 left-0 w-full h-full"
+                  style={{ display: "none" }} // Show this when needed for drawing
+                />
+              </>
             ) : (
               <img
                 src="https://img.icons8.com/ios-filled/50/000000/camera.png"
@@ -144,9 +211,6 @@ const AttendancePage = () => {
             )}
           </div>
         </div>
-
-        {/* Hidden canvas for capturing the image */}
-        <canvas ref={canvasRef} style={{ display: "none" }} />
 
         <button
           onClick={handleAttendance}

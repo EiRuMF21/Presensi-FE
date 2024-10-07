@@ -29,7 +29,7 @@ const Legend: React.FC<LegendProps> = ({ onFilterSelect }) => {
         <button
           key={name}
           onClick={() => handleClick(name)}
-          className={`px-3 py-1 rounded-full transition-colors duration-200 text-sm flex items-center justify-center ${
+          className={`px-3 py-1 rounded-full transition-colors duration-200 text-sm flex items-center justify-center border-2 border-black ${
             activeLabel === name
               ? "bg-black text-white"
               : `text-black hover:bg-opacity-80`

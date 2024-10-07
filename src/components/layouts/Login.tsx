@@ -31,7 +31,7 @@ const Login: React.FC = () => {
             atob(response.data.token.split(".")[1])
           );
           const userRole = decodedToken.role;
-          navigate(userRole === "ADMIN" ? "/dashboard" : "/home");
+          navigate(userRole === "ADMIN" ? "/admin" : "/home");
         }
       } catch (err) {
         console.error("Login error:", err);
