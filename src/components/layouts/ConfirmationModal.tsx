@@ -4,12 +4,14 @@ interface ConfirmationModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
+  children: React.ReactNode; // Add the children prop here
 }
 
 const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   isOpen,
   onClose,
   onConfirm,
+  children, // Destructure the children prop
 }) => {
   if (!isOpen) return null;
 
