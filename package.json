@@ -11,9 +11,14 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.1.8",
+    "@mediapipe/face_mesh": "^0.4.1633559619",
     "@radix-ui/react-dialog": "^1.1.1",
     "@tensorflow-models/face-detection": "^1.0.2",
+    "@tensorflow-models/face-landmarks-detection": "^1.0.5",
     "@tensorflow/tfjs": "^4.21.0",
+    "@tensorflow/tfjs-backend-webgl": "^4.21.0",
+    "@tensorflow/tfjs-converter": "^4.21.0",
+    "@tensorflow/tfjs-core": "^4.21.0",
     "axios": "^1.7.7",
     "date-fns": "^3.6.0",
     "gsap": "^3.12.5",
@@ -23,6 +28,7 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.0",
     "react-scroll": "^1.9.0",
+    "react-toastify": "^10.0.5",
     "recharts": "^2.12.7",
     "ui": "^0.2.4"
   },
