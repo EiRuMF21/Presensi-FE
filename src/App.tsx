@@ -32,6 +32,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path="/register" element={<Register />} />
         {/* <Route path="/admin" element={<DashboardAdmin />} /> */}
         <Route path="/home" element={<Homepage />} />
+        <Route path="/ProfileSettings" element={<ProfileSettings />} />
         <Route path="/attendance" element={<AttendancePage />} />
         <Route path="/datasubmission" element={<SubmissionTable />} />
         <Route path="/manageuser" element={<UserManageTable />} />

@@ -72,12 +72,12 @@ const Footer: React.FC = () => {
         {/* Bottom Section */}
         <div className="flex flex-col items-center justify-between pt-8 border-t border-gray-400 md:flex-row">
           <p className="mb-4 text-sm text-center md:text-left md:mb-0">
-            © {new Date().getFullYear()} Smart Presences. All rights reserved.
+            © {new Date().getFullYear()} Smart Attendance. All rights reserved.
           </p>
           <p className="text-sm text-center md:text-right">
-            Hand-crafted & Made by{" "}
+            Made by{" "}
             <a
-              href="https://xii-rpl3.vercel.app/"
+              href="https://xii-rpl3.v1ercel.app/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-400 hover:underline"
