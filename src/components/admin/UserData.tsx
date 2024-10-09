@@ -40,7 +40,7 @@ const UserData: React.FC = () => {
       const response = await axios.get(`${API_BASE_URL}/api/pending`);
       setUsers(response.data); // This will now include passwords
       setError(null);
-      toast.success("Users fetched successfully!"); // Success notification
+      
     } catch (error) {
       setError("Failed to fetch pending users."); // Set error state
       toast.error("Failed to fetch pending users."); // Error notification
