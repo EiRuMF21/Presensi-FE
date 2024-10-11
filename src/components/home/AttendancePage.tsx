@@ -4,13 +4,12 @@ import {useNavigate} from "react-router-dom";
 const AttendancePage = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [showCamera, setShowCamera] = useState(false);
-  const [isCheckIn, setIsCheckIn] = useState(true); // State untuk check-in atau check-out
+  const [isCheckIn, setIsCheckIn] = useState(true);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
   const navigate = useNavigate();
 
-  // Update waktu setiap detik
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(new Date());
@@ -19,17 +18,15 @@ const AttendancePage = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Fungsi untuk menentukan apakah ini waktu check-in atau check-out
   useEffect(() => {
     const currentHour = currentTime.getHours();
     if (currentHour >= 16) {
-      setIsCheckIn(false); // Sore hari (check-out)
+      setIsCheckIn(false);
     } else {
-      setIsCheckIn(true); // Pagi hari (check-in)
+      setIsCheckIn(true);
     }
   }, [currentTime]);
 
-  // Fungsi untuk mengaktifkan kamera
   const activateCamera = async () => {
     try {
       const videoStream = await navigator.mediaDevices.getUserMedia({
@@ -37,7 +34,7 @@ const AttendancePage = () => {
       });
       if (videoRef.current) {
         videoRef.current.srcObject = videoStream;
-        videoRef.current.play(); // Pastikan video mulai diputar
+        videoRef.current.play();
       }
       setStream(videoStream);
       setShowCamera(true);
@@ -47,7 +44,6 @@ const AttendancePage = () => {
     }
   };
 
-  // Fungsi untuk menangkap gambar dari video
   const captureImage = () => {
     if (videoRef.current && canvasRef.current) {
       const canvas = canvasRef.current;
@@ -59,17 +55,13 @@ const AttendancePage = () => {
         canvas.height = video.videoHeight;
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-        // Di sini kita bisa memproses gambar lebih lanjut, seperti mengirimkannya ke server
         const imageData = canvas.toDataURL("image/png");
         console.log("Captured image data:", imageData);
       }
 
-      // Simulasi berhasil check-in atau check-out
       const action = isCheckIn ? "Check-in" : "Check-out";
       console.log(`${action} at:`, currentTime.toLocaleTimeString());
       alert(`${action} successful!`);
-
-      // Hentikan stream kamera
       if (stream) {
         stream.getTracks().forEach((track) => track.stop());
       }
@@ -78,7 +70,6 @@ const AttendancePage = () => {
     }
   };
 
-  // Fungsi untuk menangani tombol Attendance
   const handleAttendance = () => {
     if (!showCamera) {
       activateCamera();
@@ -111,7 +102,7 @@ const AttendancePage = () => {
       </div>
 
       {/* Content */}
-      <div className="w-11/12 max-w-lg p-6 mt-6 bg-white rounded-lg shadow-lg">
+      <div className="w-5/6 max-w-lg p-6 mt-64 bg-white rounded-lg shadow-lg">
         <h1 className="text-2xl font-semibold text-center">
           {isCheckIn ? "Good Morning" : "Good Evening"}
         </h1>
@@ -136,7 +127,7 @@ const AttendancePage = () => {
                 ref={videoRef}
                 autoPlay
                 playsInline
-                className="w-full h-auto rounded-lg" // Pastikan ukuran video sesuai
+                className="w-full h-auto rounded-lg"
               />
             ) : (
               <img

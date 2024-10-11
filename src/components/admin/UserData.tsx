@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {ChevronLeft, Search} from "lucide-react";
+import {ChevronLeft, Search, MoreVertical} from "lucide-react";
 
 interface User {
   id: number;
@@ -26,48 +26,6 @@ const initialUsers: User[] = [
     id: 3,
     name: "Username",
     email: "Username@gmail.com",
-    password: "Thispas*****",
-  },
-  {
-    id: 4,
-    name: "Aldi Manuel",
-    email: "Manuelaldi@gmail.com",
-    password: "Thispas*****",
-  },
-  {
-    id: 5,
-    name: "Bilal",
-    email: "Bilalbilal@gmail.com",
-    password: "Thispas*****",
-  },
-  {
-    id: 6,
-    name: "Cyd Dabir",
-    email: "DabirCyd@gmail.com",
-    password: "Thispas*****",
-  },
-  {
-    id: 7,
-    name: "Doe Kinan",
-    email: "KinanDoe@gmail.com",
-    password: "Thispas*****",
-  },
-  {
-    id: 8,
-    name: "Elzein",
-    email: "Elzein123@gmail.com",
-    password: "Thispas*****",
-  },
-  {
-    id: 9,
-    name: "Ghana Hasan",
-    email: "Hasan89@gmail.com",
-    password: "Thispas*****",
-  },
-  {
-    id: 10,
-    name: "Kadeen",
-    email: "Kadeen76@gmail.com",
     password: "Thispas*****",
   },
 ];
@@ -107,33 +65,35 @@ const UserData: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] py-8 px-4">
+    <div className="min-h-screen bg-[#FFFFFF] overflow-hidden py-2 px-2 sm:px-4">
       {/* Header */}
-      <div className="flex justify-between items-center ml-14 mb-2 border-b-[3px] py-[10px]">
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-2 border-b-[3px]">
         <button
           onClick={handleBack}
-          className="absolute left-0 top-7 z-20 text-black border-b-[3px] py-[12px] px-5 -mt-6"
+          className="text-black py-2 px-2 sm:py-[12px] sm:px-5"
         >
-          <ChevronLeft className="w-8 h-8" />
+          <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8" />
         </button>
-        <h2 className="-mt-8 text-lg font-bold text-black">
-          USER REGISTRATION
+        <h2 className="my-2 text-lg font-bold text-black sm:my-0">
+          USER REGISTER
         </h2>
-        <div className="flex items-center -mt-8 mr-[80vh] bg-gray-200 rounded-2xl px-4 py-2 w-80">
-          <Search className="-ml-5 text-[#979797]" />
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full ml-2 text-black bg-transparent outline-none"
-          />
+        <div className="flex justify-center w-full sm:w-auto sm:flex-1">
+          <div className="flex items-center w-full px-2 py-1 bg-gray-200 sm:px-4 sm:py-2 rounded-2xl sm:w-80">
+            <Search className="text-[#979797] w-4 h-4 sm:w-5 sm:h-5" />
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full ml-2 text-sm text-black bg-transparent outline-none sm:text-base"
+            />
+          </div>
         </div>
       </div>
 
       <div className="overflow-x-auto">
-        <table className="min-w-full border-collapse table-fixed">
-          <thead>
+        <table className="min-w-full border-collapse table-auto sm:table-fixed">
+          <thead className="hidden sm:table-header-group">
             <tr className="bg-gray-200 border-b">
               <th className="w-12 px-4 py-2 font-semibold text-center text-gray-600">
                 #
@@ -156,34 +116,54 @@ const UserData: React.FC = () => {
             {currentUsers.map((user, index) => (
               <tr
                 key={user.id}
-                className="border-b"
+                className="flex flex-col mb-4 border-b sm:table-row sm:mb-0"
               >
-                <td className="px-4 py-3 text-center text-black">
-                  {indexOfFirstUser + index + 1}
+                <td className="block px-2 py-1 text-center text-black sm:px-4 sm:py-3 sm:table-cell">
+                  <span className="font-bold sm:font-normal">
+                    {indexOfFirstUser + index + 1}
+                  </span>
                 </td>
-                <td className="px-4 py-3 text-gray-700">{user.name}</td>
-                <td className="px-4 py-3 text-gray-700">{user.email}</td>
-                <td className="px-4 py-3 text-gray-700">{user.password}</td>
-                <td className="px-4 py-3 text-center">
-                  <button
-                    onClick={() => handleAccept(user.id)}
-                    className="px-3 py-1 mr-2 text-sm text-white bg-green-500 rounded hover:bg-green-600"
-                  >
-                    Accept
-                  </button>
-                  <button
-                    onClick={() => handleDecline(user.id)}
-                    className="px-3 py-1 text-sm text-white bg-red-500 rounded hover:bg-red-600"
-                  >
-                    Decline
-                  </button>
+                <td className="block px-2 py-1 text-gray-700 sm:px-4 sm:py-3 sm:table-cell">
+                  <span className="font-bold sm:hidden">Name: </span>
+                  {user.name}
+                </td>
+                <td className="block px-2 py-1 text-gray-700 sm:px-4 sm:py-3 sm:table-cell">
+                  <span className="font-bold sm:hidden">Email: </span>
+                  {user.email}
+                </td>
+                <td className="block px-2 py-1 text-gray-700 sm:px-4 sm:py-3 sm:table-cell">
+                  <span className="font-bold sm:hidden">Password: </span>
+                  {user.password}
+                </td>
+                <td className="block px-2 py-1 text-center sm:px-4 sm:py-3 sm:table-cell">
+                  <div className="flex items-center justify-between sm:justify-center">
+                    <div className="sm:hidden">
+                      <button className="p-1 text-gray-500">
+                        <MoreVertical className="w-5 h-5" />
+                      </button>
+                    </div>
+                    <div className="hidden sm:block">
+                      <button
+                        onClick={() => handleAccept(user.id)}
+                        className="px-3 py-1 mr-2 text-sm text-white bg-green-500 rounded hover:bg-green-600"
+                      >
+                        Accept
+                      </button>
+                      <button
+                        onClick={() => handleDecline(user.id)}
+                        className="px-3 py-1 text-sm text-white bg-red-500 rounded hover:bg-red-600"
+                      >
+                        Decline
+                      </button>
+                    </div>
+                  </div>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <div className="flex items-center justify-between mt-4">
-          <p className="text-sm text-gray-500">
+        <div className="flex flex-col items-center justify-between mt-4 sm:flex-row">
+          <p className="mb-2 text-sm text-gray-500 sm:mb-0">
             Showing {indexOfFirstUser + 1} to{" "}
             {Math.min(indexOfLastUser, filteredUsers.length)} out of{" "}
             {filteredUsers.length} entries
@@ -192,19 +172,21 @@ const UserData: React.FC = () => {
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
-              className="px-4 py-2 text-gray-600 transition-colors bg-gray-200 rounded-full disabled:opacity-50 hover:bg-gray-300"
+              className="px-3 py-1 text-sm text-gray-600 transition-colors bg-gray-200 rounded-full sm:px-4 sm:py-2 sm:text-base disabled:opacity-50 hover:bg-gray-300"
             >
               Previous
             </button>
-            <div className="flex items-center justify-center w-10 h-10 bg-gray-800 rounded-full">
-              <span className="font-bold text-white">{currentPage}</span>
+            <div className="flex items-center justify-center w-8 h-8 bg-gray-800 rounded-full sm:w-10 sm:h-10">
+              <span className="text-sm font-bold text-white sm:text-base">
+                {currentPage}
+              </span>
             </div>
             <button
               onClick={() =>
                 setCurrentPage((prev) => Math.min(prev + 1, pageNumbers.length))
               }
               disabled={currentPage === pageNumbers.length}
-              className="px-4 py-2 text-gray-600 transition-colors bg-gray-200 rounded-full disabled:opacity-50 hover:bg-gray-300"
+              className="px-3 py-1 text-sm text-gray-600 transition-colors bg-gray-200 rounded-full sm:px-4 sm:py-2 sm:text-base disabled:opacity-50 hover:bg-gray-300"
             >
               Next
             </button>

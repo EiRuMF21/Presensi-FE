@@ -53,7 +53,7 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
       onMouseEnter={() => onHover(day)}
       onMouseLeave={onLeave}
     >
-      <p className="text-md -ml-28 text-black bg-[#D9D9D9] px-2 rounded-full font-bold">
+      <p className="text-sm lg:-ml-28 sm:ml-0 text-black bg-[#D9D9D9] px-2 rounded-full font-bold">
         {day}
       </p>
 

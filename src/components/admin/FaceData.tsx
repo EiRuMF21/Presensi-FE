@@ -118,9 +118,9 @@ const FaceData: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] py-2 px-4">
+    <div className="min-h-screen overflow-hidden bg-[#FFFFFF] py-2 px-4">
       {/* Header */}
-      <div className="flex justify-between items-center mb-2 border-b-[3px] py-[10px]">
+      <div className="flex justify-between items-center mb-2 border-b-[3px]">
         <button
           onClick={handleBack}
           className="text-black py-[12px] px-5"
@@ -140,6 +140,7 @@ const FaceData: React.FC = () => {
             />
           </div>
         </div>
+
         <select
           className="px-4 py-2 text-sm text-black bg-white border border-gray-300 rounded-full"
           value={filter}
@@ -151,11 +152,11 @@ const FaceData: React.FC = () => {
         </select>
       </div>
 
-      {/* Table and rest of the component remain unchanged */}
+      {/* Table */}
       <div className="overflow-x-auto">
         <table className="min-w-full border-collapse table-fixed">
           <thead>
-            <tr className="bg-[#FFFFFF]">
+            <tr className="bg-gray-200">
               <th className="w-12 px-4 py-2 font-semibold text-center text-gray-600">
                 #
               </th>

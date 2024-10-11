@@ -1,21 +1,33 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {ArrowLeft, Search, ChevronDown, ChevronUp} from "lucide-react";
+import {ChevronLeft, Search, ChevronDown, ChevronUp} from "lucide-react";
 import * as Dialog from "@radix-ui/react-dialog";
+
+interface Submission {
+  id: number;
+  name: string;
+  email: string;
+  division: string;
+  phone: string;
+  date: string;
+  submission: string;
+  status: string;
+}
 
 const SubmissionTable: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [divisionFilter, setDivisionFilter] = useState<string>("ALL");
-  const [submissionFilter, setSubmissionFilter] = useState<string>("ALL");
+  const [submissionFilter, setSubmissionFilter] =
+    useState<string>("Submission");
+  const [divisionFilter, setDivisionFilter] = useState<string>("Division");
   const [isSubmissionDropdownOpen, setIsSubmissionDropdownOpen] =
     useState(false);
   const [isDivisionDropdownOpen, setIsDivisionDropdownOpen] = useState(false);
   const [isApprovalDialogOpen, setIsApprovalDialogOpen] = useState(false);
-  const [, setSelectedSubmission] = useState<any>(null);
+  const [, setSelectedSubmission] = useState<Submission | null>(null);
   const navigate = useNavigate();
 
-  const submissionData = [
+  const submissionData: Submission[] = [
     {
       id: 1,
       name: "Kinan Doe",
@@ -120,8 +132,9 @@ const SubmissionTable: React.FC = () => {
 
   const filteredData = submissionData.filter(
     (item) =>
-      (submissionFilter === "ALL" || item.submission === submissionFilter) &&
-      (divisionFilter === "ALL" || item.division === divisionFilter) &&
+      (submissionFilter === "Submission" ||
+        item.submission === submissionFilter) &&
+      (divisionFilter === "Division" || item.division === divisionFilter) &&
       (item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.division.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -135,33 +148,41 @@ const SubmissionTable: React.FC = () => {
     currentPage * itemsPerPage
   );
 
-  const handleApprovalClick = (submission: any) => {
+  const handleApprovalClick = (submission: Submission) => {
     setSelectedSubmission(submission);
     setIsApprovalDialogOpen(true);
   };
 
-  const handleApprove = () => setIsApprovalDialogOpen(false);
-  const handleDecline = () => setIsApprovalDialogOpen(false);
+  const handleApprove = () => {
+    setIsApprovalDialogOpen(false);
+  };
+
+  const handleDecline = () => {
+    setIsApprovalDialogOpen(false);
+  };
 
   return (
-    <div className="fixed w-full h-full p-6 text-black bg-white">
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center">
-          <ArrowLeft
-            className="mr-2 cursor-pointer"
-            onClick={() => navigate("/admin")}
-          />
-          <h1 className="text-xl font-bold">PERMISSION SUBMISSION</h1>
-        </div>
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center mr-[80vh] bg-gray-200 rounded-2xl px-4 py-2 w-80">
-            <Search className="text-[#979797]" />
+    <div className="min-h-screen bg-[#FFFFFF] overflow-hidden py-8 px-4">
+      {/* Header */}
+      <div className="flex justify-between items-center ml-14 mb-2 border-b-[3px] py-[10px]">
+        <button
+          onClick={() => navigate("/admin")}
+          className="absolute left-0 top-7 z-20 text-black border-b-[3px] py-[12px] px-5 -mt-6"
+        >
+          <ChevronLeft className="w-8 h-8" />
+        </button>
+        <h2 className="-mt-8 text-lg font-bold text-black">
+          PERMISSION SUBMISSION
+        </h2>
+        <div className="flex items-center -mt-8 space-x-4">
+          <div className="flex items-center w-full px-2 py-1 bg-gray-200 sm:px-4 sm:py-2 rounded-2xl sm:w-80">
+            <Search className="text-[#979797] w-4 h-4 sm:w-5 sm:h-5" />
             <input
               type="text"
               placeholder="Search..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full ml-2 text-black bg-transparent outline-none"
+              className="w-full ml-2 text-sm text-black bg-transparent outline-none sm:text-base"
             />
           </div>
 
@@ -179,21 +200,26 @@ const SubmissionTable: React.FC = () => {
               )}
             </button>
             {isSubmissionDropdownOpen && (
-              <div className="absolute right-0 z-10 w-48 mt-2 bg-white border-b border-gray-300 rounded-lg shadow-lg">
-                {["Sick", "Duty", "On Leave", "Office Duty", "WFH", "ALL"].map(
-                  (option) => (
-                    <div
-                      key={option}
-                      onClick={() => {
-                        setSubmissionFilter(option);
-                        setIsSubmissionDropdownOpen(false);
-                      }}
-                      className="px-4 py-2 cursor-pointer hover:bg-gray-100"
-                    >
-                      {option}
-                    </div>
-                  )
-                )}
+              <div className="absolute right-0 z-10 w-48 mt-2 text-black bg-white border-b border-gray-300 rounded-lg shadow-lg">
+                {[
+                  "Submission",
+                  "Sick",
+                  "Duty",
+                  "On Leave",
+                  "Office Duty",
+                  "WFH",
+                ].map((option) => (
+                  <div
+                    key={option}
+                    onClick={() => {
+                      setSubmissionFilter(option);
+                      setIsSubmissionDropdownOpen(false);
+                    }}
+                    className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                  >
+                    {option}
+                  </div>
+                ))}
               </div>
             )}
           </div>
@@ -212,14 +238,14 @@ const SubmissionTable: React.FC = () => {
               )}
             </button>
             {isDivisionDropdownOpen && (
-              <div className="absolute right-0 z-10 w-48 mt-2 bg-white border-b border-gray-300 rounded-lg shadow-lg">
+              <div className="absolute right-0 z-10 w-48 mt-2 text-black bg-white border-b border-gray-300 rounded-lg shadow-lg">
                 {[
+                  "Division",
                   "Pemasaran",
                   "Produksi",
                   "Umum",
                   "Humas",
                   "Keuangan",
-                  "ALL",
                 ].map((option) => (
                   <div
                     key={option}
@@ -238,70 +264,93 @@ const SubmissionTable: React.FC = () => {
         </div>
       </div>
 
-      <table className="w-full border-collapse rounded">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="p-2 text-left">#</th>
-            <th className="p-2 text-left">USER</th>
-            <th className="p-2 text-left">DIVISION</th>
-            <th className="p-2 text-left">PHONE</th>
-            <th className="p-2 text-left">DATE</th>
-            <th className="p-2 text-left">SUBMISSION</th>
-            <th className="p-2 text-left">ACTION</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentItems.map((item) => (
-            <tr
-              key={item.id}
-              className="border-b"
-            >
-              <td className="p-2">{item.id}</td>
-              <td className="p-2">
-                <div>{item.name}</div>
-                <div className="text-sm text-gray-500">{item.email}</div>
-              </td>
-              <td className="p-2">{item.division}</td>
-              <td className="p-2">{item.phone}</td>
-              <td className="p-2">{item.date}</td>
-              <td className="p-2">{item.submission}</td>
-              <td className="p-2">
-                <button
-                  className={`px-3 py-1 rounded-full text-white ${
-                    item.status === "Approved" ? "bg-green-500" : "bg-blue-500"
-                  }`}
-                  onClick={() => handleApprovalClick(item)}
-                  disabled={item.status === "Approved"}
-                >
-                  {item.status === "Approved" ? "Approved" : "Approval"}
-                </button>
-              </td>
+      <div className="overflow-x-auto">
+        <table className="min-w-full border-collapse table-fixed">
+          <thead>
+            <tr className="bg-gray-200 border-b">
+              <th className="w-12 px-4 py-2 font-semibold text-center text-gray-600">
+                #
+              </th>
+              <th className="w-1/4 px-4 py-2 font-semibold text-left text-gray-600">
+                USER
+              </th>
+              <th className="w-1/6 px-4 py-2 font-semibold text-left text-gray-600">
+                DIVISION
+              </th>
+              <th className="w-1/6 px-4 py-2 font-semibold text-left text-gray-600">
+                PHONE
+              </th>
+              <th className="w-1/6 px-4 py-2 font-semibold text-left text-gray-600">
+                DATE
+              </th>
+              <th className="w-1/6 px-4 py-2 font-semibold text-left text-gray-600">
+                SUBMISSION
+              </th>
+              <th className="w-32 px-4 py-2 font-semibold text-center text-gray-600">
+                ACTION
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {currentItems.map((item) => (
+              <tr
+                key={item.id}
+                className="border-b"
+              >
+                <td className="px-4 py-3 text-center text-black">{item.id}</td>
+                <td className="px-4 py-3">
+                  <div className="font-medium text-gray-900">{item.name}</div>
+                  <div className="text-sm font-normal text-gray-900">
+                    {item.email}
+                  </div>
+                </td>
+                <td className="px-4 py-3 text-gray-700">{item.division}</td>
+                <td className="px-4 py-3 text-gray-700">{item.phone}</td>
+                <td className="px-4 py-3 text-gray-700">{item.date}</td>
+                <td className="px-4 py-3 text-gray-700">{item.submission}</td>
+                <td className="px-4 py-3 text-center">
+                  <button
+                    className={`px-3 py-1 rounded-full text-white ${
+                      item.status === "Approved"
+                        ? "bg-green-500"
+                        : "bg-blue-500"
+                    }`}
+                    onClick={() => handleApprovalClick(item)}
+                    disabled={item.status === "Approved"}
+                  >
+                    {item.status === "Approved" ? "Approved" : "Approval"}
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
-      <div className="flex items-center justify-between mt-4">
-        <div>
-          Showing{" "}
-          {Math.min((currentPage - 1) * itemsPerPage + 1, filteredData.length)}{" "}
-          to {Math.min(currentPage * itemsPerPage, filteredData.length)} of{" "}
-          {filteredData.length} results
-        </div>
-        <div className="flex space-x-2">
-          {Array.from({length: pageCount}, (_, i) => (
-            <button
-              key={i}
-              className={`px-3 py-1 rounded-full ${
-                i + 1 === currentPage
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200 text-gray-600"
-              }`}
-              onClick={() => setCurrentPage(i + 1)}
-            >
-              {i + 1}
-            </button>
-          ))}
+        <div className="flex items-center justify-between mt-4">
+          <p className="text-sm text-gray-500">
+            Showing{" "}
+            {Math.min(
+              (currentPage - 1) * itemsPerPage + 1,
+              filteredData.length
+            )}{" "}
+            to {Math.min(currentPage * itemsPerPage, filteredData.length)} out
+            of {filteredData.length} entries
+          </p>
+          <div className="flex space-x-2">
+            {Array.from({length: pageCount}, (_, i) => (
+              <button
+                key={i}
+                className={`px-3 py-1 rounded-full ${
+                  i + 1 === currentPage
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-200 text-gray-600"
+                }`}
+                onClick={() => setCurrentPage(i + 1)}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 

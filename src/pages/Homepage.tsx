@@ -20,19 +20,16 @@ const Homepage: React.FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [daysInMonth, setDaysInMonth] = useState<DayData[]>([]);
 
-  // Function to open calendar modal when a day is selected
   const openCalendarModal = (day: number) => {
     setSelectedDay(day);
     setIsCalendarModalOpen(true);
   };
 
-  // Function to close calendar modal
   const closeCalendarModal = () => {
     setIsCalendarModalOpen(false);
     setSelectedDay(null);
   };
 
-  // Calculate the number of days in the month and add placeholders if the month doesn't start from Sunday
   useEffect(() => {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
@@ -40,7 +37,6 @@ const Homepage: React.FC = () => {
     const numDays = new Date(year, month + 1, 0).getDate();
     const daysArray: DayData[] = [];
 
-    // Add placeholders for days before the 1st of the month
     for (let i = 0; i < firstDayOfMonth; i++) {
       daysArray.push({
         day: 0,
@@ -50,20 +46,18 @@ const Homepage: React.FC = () => {
       });
     }
 
-    // Add the actual days of the month
     for (let i = 1; i <= numDays; i++) {
       daysArray.push({
         day: i,
-        status: null, // You can set the actual status here if you have the data
-        checkInTime: null, // Set actual check-in time if available
-        checkOutTime: null, // Set actual check-out time if available
+        status: null,
+        checkInTime: null,
+        checkOutTime: null,
       });
     }
 
     setDaysInMonth(daysArray);
   }, [currentDate]);
 
-  // Function to handle month and year changes from MonthYearSelector
   const handleMonthYearChange = (newMonth: number, newYear: number) => {
     const newDate = new Date(currentDate);
     newDate.setFullYear(newYear);
@@ -71,11 +65,61 @@ const Homepage: React.FC = () => {
     setCurrentDate(newDate);
   };
 
+  // Mobile Calendar Component
+  const MobileCalendar = () => (
+    <div className="p-4 bg-white rounded-lg shadow-md">
+      <MonthYearSelector
+        initialMonth={currentDate.toLocaleString("default", {month: "long"})}
+        initialYear={currentDate.getFullYear()}
+        onMonthYearChange={(monthString, year) => {
+          const monthIndex = new Date(`${monthString} 1, ${year}`).getMonth();
+          handleMonthYearChange(monthIndex, year);
+        }}
+      />
+      <div className="grid grid-cols-7 gap-1 mt-4 text-center">
+        {["S", "M", "T", "W", "T", "F", "S"].map((day) => (
+          <div
+            key={day}
+            className="text-xs font-bold text-gray-600"
+          >
+            {day}
+          </div>
+        ))}
+      </div>
+      <div className="grid grid-cols-7 gap-1 mt-2 text-center text-black">
+        {daysInMonth.map((dayData, index) => (
+          <CalendarDay
+            key={index}
+            day={dayData.day}
+            checkInTime={dayData.checkInTime}
+            checkOutTime={dayData.checkOutTime}
+            status={dayData.status}
+            onClick={() => dayData.day > 0 && openCalendarModal(dayData.day)}
+            isToday={
+              dayData.day === new Date().getDate() &&
+              currentDate.getMonth() === new Date().getMonth() &&
+              currentDate.getFullYear() === new Date().getFullYear()
+            }
+            onHover={setHoveredDay}
+            onLeave={() => setHoveredDay(null)}
+            hovered={hoveredDay === dayData.day}
+          />
+        ))}
+      </div>
+    </div>
+  );
+
   return (
     <div className="bg-gradient-to-t from-[#A0DEFF] via-[#CAF4FF] to-[#5AB2FF] overflow-hidden min-h-screen">
       <NavbarHome />
 
-      <div className="grid grid-cols-1 gap-6 mt-6 ml-28 lg:grid-cols-3">
+      {/* Mobile Layout */}
+      <div className="px-4 py-6 space-y-6 lg:hidden">
+        <ProfileCard />
+        <MobileCalendar />
+        <PresenceSummary />
+      </div>
+      <div className="hidden grid-cols-1 gap-6 mt-6 lg:grid ml-28 lg:grid-cols-3">
         <div className="lg:col-span-2">
           <ProfileCard />
 

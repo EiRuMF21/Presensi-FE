@@ -10,7 +10,7 @@ import {
 import {ChevronDown} from "lucide-react";
 
 type DataPoint = {
-  date: string; // Will be day or month depending on filter
+  date: string;
   Attendance: number;
   Permission: number;
   Sick: number;
@@ -82,6 +82,8 @@ const AttendanceChart: React.FC<AttendanceChartProps> = ({visibleLines}) => {
   const currentDate = new Date();
   const [year, setYear] = useState(currentDate.getFullYear());
   const [month, setMonth] = useState(currentDate.getMonth() + 1);
+  const [startDate, setStartDate] = useState<number | null>(null); // New state for start date
+  const [endDate, setEndDate] = useState<number | null>(null); // New state for end date
   const [data, setData] = useState<DataPoint[]>([]);
   const [isYearDropdownOpen, setIsYearDropdownOpen] = useState(false);
   const [isMonthDropdownOpen, setIsMonthDropdownOpen] = useState(false);
@@ -116,6 +118,17 @@ const AttendanceChart: React.FC<AttendanceChartProps> = ({visibleLines}) => {
     "All Months",
   ];
 
+  const daysInMonth = new Date(year, month, 0).getDate();
+  const days = Array.from({length: daysInMonth}, (_, i) => i + 1); // List of days in the month
+
+  const filteredData = data.filter((d) => {
+    const day = Number(d.date);
+    if (startDate && endDate) {
+      return day >= startDate && day <= endDate; // Filter by range
+    }
+    return true;
+  });
+
   const getVisibleLines = () => {
     if (visibleLines.includes("View All")) {
       return Object.keys(colors);
@@ -126,6 +139,7 @@ const AttendanceChart: React.FC<AttendanceChartProps> = ({visibleLines}) => {
   return (
     <div className="flex flex-col p-6 space-y-6 bg-white rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold text-gray-800">Grafik Kehadiran</h2>
+
       <div className="flex space-x-4">
         {/* Year Dropdown */}
         <div className="relative">
@@ -205,6 +219,45 @@ const AttendanceChart: React.FC<AttendanceChartProps> = ({visibleLines}) => {
             </div>
           )}
         </div>
+
+        {/* Start Date and End Date */}
+        <div className="flex flex-col space-y-4">
+          <div className="flex flex-col">
+            <select
+              value={startDate || ""}
+              onChange={(e) => setStartDate(Number(e.target.value))}
+              className="w-40 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm"
+            >
+              <option value="">Tanggal Mulai</option>
+              {days.map((day) => (
+                <option
+                  key={day}
+                  value={day}
+                >
+                  {day}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex flex-col">
+            <select
+              value={endDate || ""}
+              onChange={(e) => setEndDate(Number(e.target.value))}
+              className="w-40 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm"
+            >
+              <option value="">Tanggal Akhir</option>
+              {days.map((day) => (
+                <option
+                  key={day}
+                  value={day}
+                >
+                  {day}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
       </div>
 
       {/* Chart */}
@@ -216,7 +269,7 @@ const AttendanceChart: React.FC<AttendanceChartProps> = ({visibleLines}) => {
           width="100%"
           height="100%"
         >
-          <AreaChart data={data}>
+          <AreaChart data={filteredData}>
             <XAxis
               dataKey="date"
               tick={{fill: "#000000"}}
