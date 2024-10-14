@@ -17,10 +17,6 @@ const NavbarAdmin: React.FC = () => {
     navigate("/profile");
   };
 
-  const handleSubmissionClick = () => {
-    navigate("/submissions");
-  };
-
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (

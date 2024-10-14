@@ -1,13 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  createDetector,
-  SupportedModels,
-  FaceLandmarksDetector,
-  Keypoint,
-} from "@tensorflow-models/face-landmarks-detection";
-import "@tensorflow/tfjs-core";
-import "@tensorflow/tfjs-backend-webgl";
+
 
 const AttendancePage = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
