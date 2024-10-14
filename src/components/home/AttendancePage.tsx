@@ -1,14 +1,9 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-
-const AttendancePage = () => {
+const AttendancePage: React.FC = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [showCamera, setShowCamera] = useState(false);
   const [isCheckIn, setIsCheckIn] = useState(true);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [stream, setStream] = useState<MediaStream | null>(null);
   const navigate = useNavigate();
 
   // Update time every second
@@ -25,157 +20,22 @@ const AttendancePage = () => {
     setIsCheckIn(currentHour < 16);
   }, [currentTime]);
 
-  // Activate the camera
-  const activateCamera = async () => {
-    try {
-      const videoStream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-      });
-
-      console.log("Video Stream:", videoStream); // Log the video stream
-
-      if (videoRef.current) {
-        videoRef.current.srcObject = videoStream;
-        await new Promise((resolve) => {
-          if (videoRef.current) {
-            videoRef.current.onloadedmetadata = () => {
-              console.log("Video metadata loaded");
-              resolve(null);
-            };
-          }
-        });
-        videoRef.current.play(); // Ensure the video starts playing
-      }
-
-      setStream(videoStream);
-      setShowCamera(true);
-    } catch (error) {
-      console.error("Error accessing camera:", error);
-      alert("Could not access the camera. Please check your permissions.");
-    }
-  };
-
-
-
-  // Load model and detect
-  const loadModelAndDetect = async () => {
-    if (!videoRef.current || !canvasRef.current) return; // Handle null case here
-
-    // Load the model
-    const model: FaceLandmarksDetector = await createDetector(
-      SupportedModels.MediaPipeFaceMesh
-    );
-
-    const detect = async () => {
-      if (videoRef.current?.readyState === 4) {
-        const predictions = await model.estimateFaces(videoRef.current);
-
-        const canvas = canvasRef.current;
-        if (!canvas) return; // Handle the case where canvas is null
-
-        const ctx = canvas.getContext("2d");
-        if (!ctx) return; // Handle the case where context is null
-
-        if (predictions.length > 0) {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-          predictions.forEach((prediction) => {
-            const keypoints: Keypoint[] = prediction.keypoints;
-            keypoints.forEach((keypoint: Keypoint) => {
-              const [x, y] = [keypoint.x, keypoint.y];
-              ctx.beginPath();
-              ctx.arc(x, y, 1, 0, 2 * Math.PI);
-              ctx.fillStyle = "red";
-              ctx.fill();
-            });
-          });
-        }
-      }
-
-      requestAnimationFrame(detect);
-    };
-
-    detect();
-  };
-
-  useEffect(() => {
-    activateCamera();
-    loadModelAndDetect();
-
-    return () => {
-      // Cleanup function: stop all video tracks when the component unmounts
-      if (videoRef.current && videoRef.current.srcObject) {
-        const stream = videoRef.current.srcObject as MediaStream;
-        stream.getTracks().forEach((track) => track.stop());
-      }
-    };
-  }, []);
-
-  const stopCamera = () => {
-    if (stream) {
-      stream.getTracks().forEach((track) => track.stop());
-    }
-    setStream(null);
-    setShowCamera(false);
-  };
-
-  // Fungsi untuk kembali ke halaman home
   const goToHome = () => {
     navigate("/home");
   };
 
-  // Modifikasi fungsi handleAttendance
   const handleAttendance = () => {
-    if (!showCamera) {
-      activateCamera();
-    } else {
-      captureImage();
-    }
-  };
-
-  // Function to capture image from video
-const captureImage = () => {
-  if (videoRef.current && canvasRef.current) {
-    const canvas = canvasRef.current;
-    const video = videoRef.current;
-    const context = canvas.getContext("2d");
-
-    if (context) {
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-      const imageData = canvas.toDataURL("image/png");
-      console.log("Captured image data:", imageData);
-    }
-
     const action = isCheckIn ? "Check-in" : "Check-out";
     console.log(`${action} at:`, currentTime.toLocaleTimeString());
     alert(`${action} successful!`);
-
-    // Navigasi ke halaman home setelah capture
     goToHome();
-  }
-};
-
-// Efek untuk membersihkan kamera saat komponen unmount
-useEffect(() => {
-  return () => {
-    stopCamera();
   };
-}, []);
 
   return (
     <div className="flex flex-col items-center min-h-screen text-black bg-gray-100">
       {/* Navbar */}
       <div className="flex items-center justify-between w-full px-4 py-4 bg-white shadow-md">
-        <button
-          onClick={() => {
-            stopCamera();
-            goToHome();
-          }}
-          className="text-black"
-        >
+        <button onClick={goToHome} className="text-black">
           <img
             src="https://img.icons8.com/ios-glyphs/30/000000/home.png"
             alt="Home Icon"
@@ -212,38 +72,19 @@ useEffect(() => {
 
         <div className="flex justify-center mt-6">
           <div className="p-6 bg-gray-100 rounded-lg max-w-md w-full md:max-w-xl lg:max-w-2xl">
-            {showCamera ? (
-              <>
-                <video
-                  ref={videoRef}
-                  className="w-full h-auto border-2 border-gray-300"
-                  autoPlay
-                  playsInline
-                  style={{ display: showCamera ? "block" : "none" }}
-                />
-                <canvas
-                  ref={canvasRef}
-                  className="absolute top-0 left-0 w-full h-full"
-                  style={{ display: "none" }} // Show this when needed for drawing
-                />
-              </>
-            ) : (
-              <img
-                src="https://img.icons8.com/ios-filled/50/000000/camera.png"
-                alt="Camera Icon"
-                className="mx-auto"
-              />
-            )}
+            <img
+              src="https://img.icons8.com/ios-filled/50/000000/camera.png"
+              alt="Camera Icon"
+              className="mx-auto"
+            />
           </div>
         </div>
 
         <button
           onClick={handleAttendance}
-          className={`w-full px-6 py-3 mt-6 font-bold text-white rounded-full md:text-lg lg:text-xl ${
-            showCamera ? "bg-red-500" : "bg-blue-500"
-          }`}
+          className="w-full px-6 py-3 mt-6 font-bold text-white bg-blue-500 rounded-full md:text-lg lg:text-xl"
         >
-          {showCamera ? "Capture and Finish" : "Attendance"}
+          {isCheckIn ? "Check In" : "Check Out"}
         </button>
       </div>
     </div>

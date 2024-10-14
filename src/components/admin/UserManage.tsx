@@ -221,7 +221,6 @@ const UserDataTable: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
   const [showPassword, setShowPassword] = useState(false);
-  const [password, setPassword] = useState("");
 
   const handleView = (user: User) => {
     setSelectedUser(user);
@@ -275,9 +274,9 @@ const UserDataTable: React.FC = () => {
     handlePopup();
   };
 
-   const togglePasswordVisibility = () => {
-     setShowPassword(!showPassword);
-   };
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -466,7 +465,6 @@ const UserDataTable: React.FC = () => {
                     type={showPassword ? "text" : "password"}
                     placeholder="Type your password"
                     value={selectedUser.password}
-                    onChange={(e) => setPassword(e.target.value)}
                     className="w-full text-black pl-4  pr-32 focus:outline-none h-9 bg-transparent"
                   />
                   <button
