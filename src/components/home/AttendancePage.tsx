@@ -108,8 +108,30 @@ const AttendancePage = () => {
   useEffect(() => {
     activateCamera();
     loadModelAndDetect();
+
+    return () => {
+      // Cleanup function: stop all video tracks when the component unmounts
+      if (videoRef.current && videoRef.current.srcObject) {
+        const stream = videoRef.current.srcObject as MediaStream;
+        stream.getTracks().forEach((track) => track.stop());
+      }
+    };
   }, []);
 
+  const stopCamera = () => {
+    if (stream) {
+      stream.getTracks().forEach((track) => track.stop());
+    }
+    setStream(null);
+    setShowCamera(false);
+  };
+
+  // Fungsi untuk kembali ke halaman home
+  const goToHome = () => {
+    navigate("/home");
+  };
+
+  // Modifikasi fungsi handleAttendance
   const handleAttendance = () => {
     if (!showCamera) {
       activateCamera();
@@ -119,41 +141,51 @@ const AttendancePage = () => {
   };
 
   // Function to capture image from video
-  const captureImage = () => {
-    if (videoRef.current && canvasRef.current) {
-      const canvas = canvasRef.current;
-      const video = videoRef.current;
-      const context = canvas.getContext("2d");
+const captureImage = () => {
+  if (videoRef.current && canvasRef.current) {
+    const canvas = canvasRef.current;
+    const video = videoRef.current;
+    const context = canvas.getContext("2d");
 
-      if (context) {
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    if (context) {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-        const imageData = canvas.toDataURL("image/png");
-        console.log("Captured image data:", imageData);
-      }
-
-      const action = isCheckIn ? "Check-in" : "Check-out";
-      console.log(`${action} at:`, currentTime.toLocaleTimeString());
-      alert(`${action} successful!`);
-
-      if (stream) {
-        stream.getTracks().forEach((track) => track.stop());
-      }
-
-      navigate("/home");
+      const imageData = canvas.toDataURL("image/png");
+      console.log("Captured image data:", imageData);
     }
+
+    const action = isCheckIn ? "Check-in" : "Check-out";
+    console.log(`${action} at:`, currentTime.toLocaleTimeString());
+    alert(`${action} successful!`);
+
+    // Navigasi ke halaman home setelah capture
+    goToHome();
+  }
+};
+
+// Efek untuk membersihkan kamera saat komponen unmount
+useEffect(() => {
+  return () => {
+    stopCamera();
   };
+}, []);
 
   return (
     <div className="flex flex-col items-center min-h-screen text-black bg-gray-100">
       {/* Navbar */}
       <div className="flex items-center justify-between w-full px-4 py-4 bg-white shadow-md">
-        <button onClick={() => navigate(-1)} className="text-black">
+        <button
+          onClick={() => {
+            stopCamera();
+            goToHome();
+          }}
+          className="text-black"
+        >
           <img
-            src="https://img.icons8.com/ios-glyphs/30/000000/back.png"
-            alt="Back Icon"
+            src="https://img.icons8.com/ios-glyphs/30/000000/home.png"
+            alt="Home Icon"
           />
         </button>
         <h1 className="text-lg font-bold">
