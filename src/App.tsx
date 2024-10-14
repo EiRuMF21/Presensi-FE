@@ -20,7 +20,8 @@ import UserManageTable from "./components/admin/UserManage";
 import UserData from "./components/admin/UserData";
 import FaceData from "./components/admin/FaceData";
 import "./index.css";
-import FaceLandmarkDetection from "./components/layouts/FaceLandmarkDetection";
+import ProfileSettingsAdmin from "./components/layouts/ProfileSettingAdmin";
+
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -30,14 +31,14 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        {/* <Route path="/admin" element={<DashboardAdmin />} /> */}
+        <Route path="/admin" element={<DashboardAdmin />} />
         <Route path="/home" element={<Homepage />} />
         <Route path="/attendance" element={<AttendancePage />} />
         <Route path="/datasubmission" element={<SubmissionTable />} />
         <Route path="/manageuser" element={<UserManageTable />} />
         <Route path="/userdata" element={<UserData />} />
         <Route path="/facedata" element={<FaceData />} />
-        <Route path="/face" element={<FaceLandmarkDetection />} />
+        <Route path="/psa" element={<ProfileSettingsAdmin />} />
 
         {/* Halaman yang dilindungi: hanya bisa diakses jika sudah login */}
         <Route
@@ -49,14 +50,14 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           }
         />
 
-        <Route
+        {/* <Route
           path="/admin"
           element={
             <ProtectedRoute>
               <DashboardAdmin />
             </ProtectedRoute>
           }
-        />
+        /> */}
 
         <Route
           path="/recap"

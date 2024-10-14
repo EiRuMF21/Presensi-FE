@@ -13,7 +13,7 @@ interface User {
   password: string; // Add the password field
 }
 
-const API_BASE_URL = "http://localhost:3000"; // Adjust this to match your backend URL
+const API_BASE_URL = "https://api-smart.curaweda.com"; // Adjust this to match your backend URL
 
 const UserData: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -52,8 +52,8 @@ const UserData: React.FC = () => {
   const handleAction = async (action: "approve" | "reject") => {
     if (selectedUserId === null) return; // Prevent action if no user is selected
     try {
-      await axios.patch(
-        `${API_BASE_URL}/api/${selectedUserId}`,
+      await axios.put(
+        `${API_BASE_URL}/api/${selectedUserId}/approve`,
         { action, password: userPassword }, // Send password with the action
         { headers: { "Content-Type": "application/json" } }
       );

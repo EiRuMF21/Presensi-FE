@@ -37,34 +37,40 @@ const Register: React.FC = () => {
     }));
   };
 
- const handleSubmit = async (e: React.FormEvent) => {
-   e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-   if (formData.password !== formData.confirmPassword) {
-     setError("Passwords do not match");
-     return;
-   }
+    // Validate password and confirm password match
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
 
-   try {
-     const response = await axios.post("http://localhost:3000/api/accounts", {
-       name: formData.name,
-       email: formData.email,
-       password: formData.password,
-       confirmPassword: formData.confirmPassword, // Make sure this is sent
-     });
-     console.log("Account created:", response.data);
-     navigate("/login");
-   } catch (err: unknown) {
-     if (axios.isAxiosError(err)) {
-       console.error("Axios error:", err.response?.data || err.message);
-       setError("Failed to create account");
-     } else {
-       console.error("Error creating account:", (err as Error).message);
-       setError("An unexpected error occurred");
-     }
-   }
- };
+    try {
+      // Submit the form data to the backend
+      const response = await axios.post(
+        "https://api-smart.curaweda.com/api/accounts",
+        {
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          confirmPassword: formData.confirmPassword
+        }
+      );
 
+      console.log("Account created:", response.data);
+      // Redirect to login page after successful registration
+      navigate("/login");
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        console.error("Axios error:", err.response?.data || err.message);
+        setError(err.response?.data?.message || "Failed to create account");
+      } else {
+        console.error("Error creating account:", (err as Error).message);
+        setError("An unexpected error occurred");
+      }
+    }
+  };
 
   return (
     <div className="flex w-full min-h-screen">
@@ -81,7 +87,12 @@ const Register: React.FC = () => {
               Welcome
             </h1>
             <p className="mt-4 ml-24 text-white text-md md:mt-10">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam voluptatem et facilis eveniet distinctio totam nemo vero, ullam repellat voluptate minima doloribus soluta accusantium eius error! Sed, eum perferendis doloremque a et eaque earum nemo commodi similique, consequatur vitae culpa quisquam praesentium aperiam? Laudantium nulla consequuntur quidem labore accusamus a!
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+              Quibusdam voluptatem et facilis eveniet distinctio totam nemo
+              vero, ullam repellat voluptate minima doloribus soluta accusantium
+              eius error! Sed, eum perferendis doloremque a et eaque earum nemo
+              commodi similique, consequatur vitae culpa quisquam praesentium
+              aperiam? Laudantium nulla consequuntur quidem labore accusamus a!
             </p>
           </div>
           <div className="absolute md:-top-52 md:right-52">

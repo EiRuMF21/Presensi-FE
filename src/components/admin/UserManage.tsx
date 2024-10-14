@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, Search } from "lucide-react";
 import axios from "axios";
+import { Eye, EyeOff } from "lucide-react";
 
 interface User {
   id: number;
@@ -222,7 +223,8 @@ const UserDataTable: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleView = (user: User) => {
-    setSelectedUser(user); // Set selected user and open modal
+    setSelectedUser(user);
+    setShowPassword(false); // Reset password visibility when opening new user popup
   };
 
   const handleDelete = async (id: number) => {
@@ -272,7 +274,9 @@ const UserDataTable: React.FC = () => {
     handlePopup();
   };
 
-  const togglePasswordVisibility = () => setShowPassword(!showPassword);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -456,13 +460,27 @@ const UserDataTable: React.FC = () => {
               </div>
               <div className="flex justify-between border-b-[3px] pb-2 border-[#D9D9D9] px-4">
                 <h1 className="text-black">Password</h1>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  value={selectedUser.password}
-                  readOnly
-                  className="w-full text-black pl-4 rounded-xl focus:outline-none max-w-[40vh] h-9 bg-[#D9D9D9]"
-                />
+                <div className="flex items-center bg-[#D9D9D9] rounded-xl max-w-[40vh] ">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Type your password"
+                    value={selectedUser.password}
+                    className="w-full text-black pl-4  pr-32 focus:outline-none h-9 bg-transparent"
+                  />
+                  <button
+                    onClick={togglePasswordVisibility}
+                    className="focus:outline-none pr-3"
+                    type="button"
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-5 w-5 text-gray-500" />
+                    ) : (
+                      <Eye className="h-5 w-5 text-gray-500" />
+                    )}
+                  </button>
+                </div>
               </div>
+
               <div className="flex justify-between border-b-[3px] pb-2 border-[#D9D9D9] px-4">
                 <h1 className="text-black">Position</h1>
                 <input

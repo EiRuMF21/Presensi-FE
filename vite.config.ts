@@ -1,4 +1,3 @@
-// vite.config.js
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
@@ -8,9 +7,9 @@ export default defineConfig({
     port: 3001, // Port frontend
     proxy: {
       "/api": {
-        target: "http://localhost:3000", // Port backend
+        target: "https://api-smart.curaweda.com", 
         changeOrigin: true,
-        secure: false,
+        secure: true,
       },
     },
   },
