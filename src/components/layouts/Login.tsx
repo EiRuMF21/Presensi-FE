@@ -18,10 +18,13 @@ const Login: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
       try {
-        const response = await axios.post("/api/login", {
-          email,
-          password,
-        });
+        const response = await axios.post(
+          "https://api-smart.curaweda.com/api/login",
+          {
+            email,
+            password,
+          }
+        );
         if (response.data.token) {
           // Simpan token di localStorage
           localStorage.setItem("token", response.data.token);
