@@ -1,23 +1,38 @@
-import React, {useState} from "react";
-import {useNavigate} from "react-router-dom";
-import {ArrowLeft, Search, ChevronDown, ChevronUp} from "lucide-react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ChevronLeft, Search, ChevronDown, ChevronUp } from "lucide-react";
 import * as Dialog from "@radix-ui/react-dialog";
+
+interface Submission {
+  id: number;
+  name: string;
+  email: string;
+  division: string;
+  phone: string;
+  date: string;
+  submission: string;
+  status: string;
+}
 
 const SubmissionTable: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [filter, setFilter] = useState<string>("ALL");
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [submissionFilter, setSubmissionFilter] =
+    useState<string>("Submission");
+  const [divisionFilter, setDivisionFilter] = useState<string>("Division");
+  const [isSubmissionDropdownOpen, setIsSubmissionDropdownOpen] =
+    useState(false);
+  const [isDivisionDropdownOpen, setIsDivisionDropdownOpen] = useState(false);
   const [isApprovalDialogOpen, setIsApprovalDialogOpen] = useState(false);
-  const [selectedSubmission, setSelectedSubmission] = useState<any>(null);
+  const [, setSelectedSubmission] = useState<Submission | null>(null);
   const navigate = useNavigate();
 
-  const submissionData = [
+  const submissionData: Submission[] = [
     {
       id: 1,
       name: "Kinan Doe",
       email: "KinanDoe@gmail.com",
-      division: "Division - Position",
+      division: "Pemasaran",
       phone: "085555555555",
       date: "26 August 2024",
       submission: "Sick",
@@ -27,7 +42,7 @@ const SubmissionTable: React.FC = () => {
       id: 2,
       name: "Abbysa",
       email: "AbbysaO0@gmail.com",
-      division: "Division - Position",
+      division: "Produksi",
       phone: "0834322444",
       date: "23 August 2024",
       submission: "Sick",
@@ -37,7 +52,7 @@ const SubmissionTable: React.FC = () => {
       id: 3,
       name: "Username",
       email: "Username@gmail.com",
-      division: "Division - Position",
+      division: "Humas",
       phone: "0876543213",
       date: "19 August 2024",
       submission: "Duty",
@@ -47,7 +62,7 @@ const SubmissionTable: React.FC = () => {
       id: 4,
       name: "Aldi Manuel",
       email: "Manuelaldi@gmail.com",
-      division: "Division - Position",
+      division: "Umum",
       phone: "0899994444",
       date: "10 August 2024",
       submission: "Office Duty",
@@ -57,10 +72,10 @@ const SubmissionTable: React.FC = () => {
       id: 5,
       name: "Bilal",
       email: "Bilalbilal@gmail.com",
-      division: "Division - Position",
+      division: "Keuangan",
       phone: "0854545454",
       date: "1 August 2024",
-      submission: "Sick",
+      submission: "Office Duty",
       status: "Pending",
     },
     {
@@ -100,7 +115,7 @@ const SubmissionTable: React.FC = () => {
       division: "Division - Position",
       phone: "0898635472",
       date: "15 July 2024",
-      submission: "Holiday",
+      submission: "On Leave",
       status: "Pending",
     },
     {
@@ -110,13 +125,20 @@ const SubmissionTable: React.FC = () => {
       division: "Division - Position",
       phone: "0809876543",
       date: "15 July 2024",
-      submission: "Holiday",
+      submission: "On Leave",
       status: "Pending",
     },
   ];
 
   const filteredData = submissionData.filter(
-    (item) => filter === "ALL" || item.submission === filter
+    (item) =>
+      (submissionFilter === "Submission" ||
+        item.submission === submissionFilter) &&
+      (divisionFilter === "Division" || item.division === divisionFilter) &&
+      (item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.division.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.submission.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   const itemsPerPage = 10;
@@ -126,197 +148,231 @@ const SubmissionTable: React.FC = () => {
     currentPage * itemsPerPage
   );
 
-  const handleApprovalClick = (submission: any) => {
+  const handleApprovalClick = (submission: Submission) => {
     setSelectedSubmission(submission);
     setIsApprovalDialogOpen(true);
   };
 
-  const handleApprove = () => setIsApprovalDialogOpen(false);
-  const handleDecline = () => setIsApprovalDialogOpen(false);
+  const handleApprove = () => {
+    setIsApprovalDialogOpen(false);
+  };
+
+  const handleDecline = () => {
+    setIsApprovalDialogOpen(false);
+  };
 
   return (
-    <div className="fixed w-full h-full p-6 text-black bg-white">
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center">
-          <ArrowLeft
-            className="mr-2 cursor-pointer"
-            onClick={() => navigate("/admin")}
-          />
-          <h1 className="text-xl font-bold">PERMISSION SUBMISSION</h1>
-        </div>
-        <div className="flex items-center space-x-4">
-          <div className="relative">
+    <div className="min-h-screen bg-[#FFFFFF] overflow-hidden py-8 px-4">
+      {/* Header */}
+      <div className="flex justify-between items-center ml-14 mb-2 border-b-[3px] py-[10px]">
+        <button
+          onClick={() => navigate("/admin")}
+          className="absolute left-0 top-7 z-20 text-black border-b-[3px] py-[12px] px-5 -mt-6"
+        >
+          <ChevronLeft className="w-8 h-8" />
+        </button>
+        <h2 className="-mt-8 text-lg font-bold text-black">
+          PERMISSION SUBMISSION
+        </h2>
+        <div className="flex items-center -mt-8 space-x-4">
+          <div className="flex items-center w-full px-2 py-1 bg-gray-200 sm:px-4 sm:py-2 rounded-2xl sm:w-80">
+            <Search className="text-[#979797] w-4 h-4 sm:w-5 sm:h-5" />
             <input
               type="text"
               placeholder="Search..."
-              className="py-2 pl-10 pr-4 bg-white border-b rounded-full"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full ml-2 text-sm text-black bg-transparent outline-none sm:text-base"
             />
-            <Search className="absolute left-3 top-2.5 text-gray-400" />
           </div>
+
+          {/* Filter for Submission */}
           <div className="relative">
             <button
-              onClick={() => setIsDropdownOpen((prev) => !prev)}
+              onClick={() => setIsSubmissionDropdownOpen((prev) => !prev)}
               className="flex items-center px-4 py-2 text-gray-700 bg-white border-b border-gray-300 rounded-full"
             >
-              {filter || "Filter"}
-              {isDropdownOpen ? (
+              {submissionFilter || "Filter Submission"}
+              {isSubmissionDropdownOpen ? (
                 <ChevronUp className="ml-2" />
               ) : (
                 <ChevronDown className="ml-2" />
               )}
             </button>
-            {isDropdownOpen && (
-              <div className="absolute right-0 z-10 w-48 mt-2 bg-white border-b border-gray-300 rounded-lg shadow-lg">
-                {["Sick", "Duty", "Holiday", "Office Duty", "WFH", "ALL"].map(
-                  (option) => (
-                    <div
-                      key={option}
-                      onClick={() => {
-                        setFilter(option);
-                        setIsDropdownOpen(false);
-                      }}
-                      className="px-4 py-2 cursor-pointer hover:bg-gray-100"
-                    >
-                      {option}
-                    </div>
-                  )
-                )}
+            {isSubmissionDropdownOpen && (
+              <div className="absolute right-0 z-10 w-48 mt-2 text-black bg-white border-b border-gray-300 rounded-lg shadow-lg">
+                {[
+                  "Submission",
+                  "Sick",
+                  "Duty",
+                  "On Leave",
+                  "Office Duty",
+                  "WFH",
+                ].map((option) => (
+                  <div
+                    key={option}
+                    onClick={() => {
+                      setSubmissionFilter(option);
+                      setIsSubmissionDropdownOpen(false);
+                    }}
+                    className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                  >
+                    {option}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Filter for Division */}
+          <div className="relative">
+            <button
+              onClick={() => setIsDivisionDropdownOpen((prev) => !prev)}
+              className="flex items-center px-4 py-2 text-gray-700 bg-white border-b border-gray-300 rounded-full"
+            >
+              {divisionFilter || "Filter Division"}
+              {isDivisionDropdownOpen ? (
+                <ChevronUp className="ml-2" />
+              ) : (
+                <ChevronDown className="ml-2" />
+              )}
+            </button>
+            {isDivisionDropdownOpen && (
+              <div className="absolute right-0 z-10 w-48 mt-2 text-black bg-white border-b border-gray-300 rounded-lg shadow-lg">
+                {[
+                  "Division",
+                  "Pemasaran",
+                  "Produksi",
+                  "Umum",
+                  "Humas",
+                  "Keuangan",
+                ].map((option) => (
+                  <div
+                    key={option}
+                    onClick={() => {
+                      setDivisionFilter(option);
+                      setIsDivisionDropdownOpen(false);
+                    }}
+                    className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                  >
+                    {option}
+                  </div>
+                ))}
               </div>
             )}
           </div>
         </div>
       </div>
 
-      <table className="w-full border-collapse rounded">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="p-2 text-left">#</th>
-            <th className="p-2 text-left">USER</th>
-            <th className="p-2 text-left">DIVISION</th>
-            <th className="p-2 text-left">PHONE</th>
-            <th className="p-2 text-left">DATE</th>
-            <th className="p-2 text-left">SUBMISSION</th>
-            <th className="p-2 text-left">ACTION</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentItems.map((item) => (
-            <tr
-              key={item.id}
-              className="border-b"
-            >
-              <td className="p-2">{item.id}</td>
-              <td className="p-2">
-                <div>{item.name}</div>
-                <div className="text-sm text-gray-500">{item.email}</div>
-              </td>
-              <td className="p-2">{item.division}</td>
-              <td className="p-2">{item.phone}</td>
-              <td className="p-2">{item.date}</td>
-              <td className="p-2">{item.submission}</td>
-              <td className="p-2">
-                <button
-                  className={`px-3 py-1 rounded-full text-white ${
-                    item.status === "Approved" ? "bg-gray-500" : "bg-slate-500"
-                  }`}
-                  onClick={() => handleApprovalClick(item)}
-                  disabled={item.status === "Approved"}
-                >
-                  {item.status === "Approved" ? "Approved" : "Approval"}
-                </button>
-              </td>
+      <div className="overflow-x-auto">
+        <table className="min-w-full border-collapse table-fixed">
+          <thead>
+            <tr className="bg-gray-200 border-b">
+              <th className="w-12 px-4 py-2 font-semibold text-center text-gray-600">
+                #
+              </th>
+              <th className="w-1/4 px-4 py-2 font-semibold text-left text-gray-600">
+                USER
+              </th>
+              <th className="w-1/6 px-4 py-2 font-semibold text-left text-gray-600">
+                DIVISION
+              </th>
+              <th className="w-1/6 px-4 py-2 font-semibold text-left text-gray-600">
+                PHONE
+              </th>
+              <th className="w-1/6 px-4 py-2 font-semibold text-left text-gray-600">
+                DATE
+              </th>
+              <th className="w-1/6 px-4 py-2 font-semibold text-left text-gray-600">
+                SUBMISSION
+              </th>
+              <th className="w-32 px-4 py-2 font-semibold text-center text-gray-600">
+                ACTION
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {currentItems.map((item) => (
+              <tr key={item.id} className="border-b">
+                <td className="px-4 py-3 text-center text-black">{item.id}</td>
+                <td className="px-4 py-3">
+                  <div className="font-medium text-gray-900">{item.name}</div>
+                  <div className="text-sm font-normal text-gray-900">
+                    {item.email}
+                  </div>
+                </td>
+                <td className="px-4 py-3 text-gray-700">{item.division}</td>
+                <td className="px-4 py-3 text-gray-700">{item.phone}</td>
+                <td className="px-4 py-3 text-gray-700">{item.date}</td>
+                <td className="px-4 py-3 text-gray-700">{item.submission}</td>
+                <td className="px-4 py-3 text-center">
+                  <button
+                    className={`px-3 py-1 rounded-full text-white ${
+                      item.status === "Approved"
+                        ? "bg-green-500"
+                        : "bg-blue-500"
+                    }`}
+                    onClick={() => handleApprovalClick(item)}
+                    disabled={item.status === "Approved"}
+                  >
+                    {item.status === "Approved" ? "Approved" : "Approval"}
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
-      <div className="flex items-center justify-between mt-4">
-        <div>
-          Showing{" "}
-          {Math.min((currentPage - 1) * itemsPerPage + 1, filteredData.length)}{" "}
-          - {Math.min(currentPage * itemsPerPage, filteredData.length)} of{" "}
-          {filteredData.length}
-        </div>
-        <div className="flex space-x-2">
-          <button
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-            className="px-3 py-1 border rounded"
-          >
-            Previous
-          </button>
-          {[...Array(pageCount)].map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrentPage(i + 1)}
-              className={`px-3 py-1 border rounded ${
-                currentPage === i + 1 ? "bg-gray-200" : ""
-              }`}
-            >
-              {i + 1}
-            </button>
-          ))}
-          <button
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, pageCount))
-            }
-            disabled={currentPage === pageCount}
-            className="px-3 py-1 border rounded"
-          >
-            Next
-          </button>
+        <div className="flex items-center justify-between mt-4">
+          <p className="text-sm text-gray-500">
+            Showing{" "}
+            {Math.min(
+              (currentPage - 1) * itemsPerPage + 1,
+              filteredData.length
+            )}{" "}
+            to {Math.min(currentPage * itemsPerPage, filteredData.length)} out
+            of {filteredData.length} entries
+          </p>
+          <div className="flex space-x-2">
+            {Array.from({ length: pageCount }, (_, i) => (
+              <button
+                key={i}
+                className={`px-3 py-1 rounded-full ${
+                  i + 1 === currentPage
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-200 text-gray-600"
+                }`}
+                onClick={() => setCurrentPage(i + 1)}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
+      {/* Approval Dialog */}
       <Dialog.Root
         open={isApprovalDialogOpen}
         onOpenChange={setIsApprovalDialogOpen}
       >
-        <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
-        <Dialog.Content className="fixed p-6 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-lg top-1/2 left-1/2">
-          <div className="space-y-4">
-            <h2 className="text-lg font-bold">Submission</h2>
-            {selectedSubmission && (
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-2">
-                  <div>From</div>
-                  <div>{selectedSubmission.email}</div>
-                  <div>Division</div>
-                  <div>{selectedSubmission.division}</div>
-                  <div>Phone</div>
-                  <div>{selectedSubmission.phone}</div>
-                  <div>Submission</div>
-                  <div>{selectedSubmission.submission}</div>
-                  <div>Date Start</div>
-                  <div>{selectedSubmission.date}</div>
-                  <div>Date End</div>
-                  <div>{selectedSubmission.date}</div>
-                </div>
-                <div>
-                  <label>Description...</label>
-                  <textarea
-                    className="w-full p-2 bg-white border rounded"
-                    rows={3}
-                  />
-                </div>
-              </div>
-            )}
-            <div className="flex justify-end mt-4 space-x-2">
-              <button
-                className="px-4 py-2 text-white bg-red-500 rounded"
-                onClick={handleDecline}
-              >
-                Decline
-              </button>
-              <button
-                className="px-4 py-2 text-white bg-green-500 rounded"
-                onClick={handleApprove}
-              >
-                Approve
-              </button>
-            </div>
+        <Dialog.Overlay className="fixed inset-0 bg-black opacity-50" />
+        <Dialog.Content className="fixed inset-x-0 p-6 mx-auto bg-white rounded-lg top-1/3 w-96">
+          <h2 className="mb-4 text-lg font-bold">Approve Submission</h2>
+          <p>Do you want to approve this submission?</p>
+          <div className="flex justify-end mt-6 space-x-4">
+            <button
+              className="px-4 py-2 bg-gray-200 rounded"
+              onClick={handleDecline}
+            >
+              Decline
+            </button>
+            <button
+              className="px-4 py-2 text-white bg-blue-500 rounded"
+              onClick={handleApprove}
+            >
+              Approve
+            </button>
           </div>
         </Dialog.Content>
       </Dialog.Root>

@@ -10,8 +10,7 @@ interface ConfirmationModalProps {
 const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   isOpen,
   onClose,
-  onConfirm,
- 
+  onConfirm, // Destructure the children prop
 }) => {
   if (!isOpen) return null;
 
