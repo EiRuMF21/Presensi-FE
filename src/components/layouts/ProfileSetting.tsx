@@ -35,14 +35,12 @@ const ProfileSettings: React.FC = () => {
         <button onClick={() => navigate(-1)} className="text-black">
           <ArrowLeft size={24} />
         </button>
-        <h1 className="text-lg text-black font-bold mr-[165vh]">Profile Settings</h1>
-        <div className="flex justify-center mr-16">
-          <Bell size={24} className="text-black" />
-        </div>
+        <h1 className="text-lg font-bold">Edit Profile</h1>
+        <Bell size={24} className="text-black" />
       </div>
 
-      <div className="flex items-center justify-center flex-1 p-4">
-        <div className="w-full max-w-2xl p-8 bg-white shadow-lg rounded-3xl">
+      <div className="flex items-center justify-center flex-1">
+        <div className="relative w-full max-w-2xl p-8 bg-white shadow-lg rounded-3xl">
           <div className="flex justify-center mb-6">
             <div className="relative">
               <div className="flex items-center justify-center w-24 h-24 bg-gray-200 rounded-full">
@@ -58,35 +56,77 @@ const ProfileSettings: React.FC = () => {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
-            {Object.entries(formData).map(([key, value]) => (
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Name, Email, Phone, Address fields */}
+            {["name", "email", "phone", "address"].map((key) => (
               <div
                 key={key}
-                className={key === "yearOfEmployment" ? "col-span-2" : ""}
+                className="grid items-center grid-cols-3 gap-2 bg-[#1E88E5] py-1 px-1  rounded-xl"
               >
-                <label className="block mb-1 text-sm font-medium text-gray-700 capitalize">
-                  {key.replace(/([A-Z])/g, " $1").trim()}
+                <label className=" ml-5 block col-span-1 text-sm text-[#FFFFFF]  capitalize">
+                  {key.charAt(0).toUpperCase() + key.slice(1)}
                 </label>
                 <input
                   type="text"
                   name={key}
-                  value={value}
+                  value={formData[key as keyof typeof formData]}
                   onChange={handleInputChange}
-                  className="w-full p-3 text-black bg-sky-100 rounded-xl"
+                  className="w-full col-span-2 px-3 py-2 text-black border-2 border-blue-400 rounded-2xl bg-[#FFFFFF]"
                 />
               </div>
             ))}
 
-            <div className="flex col-span-2 mt-6 space-x-4">
+            {/* Position and Division fields in one div */}
+            <div className="grid items-center grid-cols-3 gap-2 bg-[#1E88E5] py-1 px-1  rounded-xl">
+              <label className=" ml-5 block col-span-1 text-md font-medium text-[#FFFFFF]  capitalize">
+                Position
+              </label>
+              <div className="flex col-span-2 space-x-2">
+                <input
+                  type="text"
+                  name="position"
+                  value={formData.position}
+                  onChange={handleInputChange}
+                  className="w-1/2 px-3 py-2 text-black border-2 border-blue-400 rounded-2xl bg-[#FFFFFF]"
+                />
+                <label className=" ml-5 mt-2 text-md item font-medium text-[#FFFFFF]  capitalize">
+                  Division
+                </label>
+                <input
+                  type="text"
+                  name="division"
+                  value={formData.division}
+                  onChange={handleInputChange}
+                  className="w-1/2 px-3 py-2 text-black border-2 border-blue-400 rounded-2xl bg-[#FFFFFF]"
+                />
+              </div>
+            </div>
+
+            {/* Year of Employment */}
+            <div className="grid items-center grid-cols-3 gap-2 bg-[#1E88E5] py-1 px-1 rounded-xl">
+              <label className="ml-5 block col-span-1 text-sm font-medium text-[#FFFFFF]">
+                Year of Employment
+              </label>
+              <input
+                type="text"
+                name="yearOfEmployment"
+                value={formData.yearOfEmployment}
+                onChange={handleInputChange}
+                className="w-full col-span-2 px-3 py-2 text-black border-2 border-blue-400 rounded-2xl bg-[#FFFFFF]"
+              />
+            </div>
+
+            {/* Buttons */}
+            <div className="flex justify-end mt-6 space-x-4">
               <button
                 type="button"
-                className="flex-1 px-4 py-2 font-semibold text-white bg-green-500 rounded-xl"
+                className=" px-2 py-3 font-semibold text-white shadow-slate-600 shadow-md bg-green-500 rounded-xl"
               >
                 Face Recognition
               </button>
               <button
                 type="submit"
-                className="flex-1 px-4 py-2 font-semibold text-white bg-blue-500 rounded-xl"
+                className=" px-4 py-3 font-semibold text-white shadow-slate-600 shadow-md bg-blue-500 rounded-xl"
               >
                 Save Changes
               </button>

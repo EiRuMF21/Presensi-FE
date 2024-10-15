@@ -79,7 +79,7 @@ const ProfileSettings: React.FC = () => {
             {/* Position and Division fields in one div */}
             <div className="grid items-center grid-cols-3 gap-2 bg-[#1E88E5] py-1 px-1  rounded-xl">
               <label className=" ml-5 block col-span-1 text-md font-medium text-[#FFFFFF]  capitalize">
-                Position 
+                Position
               </label>
               <div className="flex col-span-2 space-x-2">
                 <input
@@ -118,12 +118,6 @@ const ProfileSettings: React.FC = () => {
 
             {/* Buttons */}
             <div className="flex justify-end mt-6 space-x-4">
-              <button
-                type="button"
-                className=" px-2 py-3 font-semibold text-white shadow-slate-600 shadow-md bg-green-500 rounded-xl"
-              >
-                Face Recognition
-              </button>
               <button
                 type="submit"
                 className=" px-4 py-3 font-semibold text-white shadow-slate-600 shadow-md bg-blue-500 rounded-xl"
