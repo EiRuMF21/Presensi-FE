@@ -49,22 +49,28 @@ const UserData: React.FC = () => {
     }
   };
 
-  const handleAction = async (action: "approve" | "reject") => {
-    if (selectedUserId === null) return; // Prevent action if no user is selected
-    try {
-      await axios.put(
-        `${API_BASE_URL}/api/${selectedUserId}/approve`,
-        { action, password: userPassword }, // Send password with the action
-        { headers: { "Content-Type": "application/json" } }
-      );
-      fetchPendingUsers(); // Refresh the list after action
-      toast.success(`User ${action}d successfully!`); // Success notification
-    } catch (error) {
-      toast.error(`Failed to ${action} user.`); // Error notification
-    }
-    setIsModalOpen(false); // Close the modal
-    setUserPassword(""); // Reset the password input
-  };
+const handleAction = async (action: "approve" | "reject") => {
+  if (selectedUserId === null) return; // Prevent action if no user is selected
+  try {
+    const endpoint =
+      action === "approve"
+        ? `${API_BASE_URL}/api/accounts/${selectedUserId}/approve`
+        : `${API_BASE_URL}/api/accounts/${selectedUserId}/reject`;
+
+    await axios.put(
+      endpoint,
+      { action, password: userPassword }, // Send password with the action
+      { headers: { "Content-Type": "application/json" } }
+    );
+    fetchPendingUsers(); // Refresh the list after action
+    toast.success(`User ${action}d successfully!`); // Success notification
+  } catch (error) {
+    toast.error(`Failed to ${action} user.`); // Error notification
+  }
+  setIsModalOpen(false); // Close the modal
+  setUserPassword(""); // Reset the password input
+};
+
 
   const openModal = (userId: number, action: "approve" | "reject") => {
     setSelectedUserId(userId);

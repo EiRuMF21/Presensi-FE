@@ -525,7 +525,7 @@ const UserDataTable: React.FC = () => {
                   readOnly
                   className="w-full text-black pl-4 rounded-xl focus:outline-none max-w-[40vh] h-9 bg-[#D9D9D9]"
                 />
-              </div>
+              </div>  
               <div className="flex justify-between border-b-[3px] pb-2  border-[#D9D9D9] px-4">
                 <h1 className="text-black">Registration Date</h1>
                 <p className="text-black px-20">13 September 2024</p>
