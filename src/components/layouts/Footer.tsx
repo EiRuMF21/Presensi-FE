@@ -11,11 +11,7 @@ const Footer: React.FC = () => {
 
           {/* Social Media Icons */}
           <div className="flex justify-center space-x-6">
-            <a
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href="#" target="_blank" rel="noopener noreferrer">
               <img
                 src="https://img.icons8.com/ios-filled/50/ffffff/facebook-new.png"
                 alt="Facebook"
@@ -23,7 +19,7 @@ const Footer: React.FC = () => {
               />
             </a>
             <a
-              href="#"
+              href="https://github.com/EiRuMF21/Presensi-FE"
               target="_blank"
               rel="noopener noreferrer"
             >

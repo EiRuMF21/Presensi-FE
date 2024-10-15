@@ -31,14 +31,14 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/admin" element={<DashboardAdmin />} />
-        <Route path="/home" element={<Homepage />} />
-        <Route path="/attendance" element={<AttendancePage />} />
-        <Route path="/datasubmission" element={<SubmissionTable />} />
-        <Route path="/manageuser" element={<UserManageTable />} />
-        <Route path="/userdata" element={<UserData />} />
-        <Route path="/facedata" element={<FaceData />} />
-        <Route path="/psa" element={<ProfileSettingsAdmin />} />
+        {/* <Route path="/admin" element={<DashboardAdmin />} /> */}
+        {/* <Route path="/home" element={<Homepage />} /> */}
+        {/* <Route path="/attendance" element={<AttendancePage />} /> */}
+        {/* <Route path="/datasubmission" element={<SubmissionTable />} /> */}
+        {/* <Route path="/manageuser" element={<UserManageTable />} /> */}
+        {/* <Route path="/userdata" element={<UserData />} /> */}
+        {/* <Route path="/facedata" element={<FaceData />} /> */}
+        {/* <Route path="/psa" element={<ProfileSettingsAdmin />} /> */}
 
         {/* Halaman yang dilindungi: hanya bisa diakses jika sudah login */}
         <Route
@@ -50,14 +50,14 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           }
         />
 
-        {/* <Route
+        <Route
           path="/admin"
           element={
             <ProtectedRoute>
               <DashboardAdmin />
             </ProtectedRoute>
           }
-        /> */}
+        />
 
         <Route
           path="/recap"
@@ -70,6 +70,65 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 
         <Route
           path="/profile"
+          element={
+            <ProtectedRoute>
+              <ProfileSettings />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/attendance"
+          element={
+            <ProtectedRoute>
+              <AttendancePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/submission"
+          element={
+            <ProtectedRoute>
+              <SubmissionTable />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/facedata"
+          element={
+            <ProtectedRoute>
+              <FaceData />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/usermanage"
+          element={
+            <ProtectedRoute>
+              <UserManageTable />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/userdata"
+          element={
+            <ProtectedRoute>
+              <UserData />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/profilesettingadmin"
+          element={
+            <ProtectedRoute>
+              <ProfileSettingsAdmin />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/profilesetting"
           element={
             <ProtectedRoute>
               <ProfileSettings />

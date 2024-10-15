@@ -14,7 +14,7 @@ const NavbarAdmin: React.FC = () => {
     setNotificationOpen(!isNotificationOpen);
 
   const handleProfileClick = () => {
-    navigate("/profile");
+    navigate("/profilesettingadmin");
   };
 
   useEffect(() => {
