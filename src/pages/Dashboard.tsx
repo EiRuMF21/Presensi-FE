@@ -4,6 +4,7 @@ import SidebarAdmin from "../components/admin/SidebarAdmin";
 import AttendanceChart from "../components/admin/AttendanceChart";
 import Legend from "../components/admin/Legend";
 
+
 // Pemetaan label untuk garis di grafik
 const lineMappings: Record<string, string[]> = {
   "View All": [
@@ -25,6 +26,7 @@ const lineMappings: Record<string, string[]> = {
 const DashboardAdmin: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [visibleLines, setVisibleLines] = useState(lineMappings["View All"]);
+  
 
   const handleFilterSelect = (label: keyof typeof lineMappings) => {
     // Mengatur visibleLines berdasarkan label yang dipilih
