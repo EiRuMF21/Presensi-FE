@@ -37,39 +37,42 @@ const UserData: React.FC = () => {
   const fetchPendingUsers = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(`${API_BASE_URL}/api/pending`);
+      const response = await axios.get(`${API_BASE_URL}/api/accounts/pending`, {
+        withCredentials: true, // Enable credentials to send cookies
+      });
       setUsers(response.data); // This will now include passwords
       setError(null);
-      
     } catch (error) {
-      setError("Failed to fetch pending users."); // Set error state
       toast.error("Failed to fetch pending users."); // Error notification
     } finally {
       setIsLoading(false);
     }
   };
 
-const handleAction = async (action: "approve" | "reject") => {
-  if (selectedUserId === null) return; // Prevent action if no user is selected
-  try {
-    const endpoint =
-      action === "approve"
-        ? `${API_BASE_URL}/api/accounts/${selectedUserId}/approve`
-        : `${API_BASE_URL}/api/accounts/${selectedUserId}/reject`;
+  const handleAction = async (action: "approve" | "reject") => {
+    if (selectedUserId === null) return; // Prevent action if no user is selected
+    try {
+      const endpoint =
+        action === "approve"
+          ? `${API_BASE_URL}/api/accounts/${selectedUserId}/approve`
+          : `${API_BASE_URL}/api/accounts/${selectedUserId}/reject`;
 
-    await axios.put(
-      endpoint,
-      { action, password: userPassword }, // Send password with the action
-      { headers: { "Content-Type": "application/json" } }
-    );
-    fetchPendingUsers(); // Refresh the list after action
-    toast.success(`User ${action}d successfully!`); // Success notification
-  } catch (error) {
-    toast.error(`Failed to ${action} user.`); // Error notification
-  }
-  setIsModalOpen(false); // Close the modal
-  setUserPassword(""); // Reset the password input
-};
+      await axios.put(
+        endpoint,
+        { action, password: userPassword }, // Send password with the action
+        {
+          withCredentials: true, // Enable credentials to send cookies
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      fetchPendingUsers(); // Refresh the list after action
+      toast.success(`User ${action}d successfully!`); // Success notification
+    } catch (error) {
+      toast.error(`Failed to ${action} user.`); // Error notification
+    }
+    setIsModalOpen(false); // Close the modal
+    setUserPassword(""); // Reset the password input
+  };
 
 
   const openModal = (userId: number, action: "approve" | "reject") => {

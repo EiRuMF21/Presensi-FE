@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NotificationPanel from "../layouts/Notification";
+import axios from "axios";
 
 const NavbarHome: React.FC = () => {
   const [isProfileDropdownOpen, setProfileDropdownOpen] = useState(false);
@@ -16,6 +17,14 @@ const NavbarHome: React.FC = () => {
     navigate("/profile");
   };
 
+  const handleLogout = async () => {
+    try {
+      await axios.post("https://api-smart.curaweda.com/api/logout"); // Adjust the endpoint if necessary
+      navigate("/"); // Redirect to the home or login page
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
   return (
     <nav className="flex items-center justify-between text-black bg-white shadow-lg sm:px-6 lg:px-8">
       <div className="flex items-center justify-between h-16">
@@ -50,9 +59,7 @@ const NavbarHome: React.FC = () => {
             </button>
             <button
               className="block w-full px-4 py-2 text-left hover:bg-gray-200"
-              onClick={() => {
-                navigate("/");
-              }}
+              onClick={handleLogout}
             >
               Logout
             </button>

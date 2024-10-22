@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import backgroundSvg from "/public/image/register.svg";
-import backgroundLogSvg from "/public/image/log.svg";
 import { Eye, EyeOff, ChevronLeft } from "lucide-react";
 import axios from "axios";
+import { useAuthStore } from "../../store/useAuthStore"; // Import Zustand store
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -11,37 +10,36 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-    const togglePasswordVisibility = () => setShowPassword(!showPassword);
+  const { setUser, setRole } = useAuthStore(); // Access Zustand store
 
-    const handleBack = () => navigate("/");
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
+  const handleBack = () => navigate("/");
 
-    const handleSubmit = async (e: React.FormEvent) => {
-      e.preventDefault();
-      try {
-        const response = await axios.post(
-          "https://api-smart.curaweda.com/api/login",
-          {
-            email,
-            password,
-          }
-        );
-        if (response.data.token) {
-          // Simpan token di localStorage
-          localStorage.setItem("token", response.data.token);
-
-          // Redirect sesuai role user
-          const decodedToken = JSON.parse(
-            atob(response.data.token.split(".")[1])
-          );
-          const userRole = decodedToken.role;
-          navigate(userRole === "ADMIN" ? "/admin" : "/home");
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "https://api-smart.curaweda.com/api/login",
+        { email, password },
+        {
+          withCredentials: true, // This ensures cookies are included in the request
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      } catch (err) {
-        console.error("Login error:", err);
-        setError("Login failed");
-      }
-    };
+      );
 
+      if (response.status === 200) {
+        const { user, role } = response.data; // Destructure user and role from the response
+        setUser(user, role); // Store user in Zustand
+        setRole(role); // Store role in Zustand
+        navigate(role === "ADMIN" ? "/admin" : "/home"); // Navigate based on role
+      }
+    } catch (err) {
+      console.error("Login error:", err);
+      setError("Login failed");
+    }
+  };
 
   return (
     <div className="flex w-full min-h-screen">
@@ -51,7 +49,6 @@ const Login: React.FC = () => {
       >
         <ChevronLeft className="h-8 w-8" />
       </button>
-      {/* Bagian Kiri Welcome Section */}
       <div className="flex-[1.7] bg-[#1E88E5] flex flex-col justify-center p-6 md:py-10 relative">
         <div className="relative flex flex-col items-center lg:flex-row lg:items-start">
           <div className="flex flex-col -ml-8 md:max-w-3xl">
@@ -59,32 +56,12 @@ const Login: React.FC = () => {
               Welcome
             </h1>
             <p className="mt-4 ml-24 text-white text-md md:mt-10">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit...
             </p>
           </div>
-          <div className="absolute md:-top-52 md:right-52 ">
-            <div
-              style={{ backgroundImage: `url(${backgroundLogSvg})` }}
-              className="w-[100px] h-[100px] lg:w-[250px] lg:h-[200px] object-contain"
-            >
-              {" "}
-            </div>
-          </div>
         </div>
-
-        <div
-          className="absolute inset-0 w-full h-full bg-left-bottom bg-no-repeat"
-          style={{ backgroundImage: `url(${backgroundSvg})` }}
-        ></div>
       </div>
 
-      {/* Bagian Kanan Register */}
       <div className="flex-[1] bg-[#CCCBCB] flex flex-col justify-center items-center p-6 lg:px-0 z-10 relative">
         <div className="bg-[#D9D9D9] rounded-3xl p-8 md:py-20 md:px-16 shadow-lg max-w-md w-full gap-y-10">
           <h2 className="text-6xl font-bold text-[#212121] mb-4">

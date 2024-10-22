@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import NotificationPanel from "../layouts/Notification"; // Sesuaikan path jika perlu
+import axios from "axios"; // Import axios
+import NotificationPanel from "../layouts/Notification"; 
+import { useAuthStore } from "../../store/useAuthStore";
 
 const NavbarAdmin: React.FC = () => {
   const [isProfileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const [isNotificationOpen, setNotificationOpen] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef<HTMLDivElement>(null);
+   const { setUser } = useAuthStore();
 
   const toggleProfileDropdown = () =>
     setProfileDropdownOpen(!isProfileDropdownOpen);
@@ -15,6 +18,22 @@ const NavbarAdmin: React.FC = () => {
 
   const handleProfileClick = () => {
     navigate("/profilesettingadmin");
+  };
+
+  // Logout function to call backend and clear cookie
+  const handleLogout = async () => {
+    try {
+      await axios.post("https://api-smart.curaweda.com/api/logout");
+
+      // Hapus cookie dari sisi klien
+      document.cookie =
+        "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;"; // Mengatur cookie dengan tanggal kedaluwarsa di masa lalu
+
+      setUser(null, null); // Clear user state
+      navigate("/"); // Redirect to the home or login page
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   useEffect(() => {
@@ -70,9 +89,7 @@ const NavbarAdmin: React.FC = () => {
 
                 <button
                   className="block w-full px-4 py-2 text-left hover:bg-gray-200"
-                  onClick={() => {
-                    navigate("/");
-                  }}
+                  onClick={handleLogout} // Call the logout function
                 >
                   Logout
                 </button>

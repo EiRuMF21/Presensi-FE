@@ -22,7 +22,6 @@ import FaceData from "./components/admin/FaceData";
 import "./index.css";
 import ProfileSettingsAdmin from "./components/layouts/ProfileSettingAdmin";
 
-
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Router>
