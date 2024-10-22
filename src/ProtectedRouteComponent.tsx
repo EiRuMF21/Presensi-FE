@@ -14,7 +14,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await axios.get(
+         await axios.get(
           "https://api-smart.curaweda.com/api/check-auth",
           {
             withCredentials: true,
