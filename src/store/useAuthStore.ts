@@ -1,21 +1,26 @@
 import { create } from "zustand";
+import axios from "axios";
 
 interface AuthState {
-  token: string | null;
   user: any;
-  role: string | null; // Add role to the state
-  setToken: (token: string) => void;
+  role: string | null;
+  token: string | null;
   setUser: (user: any, role: string | null) => void;
-  setRole: (role: string) => void; // Add setRole method
+  setRole: (role: string) => void;
+  setToken: (token: string) => void;
   clearUser: () => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
-  token: null,
   user: null,
-  role: null, // Initialize role
-  setToken: (token: string) => set({ token }),
+  role: null,
+  token: localStorage.getItem("token"),
   setUser: (user, role) => set({ user, role }),
-  setRole: (role: string) => set({ role }), // Implement setRole
-  clearUser: () => set({ user: null, role: null }), // Clear role on logout
+  setRole: (role: string) => set({ role }),
+  setToken: (token) => set({ token }),
+  clearUser: () => {
+    localStorage.removeItem("token");
+    delete axios.defaults.headers.common["Authorization"];
+    set({ user: null, role: null, token: null });
+  },
 }));
