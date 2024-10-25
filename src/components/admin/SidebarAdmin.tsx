@@ -1,6 +1,6 @@
 // SidebarAdmin.tsx
-import React, { useState } from "react";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import React, {useState} from "react";
+import {ChevronDown, ChevronRight} from "lucide-react";
 
 const SidebarAdmin: React.FC = () => {
   const [isUserManagementOpen, setIsUserManagementOpen] = useState(true);
@@ -17,25 +17,40 @@ const SidebarAdmin: React.FC = () => {
         >
           <span className="font-semibold text-black">USER MANAGEMENT</span>
           {isUserManagementOpen ? (
-            <ChevronDown size={23} className="text-black " />
+            <ChevronDown
+              size={23}
+              className="text-black "
+            />
           ) : (
-            <ChevronRight size={23} className="text-black" />
+            <ChevronRight
+              size={23}
+              className="text-black"
+            />
           )}
         </button>
         {isUserManagementOpen && (
           <div className="ml-4">
             <button className="w-full px-4 py-2 text-left hover:bg-gray-100">
-              <a className="text-black" href="/manageuser">
+              <a
+                className="text-black"
+                href="/usermanage"
+              >
                 Manage User
               </a>
             </button>
             <button className="w-full px-4 py-2 text-left hover:bg-gray-100">
-              <a className="text-black" href="/userdata">
+              <a
+                className="text-black"
+                href="/userdata"
+              >
                 User Data
               </a>
             </button>
             <button className="w-full px-4 py-2 text-left hover:bg-gray-100">
-              <a className="text-black" href="/facedata">
+              <a
+                className="text-black"
+                href="/facedata"
+              >
                 Face Data
               </a>
             </button>
@@ -43,12 +58,18 @@ const SidebarAdmin: React.FC = () => {
         )}
 
         <button className="w-full px-4 py-2 font-semibold text-left hover:bg-gray-100">
-          <a className="text-black" href="/datasubmission">
+          <a
+            className="text-black"
+            href="/submission"
+          >
             SUBMISSION
           </a>
         </button>
         <button className="w-full px-4 py-2 font-semibold text-left hover:bg-gray-100">
-          <a className="text-black" href="/recap">
+          <a
+            className="text-black"
+            href="/recap"
+          >
             RECAP
           </a>
         </button>

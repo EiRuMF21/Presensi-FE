@@ -7,7 +7,6 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -139,9 +138,12 @@ const Login: React.FC = () => {
             <div>
               <button
                 type="submit"
-                className="w-full bg-[#1E88E5] text-white p-2 rounded-xl mt-2"
+                className={`w-full text-white p-2 rounded-xl mt-2 ${
+                  loading ? "bg-gray-400" : "bg-[#1E88E5]"
+                } ${loading ? "cursor-not-allowed" : ""}`}
+                disabled={loading} // Disable button when loading
               >
-                Login
+                {loading ? "Logging in..." : "Login"}
               </button>
             </div>
           </form>

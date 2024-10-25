@@ -15,7 +15,6 @@ import ProfileSettings from "./components/layouts/ProfileSetting";
 import AttendancePage from "./components/home/AttendancePage";
 import SubmissionTable from "./components/admin/SubmissionData";
 import RecapTable from "./components/admin/RecapTable";
-import ProtectedRoute from "./ProtectedRouteComponent";
 import UserManageTable from "./components/admin/UserManage";
 import UserData from "./components/admin/UserData";
 import FaceData from "./components/admin/FaceData";
@@ -27,116 +26,75 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <Router>
       <Routes>
         {/* Halaman yang boleh diakses tanpa login */}
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        {/* <Route path="/admin" element={<DashboardAdmin />} /> */}
-        {/* <Route path="/home" element={<Homepage />} /> */}
-        {/* <Route path="/attendance" element={<AttendancePage />} /> */}
-        {/* <Route path="/datasubmission" element={<SubmissionTable />} /> */}
-        {/* <Route path="/manageuser" element={<UserManageTable />} /> */}
-        {/* <Route path="/userdata" element={<UserData />} /> */}
-        {/* <Route path="/facedata" element={<FaceData />} /> */}
-        {/* <Route path="/psa" element={<ProfileSettingsAdmin />} /> */}
+        <Route
+          path="/"
+          element={<Home />}
+        />
+        <Route
+          path="/login"
+          element={<Login />}
+        />
+        <Route
+          path="/register"
+          element={<Register />}
+        />
 
-        {/* Halaman yang dilindungi: hanya bisa diakses jika sudah login */}
+        {/* Halaman yang bisa diakses tanpa login */}
         <Route
           path="/home"
-          element={
-            <ProtectedRoute>
-              <Homepage />
-            </ProtectedRoute>
-          }
+          element={<Homepage />}
         />
-
         <Route
           path="/admin"
-          element={
-            <ProtectedRoute>
-              <DashboardAdmin />
-            </ProtectedRoute>
-          }
+          element={<DashboardAdmin />}
         />
-
         <Route
           path="/recap"
-          element={
-            <ProtectedRoute>
-              <RecapTable />
-            </ProtectedRoute>
-          }
+          element={<RecapTable />}
         />
-
         <Route
           path="/profile"
-          element={
-            <ProtectedRoute>
-              <ProfileSettings />
-            </ProtectedRoute>
-          }
+          element={<ProfileSettings />}
         />
         <Route
           path="/attendance"
-          element={
-            <ProtectedRoute>
-              <AttendancePage />
-            </ProtectedRoute>
-          }
+          element={<AttendancePage />}
         />
         <Route
           path="/submission"
-          element={
-            <ProtectedRoute>
-              <SubmissionTable />
-            </ProtectedRoute>
-          }
+          element={<SubmissionTable />}
         />
-
         <Route
           path="/facedata"
-          element={
-            <ProtectedRoute>
-              <FaceData />
-            </ProtectedRoute>
-          }
+          element={<FaceData />}
         />
         <Route
           path="/usermanage"
-          element={
-            <ProtectedRoute>
-              <UserManageTable />
-            </ProtectedRoute>
-          }
+          element={<UserManageTable />}
         />
         <Route
           path="/userdata"
-          element={
-            <ProtectedRoute>
-              <UserData />
-            </ProtectedRoute>
-          }
+          element={<UserData />}
         />
-
         <Route
           path="/profilesettingadmin"
-          element={
-            <ProtectedRoute>
-              <ProfileSettingsAdmin />
-            </ProtectedRoute>
-          }
+          element={<ProfileSettingsAdmin />}
         />
-
         <Route
           path="/profilesetting"
-          element={
-            <ProtectedRoute>
-              <ProfileSettings />
-            </ProtectedRoute>
-          }
+          element={<ProfileSettings />}
         />
 
         {/* Redirect ke halaman login jika mencoba mengakses rute yang tidak ada */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route
+          path="*"
+          element={
+            <Navigate
+              to="/login"
+              replace
+            />
+          }
+        />
       </Routes>
     </Router>
   </React.StrictMode>
