@@ -32,11 +32,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           element={<Login />}
         />
         <Route
-          path="/admin"
+          path="/Dashboard"
           element={<DashboardAdmin />}
         />
         <Route
-          path="/home"
+          path="/homepage"
           element={<Homepage />}
         />
         <Route

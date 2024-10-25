@@ -67,14 +67,16 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
             {status.charAt(0).toUpperCase() + status.slice(1)}
           </p>
         ) : (
-          <>
-            <p className="bg-[#4CAF50] px-2 py-1 h-5 rounded-xl mb-1 text-center text-xs">
-              In: {checkInTime || "-"}
-            </p>
-            <p className="bg-[#FF6F61] px-2 py-1 h-5 rounded-xl text-center text-xs">
-              Out: {checkOutTime || "-"}
-            </p>
-          </>
+          hovered && (
+            <>
+              <p className="bg-[#4CAF50] px-2 py-1 h-5 rounded-xl mb-1 text-center text-xs">
+                In: {checkInTime || "-"}
+              </p>
+              <p className="bg-[#FF6F61] px-2 py-1 h-5 rounded-xl text-center text-xs">
+                Out: {checkOutTime || "-"}
+              </p>
+            </>
+          )
         )}
       </div>
     </div>

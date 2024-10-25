@@ -29,7 +29,7 @@ html {
 
 body {
   background: #1e1e1e;
-  overflow-x: hidden; /* Mencegah scroll horizontal */
+  overflow-x: hidden;
 }
 
 /* Untuk Webkit Browsers */
@@ -40,7 +40,7 @@ body {
 ::-webkit-scrollbar-track {
   background-color: black;
   background: rgb(67, 66, 66);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(31.6px);
   -webkit-backdrop-filter: blur(11.6px);
 }
@@ -62,7 +62,6 @@ a {
 a:hover {
   color: #535bf2;
 }
-
 
 body {
   margin: 0;

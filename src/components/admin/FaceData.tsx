@@ -46,41 +46,6 @@ const initialData: User[] = [
     division: "Division - Position",
     photoStatus: "Uploaded",
   },
-  {
-    id: 6,
-    name: "Cyd Dabir",
-    email: "DabirCyd@gmail.com",
-    division: "Division - Position",
-    photoStatus: "Haven't scanned yet",
-  },
-  {
-    id: 7,
-    name: "Doe Kinan",
-    email: "KinanDoe@gmail.com",
-    division: "Division - Position",
-    photoStatus: "Haven't scanned yet",
-  },
-  {
-    id: 8,
-    name: "Elzein",
-    email: "Elzein123@gmail.com",
-    division: "Division - Position",
-    photoStatus: "Uploaded",
-  },
-  {
-    id: 9,
-    name: "Ghana Hasan",
-    email: "Hasan89@gmail.com",
-    division: "Division - Position",
-    photoStatus: "Uploaded",
-  },
-  {
-    id: 10,
-    name: "Kadeen",
-    email: "Kadeen76@gmail.com",
-    division: "Division - Position",
-    photoStatus: "Haven't scanned yet",
-  },
 ];
 
 const FaceData: React.FC = () => {
@@ -118,44 +83,47 @@ const FaceData: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen overflow-hidden bg-[#FFFFFF] py-2 px-4">
+    <div className="min-h-screen overflow-hidden bg-[#FFFFFF] py-2 px-2 sm:px-4">
       {/* Header */}
-      <div className="flex justify-between items-center mb-2 border-b-[3px]">
-        <button
-          onClick={handleBack}
-          className="text-black py-[12px] px-5"
-        >
-          <ChevronLeft className="w-8 h-8" />
-        </button>
-        <h2 className="text-lg font-bold text-black">FACE DATA</h2>
-        <div className="flex justify-center flex-1">
-          <div className="flex items-center px-4 py-2 bg-gray-200 rounded-2xl w-80">
-            <Search className="text-[#979797]" />
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-2 border-b-[3px] pb-2">
+        <div className="flex items-center justify-between w-full sm:w-auto sm:justify-start">
+          <button
+            onClick={handleBack}
+            className="text-black py-[12px] px-2 sm:px-5"
+          >
+            <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8" />
+          </button>
+          <h2 className="ml-2 text-base font-bold text-black sm:text-lg sm:ml-0">
+            FACE DATA
+          </h2>
+        </div>
+        <div className="flex flex-col items-center w-full mt-2 sm:flex-row sm:w-auto sm:mt-0">
+          <div className="flex items-center w-full px-2 py-1 bg-gray-200 sm:px-4 sm:py-2 rounded-2xl sm:w-80">
+            <Search className="text-[#979797] w-4 h-4 sm:w-5 sm:h-5" />
             <input
               type="text"
               placeholder="Search..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full ml-2 text-black bg-transparent outline-none"
+              className="w-full ml-2 text-sm text-black bg-transparent outline-none sm:text-base"
             />
           </div>
+          <select
+            className="w-full px-2 py-1 text-sm text-black bg-white border border-gray-300 rounded-full sm:px-4 sm:py-2 sm:w-auto"
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+          >
+            <option value="ALL">SCANNING ALL</option>
+            <option value="COMPLETE">COMPLETE</option>
+            <option value="HAVEN'T">HAVEN'T</option>
+          </select>
         </div>
-
-        <select
-          className="px-4 py-2 text-sm text-black bg-white border border-gray-300 rounded-full"
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-        >
-          <option value="ALL">SCANNING ALL</option>
-          <option value="COMPLETE">COMPLETE</option>
-          <option value="HAVEN'T">HAVEN'T</option>
-        </select>
       </div>
 
       {/* Table */}
       <div className="overflow-x-auto">
-        <table className="min-w-full border-collapse table-fixed">
-          <thead>
+        <table className="min-w-full border-collapse">
+          <thead className="hidden sm:table-header-group">
             <tr className="bg-gray-200">
               <th className="w-12 px-4 py-2 font-semibold text-center text-gray-600">
                 #
@@ -178,14 +146,17 @@ const FaceData: React.FC = () => {
             {currentUsers.map((user, index) => (
               <tr
                 key={user.id}
-                className="border-b"
+                className="flex flex-col border-b sm:table-row"
               >
-                <td className="px-4 py-3 text-center text-black">
+                <td className="px-4 py-3 text-left text-black sm:text-center">
+                  <span className="mr-2 font-semibold text-gray-600 sm:hidden">
+                    #:
+                  </span>
                   {indexOfFirstUser + index + 1}
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex items-center">
-                    <div className="flex-shrink-0 w-10 h-10 bg-gray-300 rounded-full"></div>
+                    <div className="flex-shrink-0 w-8 h-8 bg-gray-300 rounded-full sm:w-10 sm:h-10"></div>
                     <div className="ml-3">
                       <p className="font-medium text-gray-900">{user.name}</p>
                       <p className="text-sm font-normal text-gray-900">
@@ -194,8 +165,16 @@ const FaceData: React.FC = () => {
                     </div>
                   </div>
                 </td>
-                <td className="px-4 py-3 text-gray-700">{user.division}</td>
+                <td className="px-4 py-3 text-gray-700">
+                  <span className="mr-2 font-semibold text-gray-600 sm:hidden">
+                    Division:
+                  </span>
+                  {user.division}
+                </td>
                 <td className="px-4 py-3">
+                  <span className="mr-2 font-semibold text-gray-600 sm:hidden">
+                    Photo:
+                  </span>
                   <span
                     className={
                       user.photoStatus === "Uploaded"
@@ -218,8 +197,8 @@ const FaceData: React.FC = () => {
             ))}
           </tbody>
         </table>
-        <div className="flex items-center justify-between mt-4">
-          <p className="text-sm text-gray-500">
+        <div className="flex flex-col items-center justify-between mt-4 sm:flex-row">
+          <p className="mb-2 text-xs text-gray-500 sm:text-sm sm:mb-0">
             Showing {indexOfFirstUser + 1} to{" "}
             {Math.min(indexOfLastUser, filteredUsers.length)} out of{" "}
             {filteredUsers.length} entries
@@ -228,19 +207,21 @@ const FaceData: React.FC = () => {
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
-              className="px-4 py-2 text-gray-600 transition-colors bg-gray-200 rounded-full disabled:opacity-50 hover:bg-gray-300"
+              className="px-2 py-1 text-xs text-gray-600 transition-colors bg-gray-200 rounded-full sm:px-4 sm:py-2 sm:text-sm disabled:opacity-50 hover:bg-gray-300"
             >
               Previous
             </button>
-            <div className="flex items-center justify-center w-10 h-10 bg-gray-800 rounded-full">
-              <span className="font-bold text-white">{currentPage}</span>
+            <div className="flex items-center justify-center w-8 h-8 bg-gray-800 rounded-full sm:w-10 sm:h-10">
+              <span className="text-xs font-bold text-white sm:text-sm">
+                {currentPage}
+              </span>
             </div>
             <button
               onClick={() =>
                 setCurrentPage((prev) => Math.min(prev + 1, pageNumbers.length))
               }
               disabled={currentPage === pageNumbers.length}
-              className="px-4 py-2 text-gray-600 transition-colors bg-gray-200 rounded-full disabled:opacity-50 hover:bg-gray-300"
+              className="px-2 py-1 text-xs text-gray-600 transition-colors bg-gray-200 rounded-full sm:px-4 sm:py-2 sm:text-sm disabled:opacity-50 hover:bg-gray-300"
             >
               Next
             </button>
@@ -250,46 +231,50 @@ const FaceData: React.FC = () => {
 
       {/* Modal for viewing user details */}
       {selectedUser && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-[30rem] px-14">
+        <div className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 w-full sm:w-[30rem] max-w-[90vw] sm:max-w-none">
             <div className="border-b-[3px] flex border-black pb-2">
               <div className="flex">
                 <button
                   onClick={() => setSelectedUser(null)}
                   className="left-0 z-20 text-black"
                 >
-                  <ChevronLeft className="w-8 h-8" />
+                  <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8" />
                 </button>
               </div>
-              <h2 className="text-xl flex justify-center text-black ml-[8vh] font-semibold">
+              <h2 className="text-lg sm:text-xl flex justify-center text-black ml-[8vh] font-semibold">
                 FACE DATA
               </h2>
             </div>
             <div className="mt-5 space-y-4">
               <div className="flex justify-center">
-                <div className="flex items-center justify-center w-24 h-24 bg-gray-200 rounded-full">
+                <div className="flex items-center justify-center w-20 h-20 bg-gray-200 rounded-full sm:w-24 sm:h-24">
                   <User
-                    size={48}
+                    size={40}
                     className="text-gray-400"
                   />
                 </div>
               </div>
-              <div className="flex justify-between border-b-[3px] pb-2 border-[#D9D9D9] px-4">
-                <h1 className="text-black">User</h1>
-                <p className="text-black">{selectedUser.email}</p>
+              <div className="flex justify-between border-b-[3px] pb-2 border-[#D9D9D9] px-2 sm:px-4">
+                <h1 className="text-sm text-black sm:text-base">User</h1>
+                <p className="text-sm text-black sm:text-base">
+                  {selectedUser.email}
+                </p>
               </div>
-              <div className="flex justify-between border-b-[3px] pb-2 border-[#D9D9D9] px-4">
-                <h1 className="text-black">Division</h1>
-                <p className="text-black">{selectedUser.division}</p>
+              <div className="flex justify-between border-b-[3px] pb-2 border-[#D9D9D9] px-2 sm:px-4">
+                <h1 className="text-sm text-black sm:text-base">Division</h1>
+                <p className="text-sm text-black sm:text-base">
+                  {selectedUser.division}
+                </p>
               </div>
-              <div className="flex justify-between border-b-[3px] pb-2 border-[#D9D9D9] px-4">
-                <h1 className="text-black">Photo</h1>
+              <div className="flex justify-between border-b-[3px] pb-2 border-[#D9D9D9] px-2 sm:px-4">
+                <h1 className="text-sm text-black sm:text-base">Photo</h1>
                 <p
-                  className={
+                  className={`text-sm sm:text-base ${
                     selectedUser.photoStatus === "Uploaded"
                       ? "text-green-600"
                       : "text-red-600"
-                  }
+                  }`}
                 >
                   {selectedUser.photoStatus}
                 </p>

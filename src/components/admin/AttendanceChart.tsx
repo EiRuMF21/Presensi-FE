@@ -51,9 +51,8 @@ const generateYearlyData = (_year: number): DataPoint[] => {
   ];
 
   return months.map((month, _index) => {
-    // Aggregate random values for each month
     return {
-      date: month, // Month name
+      date: month,
       Attendance: Math.floor(Math.random() * 3000),
       Permission: Math.floor(Math.random() * 1500),
       Sick: Math.floor(Math.random() * 900),
@@ -91,9 +90,9 @@ const AttendanceChart: React.FC<AttendanceChartProps> = ({visibleLines}) => {
 
   useEffect(() => {
     if (isAllMonths) {
-      setData(generateYearlyData(year)); // Generate data for the whole year
+      setData(generateYearlyData(year));
     } else {
-      setData(generateRandomData(year, month)); // Generate data for a specific month
+      setData(generateRandomData(year, month));
     }
   }, [year, month, isAllMonths]);
 
@@ -119,12 +118,12 @@ const AttendanceChart: React.FC<AttendanceChartProps> = ({visibleLines}) => {
   ];
 
   const daysInMonth = new Date(year, month, 0).getDate();
-  const days = Array.from({length: daysInMonth}, (_, i) => i + 1); // List of days in the month
+  const days = Array.from({length: daysInMonth}, (_, i) => i + 1);
 
   const filteredData = data.filter((d) => {
     const day = Number(d.date);
     if (startDate && endDate) {
-      return day >= startDate && day <= endDate; // Filter by range
+      return day >= startDate && day <= endDate;
     }
     return true;
   });
@@ -138,7 +137,7 @@ const AttendanceChart: React.FC<AttendanceChartProps> = ({visibleLines}) => {
 
   return (
     <div className="flex flex-col p-6 space-y-6 bg-white rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold text-gray-800">Grafik Kehadiran</h2>
+      <h2 className="text-2xl font-bold text-gray-800">Attendance Graph</h2>
 
       <div className="flex space-x-4">
         {/* Year Dropdown */}
@@ -147,7 +146,7 @@ const AttendanceChart: React.FC<AttendanceChartProps> = ({visibleLines}) => {
             onClick={() => setIsYearDropdownOpen(!isYearDropdownOpen)}
             className="flex items-center justify-between w-32 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
-            Tahun: {year}
+            Year: {year}
             <ChevronDown
               className="w-5 h-5 ml-2"
               aria-hidden="true"
@@ -182,16 +181,16 @@ const AttendanceChart: React.FC<AttendanceChartProps> = ({visibleLines}) => {
         <div className="relative">
           <button
             onClick={() => setIsMonthDropdownOpen(!isMonthDropdownOpen)}
-            className="flex items-center justify-between w-40 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="flex items-center justify-between px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm w-36 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
-            Bulan: {isAllMonths ? "All Months" : months[month - 1]}
+            Month: {isAllMonths ? "All" : months[month - 1]}
             <ChevronDown
               className="w-5 h-5 ml-2"
               aria-hidden="true"
             />
           </button>
           {isMonthDropdownOpen && (
-            <div className="absolute left-0 z-10 w-40 mt-2 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
+            <div className="absolute left-0 z-10 mt-2 bg-white rounded-md shadow-lg w-36 ring-1 ring-black ring-opacity-5">
               <div
                 className="py-1"
                 role="menu"
@@ -226,9 +225,9 @@ const AttendanceChart: React.FC<AttendanceChartProps> = ({visibleLines}) => {
             <select
               value={startDate || ""}
               onChange={(e) => setStartDate(Number(e.target.value))}
-              className="w-40 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm"
+              className="w-32 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm"
             >
-              <option value="">Tanggal Mulai</option>
+              <option value="">From</option>
               {days.map((day) => (
                 <option
                   key={day}
@@ -244,9 +243,9 @@ const AttendanceChart: React.FC<AttendanceChartProps> = ({visibleLines}) => {
             <select
               value={endDate || ""}
               onChange={(e) => setEndDate(Number(e.target.value))}
-              className="w-40 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm"
+              className="w-32 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm"
             >
-              <option value="">Tanggal Akhir</option>
+              <option value="">To</option>
               {days.map((day) => (
                 <option
                   key={day}

@@ -45,7 +45,7 @@ const NavbarHome: React.FC = () => {
         />
 
         {isProfileDropdownOpen && (
-          <div className="absolute right-0 w-40 py-2 mt-12 text-black bg-white rounded-lg shadow-lg">
+          <div className="absolute right-0 w-32 py-2 mt-16 text-black bg-white rounded-lg shadow-lg">
             <button
               className="block w-full px-4 py-2 text-left hover:bg-gray-200"
               onClick={handleProfileClick}
