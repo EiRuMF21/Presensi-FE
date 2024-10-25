@@ -1,10 +1,14 @@
-import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import {useState, useEffect, useRef} from "react";
+import {useNavigate} from "react-router-dom";
+import axios from "axios"; // Untuk mengirim request ke backend
 
 const AttendancePage = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [showCamera, setShowCamera] = useState(false);
   const [isCheckIn, setIsCheckIn] = useState(true);
+  const [latitude, setLatitude] = useState<number | null>(null); // State untuk latitude
+  const [longitude, setLongitude] = useState<number | null>(null); // State untuk longitude
+  const [locationError, setLocationError] = useState<string | null>(null); // Error handling untuk geolocation
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
@@ -20,13 +24,31 @@ const AttendancePage = () => {
 
   useEffect(() => {
     const currentHour = currentTime.getHours();
-    if (currentHour >= 16) {
-      setIsCheckIn(false);
-    } else {
-      setIsCheckIn(true);
-    }
+    setIsCheckIn(currentHour < 16); // Check-in sebelum jam 16:00, check-out setelahnya
   }, [currentTime]);
 
+  // Mengambil lokasi pengguna
+  const getUserLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLatitude(position.coords.latitude);
+          setLongitude(position.coords.longitude);
+          setLocationError(null);
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+          setLocationError(
+            "Failed to get your location. Please enable location services."
+          );
+        }
+      );
+    } else {
+      setLocationError("Geolocation is not supported by this browser.");
+    }
+  };
+
+  // Fungsi untuk mengaktifkan kamera
   const activateCamera = async () => {
     try {
       const videoStream = await navigator.mediaDevices.getUserMedia({
@@ -44,6 +66,7 @@ const AttendancePage = () => {
     }
   };
 
+  // Fungsi untuk menangkap gambar dari kamera
   const captureImage = () => {
     if (videoRef.current && canvasRef.current) {
       const canvas = canvasRef.current;
@@ -54,27 +77,70 @@ const AttendancePage = () => {
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
         const imageData = canvas.toDataURL("image/png");
         console.log("Captured image data:", imageData);
       }
 
-      const action = isCheckIn ? "Check-in" : "Check-out";
-      console.log(`${action} at:`, currentTime.toLocaleTimeString());
-      alert(`${action} successful!`);
       if (stream) {
         stream.getTracks().forEach((track) => track.stop());
       }
 
-      navigate("/home");
+      handleAttendanceSubmit();
     }
   };
 
-  const handleAttendance = () => {
-    if (!showCamera) {
-      activateCamera();
+  // Fungsi untuk mengirim data check-in/check-out ke backend
+  // Fungsi untuk mengirim data check-in/check-out ke backend
+  const handleAttendanceSubmit = async () => {
+    if (latitude && longitude) {
+      try {
+        const token = localStorage.getItem("token"); // Ambil token dari localStorage
+        const action = isCheckIn ? "checkin" : "checkout"; // Tentukan jenis aksi
+
+        const apiUrl = `https://api-smart.curaweda.com/api/${action}`; // Sesuaikan endpoint Anda
+
+        const response = await axios.post(
+          apiUrl,
+          {
+            lat: latitude,
+            long: longitude,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Sertakan token JWT untuk autentikasi
+            },
+          }
+        );
+
+        console.log(`${action} response:`, response.data);
+        alert(`${isCheckIn ? "Check-in" : "Check-out"} successful!`);
+        navigate("/home");
+      } catch (error) {
+        console.error(
+          `Error during ${isCheckIn ? "Check-in" : "Check-out"}:`,
+          error
+        );
+        alert(
+          `Failed to ${isCheckIn ? "Check-in" : "Check-out"}. Please try again.`
+        );
+      }
     } else {
-      captureImage();
+      alert(
+        "Failed to get your location. Please enable location services and try again."
+      );
+    }
+  };
+
+  // Menghandle tombol attendance
+  const handleAttendance = () => {
+    if (!latitude || !longitude) {
+      getUserLocation(); // Dapatkan lokasi jika belum ada
+    }
+
+    if (!showCamera) {
+      activateCamera(); // Aktifkan kamera jika belum aktif
+    } else {
+      captureImage(); // Tangkap gambar jika kamera sudah aktif
     }
   };
 
@@ -82,7 +148,10 @@ const AttendancePage = () => {
     <div className="flex flex-col items-center min-h-screen text-black bg-gradient-to-t from-[#A0DEFF] via-[#CAF4FF] to-[#5AB2FF]">
       {/* Navbar */}
       <div className="flex items-center justify-between w-full px-4 py-4 bg-white shadow-md">
-        <button onClick={() => navigate(-1)} className="text-black">
+        <button
+          onClick={() => navigate(-1)}
+          className="text-black"
+        >
           <img
             src="https://img.icons8.com/ios-glyphs/30/000000/back.png"
             alt="Back Icon"
@@ -137,7 +206,10 @@ const AttendancePage = () => {
         </div>
 
         {/* Hidden canvas for capturing the image */}
-        <canvas ref={canvasRef} style={{ display: "none" }} />
+        <canvas
+          ref={canvasRef}
+          style={{display: "none"}}
+        />
 
         <button
           onClick={handleAttendance}
@@ -148,6 +220,9 @@ const AttendancePage = () => {
           {showCamera ? "Capture and Finish" : "Attendance"}
         </button>
       </div>
+
+      {/* Error message jika lokasi gagal */}
+      {locationError && <p className="text-red-500">{locationError}</p>}
     </div>
   );
 };

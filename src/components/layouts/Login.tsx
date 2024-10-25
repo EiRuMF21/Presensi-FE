@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Eye, EyeOff, ChevronLeft } from "lucide-react";
+import React, {useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {Eye, EyeOff, ChevronLeft} from "lucide-react";
 import axios from "axios";
 
 const Login: React.FC = () => {
@@ -25,7 +25,7 @@ const Login: React.FC = () => {
       setLoading(true);
       const response = await axios.post(
         "https://api-smart.curaweda.com/api/login",
-        { email, password },
+        {email, password},
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -41,7 +41,7 @@ const Login: React.FC = () => {
         localStorage.setItem("token", result.token); // Save token in localStorage
 
         // Check the role and navigate accordingly
-        const { role } = result;
+        const {role} = result;
         if (role === "ADMIN") {
           navigate("/admin");
         } else {
@@ -62,9 +62,9 @@ const Login: React.FC = () => {
     <div className="flex w-full min-h-screen">
       <button
         onClick={handleBack}
-        className="absolute top-4 left-4 z-20 text-white"
+        className="absolute z-20 text-white top-4 left-4"
       >
-        <ChevronLeft className="h-8 w-8" />
+        <ChevronLeft className="w-8 h-8" />
       </button>
       <div className="flex-[1.7] bg-[#1E88E5] flex flex-col justify-center p-6 md:py-10 relative">
         <div className="relative flex flex-col items-center lg:flex-row lg:items-start">
@@ -73,7 +73,13 @@ const Login: React.FC = () => {
               Welcome
             </h1>
             <p className="mt-4 ml-24 text-white text-md md:mt-10">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit...
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Voluptatum earum fugit totam nemo fugiat eveniet quae eaque nam
+              esse asperiores repellat at placeat, sint sit facilis libero
+              magnam provident necessitatibus, similique mollitia itaque
+              laborum? Magnam nesciunt illo veritatis, ipsum voluptatibus eum
+              deleniti, deserunt consectetur exercitationem laudantium quidem
+              voluptates cumque molestias?
             </p>
           </div>
         </div>
@@ -84,8 +90,11 @@ const Login: React.FC = () => {
           <h2 className="text-6xl font-bold text-[#212121] mb-4">
             Login <br /> <span className="text-[#1E88E5]">Here!</span>
           </h2>
-          <form className="space-y-4" onSubmit={handleSubmit}>
-            {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
+          <form
+            className="space-y-4"
+            onSubmit={handleSubmit}
+          >
+            {error && <div className="mb-4 text-sm text-red-500">{error}</div>}
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 Email
@@ -120,9 +129,9 @@ const Login: React.FC = () => {
                   className="focus:outline-none"
                 >
                   {showPassword ? (
-                    <EyeOff className="h-5 w-5 text-gray-500" />
+                    <EyeOff className="w-5 h-5 text-gray-500" />
                   ) : (
-                    <Eye className="h-5 w-5 text-gray-500" />
+                    <Eye className="w-5 h-5 text-gray-500" />
                   )}
                 </button>
               </div>
