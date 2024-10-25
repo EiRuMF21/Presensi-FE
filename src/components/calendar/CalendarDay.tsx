@@ -2,8 +2,8 @@ import React from "react";
 
 interface CalendarDayProps {
   day: number;
-  checkInTime: string | null;
-  checkOutTime: string | null;
+  checkInTime: string | null; // Bisa null jika belum ada check-in
+  checkOutTime: string | null; // Bisa null jika belum ada check-out
   status: "present" | "permission" | "duty" | "sick" | null;
   onClick: () => void;
   isToday: boolean;
@@ -69,11 +69,16 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
         ) : (
           hovered && (
             <>
+              {/* Tampilkan waktu check-in dan check-out */}
               <p className="bg-[#4CAF50] px-2 py-1 h-5 rounded-xl mb-1 text-center text-xs">
-                In: {checkInTime || "-"}
+                In:{" "}
+                {checkInTime ? new Date(checkInTime).toLocaleTimeString() : "-"}
               </p>
               <p className="bg-[#FF6F61] px-2 py-1 h-5 rounded-xl text-center text-xs">
-                Out: {checkOutTime || "-"}
+                Out:{" "}
+                {checkOutTime
+                  ? new Date(checkOutTime).toLocaleTimeString()
+                  : "-"}
               </p>
             </>
           )

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import NavbarHome from "../components/home/NavbarHome";
 import PresenceSummary from "../components/home/PresenceSummary";
 import ProfileCard from "../components/home/ProfileCard";
@@ -69,7 +69,7 @@ const Homepage: React.FC = () => {
   const MobileCalendar = () => (
     <div className="p-4 bg-white rounded-lg shadow-md">
       <MonthYearSelector
-        initialMonth={currentDate.toLocaleString("default", { month: "long" })}
+        initialMonth={currentDate.toLocaleString("default", {month: "long"})}
         initialYear={currentDate.getFullYear()}
         onMonthYearChange={(monthString, year) => {
           const monthIndex = new Date(`${monthString} 1, ${year}`).getMonth();
@@ -78,7 +78,10 @@ const Homepage: React.FC = () => {
       />
       <div className="grid grid-cols-7 gap-1 mt-4 text-center">
         {["S", "M", "T", "W", "T", "F", "S"].map((day) => (
-          <div key={day} className="text-xs font-bold text-gray-600">
+          <div
+            key={day}
+            className="text-xs font-bold text-gray-600"
+          >
             {day}
           </div>
         ))}
@@ -140,7 +143,10 @@ const Homepage: React.FC = () => {
             {/* Day headers */}
             <div className="grid grid-cols-7 gap-4 text-center">
               {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-                <div key={day} className="font-bold text-gray-600">
+                <div
+                  key={day}
+                  className="font-bold text-gray-600"
+                >
                   {day}
                 </div>
               ))}
