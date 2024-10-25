@@ -4,6 +4,7 @@ import { useAuthStore } from "../../store/useAuthStore";
 import SubmissionModal from "./SubmissionModal";
 import axios from "axios";
 
+
 interface ProfileData {
   name: string;
   position: string | null;
