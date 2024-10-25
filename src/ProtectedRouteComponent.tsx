@@ -9,20 +9,28 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-  const role = useAuthStore((state) => state.role); // Get role from store
+  const role = useAuthStore((state) => state.role); // Get role from Zustand store
 
   useEffect(() => {
     const checkAuth = async () => {
-      try {
-         await axios.get(
-          "https://api-smart.curaweda.com/api/check-auth",
-          {
-            withCredentials: true,
-          }
-        );
-        setIsAuthenticated(true);
-      } catch (error) {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
         setIsAuthenticated(false);
+        return;
+      }
+
+      try {
+        await axios.get("https://api-smart.curaweda.com/api/check-auth", {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the token in the request
+          },
+          withCredentials: true, // Ensure cookies are sent with the request
+        });
+        setIsAuthenticated(true); // Authentication successful
+      } catch (error) {
+        console.error("Authentication check failed:", error);
+        setIsAuthenticated(false); // Not authenticated
       }
     };
 
@@ -30,19 +38,21 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   }, []);
 
   if (isAuthenticated === null) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>; // Loading state while checking authentication
   }
 
-  // Redirect based on role
   if (!isAuthenticated) {
-    return <Navigate to="/login" />;
-  } else if (isAuthenticated && role === "ADMIN") {
+    return <Navigate to="/login" />; // Redirect to login if not authenticated
+  }
+
+  // Redirect based on user role
+  if (role === "ADMIN") {
     return <Navigate to="/admin" />;
-  } else if (isAuthenticated && role === "USER") {
+  } else if (role === "USER") {
     return <Navigate to="/home" />;
   }
 
-  return <>{children}</>; // Render children if no redirection
+  return <>{children}</>; // Render children (the protected content) if no redirection is needed
 };
 
 export default ProtectedRoute;

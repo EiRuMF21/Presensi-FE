@@ -53,11 +53,11 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
       onMouseEnter={() => onHover(day)}
       onMouseLeave={onLeave}
     >
-      <p className="text-md -ml-20 text-black bg-[#D9D9D9] px-2 rounded-full font-bold">
+      <p className="text-sm lg:-ml-28 sm:ml-0 text-black bg-[#D9D9D9] px-2 rounded-full font-bold">
         {day}
       </p>
 
-      <div className="mt-2 text-xs w-full px-1">
+      <div className="w-full px-1 mt-2 text-xs">
         {status ? (
           <p
             className={`${getStatusColor(
@@ -67,14 +67,16 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
             {status.charAt(0).toUpperCase() + status.slice(1)}
           </p>
         ) : (
-          <>
-            <p className="bg-[#4CAF50] px-2 py-1 h-5 rounded-xl mb-1 text-center text-xs">
-              In: {checkInTime || "-"}
-            </p>
-            <p className="bg-[#FF6F61] px-2 py-1 h-5 rounded-xl text-center text-xs">
-              Out: {checkOutTime || "-"}
-            </p>
-          </>
+          hovered && (
+            <>
+              <p className="bg-[#4CAF50] px-2 py-1 h-5 rounded-xl mb-1 text-center text-xs">
+                In: {checkInTime || "-"}
+              </p>
+              <p className="bg-[#FF6F61] px-2 py-1 h-5 rounded-xl text-center text-xs">
+                Out: {checkOutTime || "-"}
+              </p>
+            </>
+          )
         )}
       </div>
     </div>

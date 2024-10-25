@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {ChevronDown, ChevronUp} from "lucide-react";
+import React, { useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 interface MonthYearSelectorProps {
   initialMonth: string;
@@ -33,7 +33,7 @@ const MonthYearSelector: React.FC<MonthYearSelectorProps> = ({
   ];
 
   // Menampilkan rentang tahun dari 10 tahun sebelumnya hingga 10 tahun ke depan
-  const years = Array.from({length: 21}, (_, i) => initialYear - 10 + i);
+  const years = Array.from({ length: 21 }, (_, i) => initialYear - 10 + i);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 

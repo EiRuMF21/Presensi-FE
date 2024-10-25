@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../store/useAuthStore";
 import SubmissionModal from "./SubmissionModal";
+import axios from "axios";
 
 interface ProfileData {
   name: string;
@@ -15,59 +17,76 @@ const ProfileCard: React.FC = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [profileData, setProfileData] = useState<ProfileData>({
     name: "",
-    position: null,
-    facePhoto: null,
+    position: "",
+    facePhoto: "",
   });
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const navigate = useNavigate();
+  const { token, clearUser } = useAuthStore();
+
+  // Authentication check and axios configuration
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+
+    if (!token && !storedToken) {
+      clearUser();
+      return;
+    }
+
+    // Set axios default authorization header
+    const currentToken = token || storedToken;
+    if (currentToken) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${currentToken}`;
+    }
+  }, [token, navigate, clearUser]);
 
   // Fetch profile data
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const userId = localStorage.getItem("userId");
-        if (!userId) {
-          throw new Error("User ID not found");
-        }
-
-        const response = await fetch(
-          `https://api-smart.curaweda.com/api/accounts/${userId}`
+        setIsLoading(true);
+        const response = await axios.get(
+          "https://api-smart.curaweda.com/api/myaccount"
         );
-        if (!response.ok) {
-          throw new Error("Failed to fetch profile data");
-        }
 
-        const data = await response.json();
-        setProfileData({
-          name: data.name || "Not Available",
-          position: data.position,
-          facePhoto: data.facePhoto,
-        });
-        setIsLoading(false);
-      } catch (error: unknown) {
-        const errorMessage =
-          error instanceof Error ? error.message : "An unknown error occurred";
-        setErrorMessage(errorMessage);
+        if (response.data) {
+          setProfileData(response.data);
+        }
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          if (error.response?.status === 401) {
+            // Clear everything on unauthorized
+            localStorage.removeItem("token");
+            delete axios.defaults.headers.common["Authorization"];
+            clearUser();
+          } else {
+            setErrorMessage(
+              "Failed to load profile data. Please try again later."
+            );
+          }
+        }
+      } finally {
         setIsLoading(false);
       }
     };
 
-    fetchProfileData();
-  }, []);
+    if (axios.defaults.headers.common["Authorization"]) {
+      fetchProfileData();
+    }
+  }, [navigate, clearUser]);
 
   // Time-based check-in/out logic
   useEffect(() => {
-    const currentHour = currentTime.getHours();
-    setIsCheckIn(currentHour < 16);
-
     const interval = setInterval(() => {
-      setCurrentTime(new Date());
+      const newTime = new Date();
+      setCurrentTime(newTime);
+      setIsCheckIn(newTime.getHours() < 16);
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [currentTime]);
+  }, []);
 
   const handleAttendance = () => {
     navigate("/attendance");
@@ -92,8 +111,8 @@ const ProfileCard: React.FC = () => {
 
   if (errorMessage) {
     return (
-      <div className="p-4 text-red-500 bg-red-100 rounded-lg">
-        Error loading profile: {errorMessage}
+      <div className="flex items-center justify-center w-full p-8 text-red-500">
+        {errorMessage}
       </div>
     );
   }
@@ -111,11 +130,13 @@ const ProfileCard: React.FC = () => {
             img.src = "https://via.placeholder.com/80";
           }}
         />
+
         <div>
           <h2 className="text-2xl font-bold text-gray-700">
             {profileData.name}
           </h2>
           <p className="text-gray-500">
+            {" "}
             {profileData.position || "Position Not Set"}
           </p>
         </div>
@@ -123,13 +144,14 @@ const ProfileCard: React.FC = () => {
 
       {/* Right Section: ATTENDANCE/Submission Buttons */}
       <div className="flex flex-col md:space-y-2">
+        {/* Check-In/Check-Out Button */}
         <button
           onClick={handleAttendance}
           className={`${
             isCheckIn ? "bg-blue-500" : "bg-red-500"
           } text-white font-bold py-3 px-6 rounded-full shadow-lg flex items-center justify-center`}
         >
-          ATTENDANCE
+          {isCheckIn ? "ATTENDANCE" : "ATTENDANCE"}
           <img
             src={`https://img.icons8.com/ios-filled/24/ffffff/${
               isCheckIn ? "globe" : "exit"
@@ -139,6 +161,7 @@ const ProfileCard: React.FC = () => {
           />
         </button>
 
+        {/* Submission Button */}
         <button
           className="flex items-center justify-center px-6 py-3 mt-2 font-bold text-blue-500 bg-white border border-blue-500 rounded-full shadow-lg"
           onClick={() => openSubmissionModal("Submission")}
@@ -152,6 +175,7 @@ const ProfileCard: React.FC = () => {
         </button>
       </div>
 
+      {/* Submission Modal */}
       {isSubmissionModalOpen && (
         <SubmissionModal
           isOpen={isSubmissionModalOpen}

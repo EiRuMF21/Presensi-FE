@@ -2,42 +2,59 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff, ChevronLeft } from "lucide-react";
 import axios from "axios";
-import { useAuthStore } from "../../store/useAuthStore"; // Import Zustand store
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+
   const [showPassword, setShowPassword] = useState(false);
-  const { setUser, setRole } = useAuthStore(); // Access Zustand store
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
   const handleBack = () => navigate("/");
+  const token = localStorage.getItem("token");
 
+  // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+
     try {
+      setLoading(true);
       const response = await axios.post(
         "https://api-smart.curaweda.com/api/login",
         { email, password },
         {
-          withCredentials: true, // This ensures cookies are included in the request
           headers: {
+            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
         }
       );
 
+      const result = response.data;
+
       if (response.status === 200) {
-        const { user, role } = response.data; // Destructure user and role from the response
-        setUser(user, role); // Store user in Zustand
-        setRole(role); // Store role in Zustand
-        navigate(role === "ADMIN" ? "/admin" : "/home"); // Navigate based on role
+        // Store token in localStorage
+        localStorage.setItem("token", result.token); // Save token in localStorage
+
+        // Check the role and navigate accordingly
+        const { role } = result;
+        if (role === "ADMIN") {
+          navigate("/admin");
+        } else {
+          navigate("/home");
+        }
+      } else {
+        setError(result.message || "An error occurred during login.");
       }
-    } catch (err) {
-      console.error("Login error:", err);
-      setError("Login failed");
+    } catch (error: any) {
+      console.error("Login failed:", error);
+      setError("Login failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
