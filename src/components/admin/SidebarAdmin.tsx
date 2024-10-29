@@ -25,7 +25,7 @@ const SidebarAdmin: React.FC = () => {
         {isUserManagementOpen && (
           <div className="ml-4">
             <button className="w-full px-4 py-2 text-left hover:bg-gray-100">
-              <a className="text-black" href="/manageuser">
+              <a className="text-black" href="/usermanage">
                 Manage User
               </a>
             </button>

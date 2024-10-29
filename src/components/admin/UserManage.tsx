@@ -240,7 +240,7 @@ const UserDataTable: React.FC = () => {
   };
 
   const handleBack = () => {
-    navigate(-1); // This will navigate to the previous page
+    navigate("/admin"); // This will navigate to the previous page
   };
 
   const handleSubmit = async () => {
