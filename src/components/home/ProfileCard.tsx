@@ -15,7 +15,7 @@ const ProfileCard: React.FC = () => {
   const [isCheckIn, setIsCheckIn] = useState(true);
   const [modalTitle, setModalTitle] = useState("");
   const [isSubmissionModalOpen, setIsSubmissionModalOpen] = useState(false);
-  const [currentTime, setCurrentTime] = useState(new Date());
+  const [, setCurrentTime] = useState(new Date());
   const [profileData, setProfileData] = useState<ProfileData>({
     name: "",
     position: "",
