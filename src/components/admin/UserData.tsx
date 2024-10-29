@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { ChevronLeft, Search } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import {ChevronLeft, Search} from "lucide-react";
+import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import ConfirmationModal from "../layouts/ConfirmationModal"; // Import the modal
-import { ToastContainer, toast } from "react-toastify";
+import {ToastContainer, toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 interface User {
   userID: number;
   name: string;
   email: string;
-  password: string; // Add the password field
+  password: string; // Add the password field if needed
 }
 
 const API_BASE_URL = "https://api-smart.curaweda.com"; // Adjust this to match your backend URL
@@ -24,7 +24,7 @@ const UserData: React.FC = () => {
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
   const [actionType, setActionType] = useState<"approve" | "reject" | null>(
     null
-  ); // State for action type
+  );
   const [currentPage, setCurrentPage] = useState(1);
   const [userPassword, setUserPassword] = useState(""); // State for password input
   const usersPerPage = 10; // Set maximum items per page
@@ -37,8 +37,11 @@ const UserData: React.FC = () => {
   const fetchPendingUsers = async () => {
     setIsLoading(true);
     try {
+      const token = localStorage.getItem("token"); // Get token from localStorage
       const response = await axios.get(`${API_BASE_URL}/api/accounts/pending`, {
-        withCredentials: true, // Enable credentials to send cookies
+        headers: {
+          Authorization: `Bearer ${token}`, // Set token in Authorization header
+        },
       });
       setUsers(response.data); // This will now include passwords
       setError(null);
@@ -52,6 +55,7 @@ const UserData: React.FC = () => {
   const handleAction = async (action: "approve" | "reject") => {
     if (selectedUserId === null) return; // Prevent action if no user is selected
     try {
+      const token = localStorage.getItem("token"); // Get token from localStorage
       const endpoint =
         action === "approve"
           ? `${API_BASE_URL}/api/accounts/${selectedUserId}/approve`
@@ -59,10 +63,12 @@ const UserData: React.FC = () => {
 
       await axios.put(
         endpoint,
-        { action, password: userPassword }, // Send password with the action
+        {action, password: userPassword}, // Send password with the action
         {
-          withCredentials: true, // Enable credentials to send cookies
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            Authorization: `Bearer ${token}`, // Set token in Authorization header
+            "Content-Type": "application/json",
+          },
         }
       );
       fetchPendingUsers(); // Refresh the list after action
@@ -73,7 +79,6 @@ const UserData: React.FC = () => {
     setIsModalOpen(false); // Close the modal
     setUserPassword(""); // Reset the password input
   };
-
 
   const openModal = (userId: number, action: "approve" | "reject") => {
     setSelectedUserId(userId);
@@ -136,13 +141,19 @@ const UserData: React.FC = () => {
           <tbody>
             {currentUsers.length === 0 ? (
               <tr>
-                <td colSpan={4} className="p-4 text-center">
+                <td
+                  colSpan={4}
+                  className="p-4 text-center"
+                >
                   No pending users found.
                 </td>
               </tr>
             ) : (
               currentUsers.map((user, index) => (
-                <tr key={user.userID} className="border-b">
+                <tr
+                  key={user.userID}
+                  className="border-b"
+                >
                   <td className="p-2">{index + 1 + indexOfFirstUser}</td>{" "}
                   {/* Display ID based on pagination */}
                   <td className="p-2">{user.name}</td>
@@ -155,7 +166,7 @@ const UserData: React.FC = () => {
                       Approve
                     </button>
                     <button
-                      onClick={() => openModal(user.userID, "reject")} // Pass "reject" here
+                      onClick={() => openModal(user.userID, "reject")}
                       className="px-3 py-1 text-sm text-white bg-red-500 rounded"
                     >
                       Reject
@@ -168,7 +179,7 @@ const UserData: React.FC = () => {
         </table>
       )}
       {/* Pagination Controls */}
-      <div className="mt-4 flex justify-between items-center">
+      <div className="flex items-center justify-between mt-4">
         <p className="text-sm text-gray-500">
           Showing {indexOfFirstUser + 1} to{" "}
           {Math.min(indexOfLastUser, filteredUsers.length)} out of{" "}
@@ -178,19 +189,19 @@ const UserData: React.FC = () => {
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
-            className="px-4 py-2 rounded-full bg-gray-200 text-gray-600 disabled:opacity-50 hover:bg-gray-300 transition-colors"
+            className="px-4 py-2 text-gray-600 transition-colors bg-gray-200 rounded-full disabled:opacity-50 hover:bg-gray-300"
           >
             Previous
           </button>
-          <div className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center">
-            <span className="text-white font-bold">{currentPage}</span>
+          <div className="flex items-center justify-center w-10 h-10 bg-gray-800 rounded-full">
+            <span className="font-bold text-white">{currentPage}</span>
           </div>
           <button
             onClick={() =>
               setCurrentPage((prev) => Math.min(prev + 1, pageNumbers.length))
             }
             disabled={currentPage === pageNumbers.length}
-            className="px-4 py-2 rounded-full bg-gray-200 text-gray-600 disabled:opacity-50 hover:bg-gray-300 transition-colors"
+            className="px-4 py-2 text-gray-600 transition-colors bg-gray-200 rounded-full disabled:opacity-50 hover:bg-gray-300"
           >
             Next
           </button>
@@ -203,14 +214,14 @@ const UserData: React.FC = () => {
         onConfirm={() => handleAction(actionType!)} // Use the selected action type
       >
         <div className="p-4">
-          <h3 className="text-lg font-semibold mb-4">Confirm Action</h3>
+          <h3 className="mb-4 text-lg font-semibold">Confirm Action</h3>
           <p>To proceed with this action, please enter the user's password:</p>
           <input
             type="password"
             value={userPassword}
             onChange={(e) => setUserPassword(e.target.value)}
             placeholder="Password"
-            className="mt-2 px-3 py-2 border rounded w-full"
+            className="w-full px-3 py-2 mt-2 border rounded"
           />
         </div>
       </ConfirmationModal>
