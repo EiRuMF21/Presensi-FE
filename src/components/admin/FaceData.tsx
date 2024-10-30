@@ -220,7 +220,7 @@ const FaceData: React.FC = () => {
   });
 
   return (
-    <div className="fixed -ml-[105vh] w-full h-full mx-auto overflow-hidden text-black bg-white rounded-lg shadow-md">
+    <div className="fixed  w-full h-full mx-auto overflow-hidden text-black bg-white rounded-lg shadow-md">
       {/* Header */}
       <div className="flex items-center justify-between p-6 border-b">
         {/* Back Button */}

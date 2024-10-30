@@ -103,7 +103,7 @@ const UserData: React.FC = () => {
   }
 
   return (
-    <div className="fixed w-full h-full -ml-[105vh] overflow-hidden text-black bg-white rounded-lg shadow-md">
+    <div className="fixed w-full h-full  overflow-hidden text-black bg-white rounded-lg shadow-md">
       <div className="flex items-center justify-between p-3 border-b">
         <div className="flex items-center">
           <ChevronLeft
@@ -141,13 +141,19 @@ const UserData: React.FC = () => {
           <tbody>
             {currentUsers.length === 0 ? (
               <tr>
-                <td colSpan={4} className="p-4 text-center">
+                <td
+                  colSpan={4}
+                  className="p-4 text-center"
+                >
                   No pending users found.
                 </td>
               </tr>
             ) : (
               currentUsers.map((user, index) => (
-                <tr key={user.userID} className="border-b">
+                <tr
+                  key={user.userID}
+                  className="border-b"
+                >
                   <td className="p-2">{index + 1 + indexOfFirstUser}</td>{" "}
                   {/* Display ID based on pagination */}
                   <td className="p-2">{user.name}</td>
