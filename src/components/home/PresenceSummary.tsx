@@ -17,25 +17,27 @@ const SummaryCard: React.FC<SummaryCardProps> = ({
 }) => {
   return (
     <div
-      className={`bg-white p-4 rounded-lg shadow-md text-center ${
+      className={`bg-white p-2 sm:p-3 lg:p-4 rounded-lg shadow-md text-center ${
         large ? "col-span-2" : "col-span-1"
       }`}
       style={{ borderLeft: `8px solid ${color}` }}
     >
-      {/* Dot in the corner */}
       <span
         className="absolute w-3 h-3 rounded-full top-2 right-2"
         style={{ backgroundColor: color }}
       ></span>
 
-      {/* Icon and Text */}
       <div className="flex items-center">
-        <img src={icon} alt={label} className="w-10 h-10 mx-auto" />
-
-        {/* Label and Days */}
+        <img
+          src={icon}
+          alt={label}
+          className="w-8 h-8 sm:w-10 sm:h-10 mx-auto"
+        />
         <div>
           <p className="text-sm text-gray-500">{label}</p>
-          <p className="text-lg font-bold text-gray-900">{days}</p>
+          <p className="text-base sm:text-lg lg:text-xl font-bold text-gray-900">
+            {days}
+          </p>
         </div>
       </div>
     </div>
@@ -84,7 +86,7 @@ const PresenceSummary: React.FC = () => {
   return (
     <div className="flex items-center justify-center max-w-screen-md">
       <div className="w-full lg:w-3/5">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-2">
           {summaries.map((summary, index) => (
             <SummaryCard
               key={index}

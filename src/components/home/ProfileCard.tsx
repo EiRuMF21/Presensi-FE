@@ -4,7 +4,6 @@ import { useAuthStore } from "../../store/useAuthStore";
 import SubmissionModal from "./SubmissionModal";
 import axios from "axios";
 
-
 interface ProfileData {
   name: string;
   position: string | null;
@@ -27,7 +26,6 @@ const ProfileCard: React.FC = () => {
   const navigate = useNavigate();
   const { token, clearUser } = useAuthStore();
 
-  // Authentication check and axios configuration
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
 
@@ -36,14 +34,12 @@ const ProfileCard: React.FC = () => {
       return;
     }
 
-    // Set axios default authorization header
     const currentToken = token || storedToken;
     if (currentToken) {
       axios.defaults.headers.common["Authorization"] = `Bearer ${currentToken}`;
     }
   }, [token, navigate, clearUser]);
 
-  // Fetch profile data
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
@@ -58,7 +54,6 @@ const ProfileCard: React.FC = () => {
       } catch (error) {
         if (axios.isAxiosError(error)) {
           if (error.response?.status === 401) {
-            // Clear everything on unauthorized
             localStorage.removeItem("token");
             delete axios.defaults.headers.common["Authorization"];
             clearUser();
@@ -78,7 +73,6 @@ const ProfileCard: React.FC = () => {
     }
   }, [navigate, clearUser]);
 
-  // Time-based check-in/out logic
   useEffect(() => {
     const interval = setInterval(() => {
       const newTime = new Date();
@@ -119,13 +113,13 @@ const ProfileCard: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-between w-full p-2 mx-auto mt-6 bg-white rounded-lg shadow-lg max-w-7xl md:flex-row">
+    <div className="flex flex-col items-center justify-between w-full p-2 sm:p-4 lg:p-6 mx-auto mt-4 lg:mt-6 bg-white rounded-lg shadow-lg max-w-7xl md:flex-row">
       {/* Left Section: Profile */}
       <div className="flex items-center mb-6 md:mb-0">
         <img
           src={profileData.facePhoto || "https://via.placeholder.com/80"}
           alt="Profile"
-          className="object-cover w-24 h-24 mr-6 rounded-full"
+          className="object-cover w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mr-4 sm:mr-6 rounded-full"
           onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
             const img = e.currentTarget;
             img.src = "https://via.placeholder.com/80";
@@ -133,26 +127,24 @@ const ProfileCard: React.FC = () => {
         />
 
         <div>
-          <h2 className="text-2xl font-bold text-gray-700">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-700">
             {profileData.name}
           </h2>
           <p className="text-gray-500">
-            {" "}
             {profileData.position || "Position Not Set"}
           </p>
         </div>
       </div>
 
       {/* Right Section: ATTENDANCE/Submission Buttons */}
-      <div className="flex flex-col md:space-y-2">
-        {/* Check-In/Check-Out Button */}
+      <div className="flex flex-col space-y-2 w-full sm:w-auto">
         <button
           onClick={handleAttendance}
           className={`${
             isCheckIn ? "bg-blue-500" : "bg-red-500"
-          } text-white font-bold py-3 px-6 rounded-full shadow-lg flex items-center justify-center`}
+          } text-white font-bold py-2 px-4 sm:py-3 sm:px-6 rounded-full shadow-lg flex items-center justify-center w-full sm:w-auto`}
         >
-          {isCheckIn ? "ATTENDANCE" : "ATTENDANCE"}
+          ATTENDANCE
           <img
             src={`https://img.icons8.com/ios-filled/24/ffffff/${
               isCheckIn ? "globe" : "exit"
@@ -162,9 +154,8 @@ const ProfileCard: React.FC = () => {
           />
         </button>
 
-        {/* Submission Button */}
         <button
-          className="flex items-center justify-center px-6 py-3 mt-2 font-bold text-blue-500 bg-white border border-blue-500 rounded-full shadow-lg"
+          className="flex items-center justify-center px-4 py-2 sm:px-6 sm:py-3 font-bold text-blue-500 bg-white border border-blue-500 rounded-full shadow-lg w-full sm:w-auto"
           onClick={() => openSubmissionModal("Submission")}
         >
           <img

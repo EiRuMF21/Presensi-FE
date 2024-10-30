@@ -76,39 +76,41 @@ const Register: React.FC = () => {
     <div className="flex w-full min-h-screen">
       <button
         onClick={handleBack}
-        className="absolute top-4 left-4 z-20 text-white"
+        className="absolute z-20 text-white top-4 left-4"
       >
-        <ChevronLeft className="h-8 w-8" />
+        <ChevronLeft className="w-8 h-8" />
       </button>
-      <div className="flex-[1.7] bg-[#1E88E5] flex flex-col justify-center p-6 md:py-10 relative">
+      <div className="hidden md:flex flex-[1.7] bg-[#1E88E5] flex-col justify-center p-6 md:py-10 lg:px-10 xl:px-36 w-full min-h-screen relative">
         <div className="relative flex flex-col items-center lg:flex-row lg:items-start">
           <div className="flex flex-col -ml-8 md:max-w-3xl">
             <h1 className="ml-24 text-4xl font-semibold text-white md:text-8xl md:-mt-32">
               Welcome
             </h1>
             <p className="mt-4 ml-24 text-white text-md md:mt-10">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Quibusdam voluptatem et facilis eveniet distinctio totam nemo
-              vero, ullam repellat voluptate minima doloribus soluta accusantium
-              eius error! Sed, eum perferendis doloremque a et eaque earum nemo
-              commodi similique, consequatur vitae culpa quisquam praesentium
-              aperiam? Laudantium nulla consequuntur quidem labore accusamus a!
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur.
             </p>
           </div>
-          <div className="absolute md:-top-52 md:right-52">
+          <div className="absolute md:-top-52 lg:right-0 xl:-right-10">
             <div
               style={{ backgroundImage: `url(${backgroundLogSvg})` }}
-              className="w-[100px] h-[100px] lg:w-[250px] lg:h-[200px] object-contain"
-            ></div>
+              className="w-[100px] h-[100px] lg:w-[250px] lg:h-[200px] object-contain ss:opacity-0 sm:opacity-0 md:opacity-0 lg:opacity-100 xl:opacity-100"
+            />
           </div>
         </div>
+
         <div
-          className="absolute inset-0 w-full h-full bg-left-bottom bg-no-repeat"
+          className="absolute inset-0 w-full h-full bg-left-bottom bg-no-repeat ss:opacity-0 sm: md:opacity-0 lg:opacity-100 lg:top-0 xl:top-0 xl:w-[110vh] xl:opacity-100"
           style={{ backgroundImage: `url(${backgroundSvg})` }}
-        ></div>
+        />
       </div>
-      <div className="flex-[1] bg-[#CCCBCB] flex flex-col justify-center items-center p-6 lg:px-0 z-10 relative">
-        <div className="bg-[#D9D9D9] rounded-3xl p-8 md:py-20 md:px-16 shadow-lg max-w-md w-full gap-y-10">
+
+      <div className="flex-[1] bg-[#CCCBCB] flex flex-col justify-center w-full min-h-screen items-center p-6 ss:px-20   sm:px-32  lg:px-10 xl:px-20 z-10 relative">
+        <div className="bg-[#D9D9D9] rounded-3xl p-8 ss:py-16 sx:-m-4 sx: sx:px-10 ss:m-0 md:py-20  md:px-16 shadow-lg max-w-md w-full gap-y-10">
           <div className="w-full">
             <h2 className="text-6xl font-bold text-[#212121] mb-8">
               Register <br /> <span className="text-[#1E88E5]">Here!</span>
