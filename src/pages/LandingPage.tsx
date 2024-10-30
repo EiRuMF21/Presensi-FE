@@ -52,7 +52,7 @@ const Home: React.FC = () => {
       >
         <div className="w-full px-4 md:px-0">
           <img
-            src="/public/image/LandingPage.png"
+            src="/image/LandingPage.png"
             alt="LandingPage"
             className="w-full rounded-xl drop-shadow-md"
           />
@@ -96,7 +96,7 @@ const Home: React.FC = () => {
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 px-4 md:px-12">
           <div className="group relative p-8 bg-[#1E88E5] rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-lg">
             <h3 className="text-xl font-bold mb-2"></h3>
-            <img src="public/image/smile.svg" className="w-96 h-20 mb-4" />
+            <img src="/image/smile.svg" className="w-96 h-20 mb-4" />
             <div className="absolute top-full left-0 w-full p-4 bg-white text-black rounded-lg opacity-0 transform -translate-y-4 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:translate-y-0">
               <p className="text-lg ml-16">Face Recognition</p>
             </div>
@@ -104,7 +104,7 @@ const Home: React.FC = () => {
 
           <div className="group relative p-8 bg-[#1E88E5] rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-lg">
             <h3 className="text-xl font-bold mb-2"></h3>
-            <img src="public/image/map-pin.svg" className="w-96 h-20 mb-4" />
+            <img src="/image/map-pin.svg" className="w-96 h-20 mb-4" />
             <div className="absolute top-full left-0 w-full p-4 bg-white text-black rounded-lg opacity-0 transform -translate-y-4 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:translate-y-0">
               <p className="text-lg ml-16">Track Location</p>
             </div>
@@ -112,7 +112,7 @@ const Home: React.FC = () => {
 
           <div className="group relative p-8 bg-[#1E88E5] rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-lg">
             <h3 className="text-xl font-bold mb-2"></h3>
-            <img src="public/image/file-text.svg" className="w-96 h-20 mb-4" />
+            <img src="/image/file-text.svg" className="w-96 h-20 mb-4" />
             <div className="absolute top-full left-0 w-full p-4 bg-white text-black rounded-lg opacity-0 transform -translate-y-4 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:translate-y-0">
               <p className="text-lg ml-16">Recap Data</p>
             </div>
@@ -120,7 +120,7 @@ const Home: React.FC = () => {
 
           <div className="group relative p-8 bg-[#1E88E5] rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-lg">
             <h3 className="text-xl font-bold mb-2"></h3>
-            <img src="public/image/users.svg" className="w-96 h-20 mb-4" />
+            <img src="/image/users.svg" className="w-96 h-20 mb-4" />
             <div className="absolute top-full left-0 w-full p-4 bg-white text-black rounded-lg opacity-0 transform -translate-y-4 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:translate-y-0">
               <p className="text-lg ml-16">User Management</p>
             </div>
