@@ -152,7 +152,7 @@ const ProfileSettings: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-t from-[#A0DEFF] via-[#CAF4FF] to-[#5AB2FF]">
+    <div className="flex flex-col min-h-screen bg-gradient-to-t from-[#A0DEFF] via-[#CAF4FF] to-[#5AB2FF] md:px-44  lg:px-10 xl:px-[58vh] xxl:px-[3vh]">
       {/* Navbar */}
       <div className="flex items-center justify-between p-4 bg-white shadow-md">
         <button onClick={() => navigate(-1)} className="text-black">
