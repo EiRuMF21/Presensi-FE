@@ -26,7 +26,7 @@ const NavbarHome: React.FC = () => {
     }
   };
   return (
-    <nav className="flex items-center justify-between text-black bg-white shadow-lg sm:px-6 lg:px-8">
+    <nav className="flex items-center justify-between text-black bg-white shadow-lg sm:px-6 md:-mx-44 lg:px-8 lg:-mx-10 xl:-mx-56">
       <div className="flex items-center justify-between h-16">
         <img src="/image/logoSA.png" alt="Logo" className="w-10" />
       </div>

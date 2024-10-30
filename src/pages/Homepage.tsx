@@ -110,7 +110,7 @@ const Homepage: React.FC = () => {
   );
 
   return (
-    <div className="bg-gradient-to-t from-[#A0DEFF] via-[#CAF4FF] to-[#5AB2FF] overflow-hidden min-h-screen">
+    <div className="bg-gradient-to-t from-[#A0DEFF] via-[#CAF4FF] to-[#5AB2FF] overflow-hidden min-h-screen md:px-44  lg:px-10 xl:px-56 xxl:px-[3vh]">
       <NavbarHome />
 
       {/* Mobile Layout */}
@@ -124,7 +124,7 @@ const Homepage: React.FC = () => {
           <ProfileCard />
 
           {/* Calendar Section */}
-          <div className="p-6 mt-6 ml-0 bg-white rounded-lg shadow-md">
+          <div className="p-6 mt-6 ml-0 lg:-mx-16 bg-white rounded-lg shadow-md">
             <div className="flex justify-between p-2 mb-2 -mt-6 -ml-6 border-b-2">
               <MonthYearSelector
                 initialMonth={currentDate.toLocaleString("default", {
@@ -143,17 +143,14 @@ const Homepage: React.FC = () => {
             {/* Day headers */}
             <div className="grid grid-cols-7 gap-4 text-center">
               {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-                <div
-                  key={day}
-                  className="font-bold text-gray-600"
-                >
+                <div key={day} className="font-bold text-gray-600">
                   {day}
                 </div>
               ))}
             </div>
 
             {/* Calendar days */}
-            <div className="grid grid-cols-7 gap-4 mt-2 text-center text-black">
+            <div className="grid grid-cols-7 gap-4 mt-2  text-center text-black">
               {daysInMonth.map((dayData, index) => (
                 <CalendarDay
                   key={index}

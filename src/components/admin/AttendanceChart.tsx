@@ -80,7 +80,7 @@ const AttendanceChart: React.FC<AttendanceChartProps> = ({ visibleLines }) => {
     return visibleLines;
   };
   return (
-    <div className="bg-white px-5 rounded-lg shadow-lg flex flex-col space-y-6">
+    <div className="bg-white px-5 rounded-lg shadow-lg flex flex-col space-y-6 ">
       <h2 className="text-2xl font-bold text-gray-800">Grafik Kehadiran</h2>
       <div className="flex space-x-4">
         <div className="relative">

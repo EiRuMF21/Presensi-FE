@@ -67,7 +67,7 @@ const Login: React.FC = () => {
       >
         <ChevronLeft className="w-8 h-8" />
       </button>
-      <div className="hidden md:flex flex-[1.7] bg-[#1E88E5] flex-col justify-center p-6 md:py-10 lg:px-10 xl:px-36 w-full min-h-screen relative">
+      <div className="hidden md:flex flex-[1.7] bg-[#1E88E5] flex-col justify-center p-6 md:py-10 lg:px-16 xl:px-36 w-full min-h-screen relative">
         <div className="relative flex flex-col items-center lg:flex-row lg:items-start">
           <div className="flex flex-col -ml-8 md:max-w-3xl">
             <h1 className="ml-24 text-4xl font-semibold text-white md:text-8xl md:-mt-32">
