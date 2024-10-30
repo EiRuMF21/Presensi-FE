@@ -47,7 +47,7 @@ const DashboardAdmin: React.FC = () => {
     <div className="flex flex-col h-screen">
       <NavbarAdmin />
 
-      <div className="flex flex-1 overflow-hidden bg-gradient-to-t from-[#A0DEFF] via-[#CAF4FF] to-[#5AB2FF] md:px-44  lg:px-10 xl:px-56 xxl:px-[3vh]">
+      <div className="flex flex-1 overflow-hidden bg-gradient-to-t from-[#A0DEFF] via-[#CAF4FF] to-[#5AB2FF] md:px-44 lg:px-10 xl:px-56 xxl:px-[3vh]">
         <div
           className={`${
             isSidebarOpen ? "block" : "hidden"
