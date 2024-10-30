@@ -113,7 +113,7 @@ const ProfileCard: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-between w-full p-2 sm:p-4 lg:p-6 mx-auto mt-4 lg:mt-6 -ml-20 bg-white rounded-lg shadow-lg max-w-7xl md:flex-row">
+    <div className="flex flex-col items-center justify-between w-full p-2 sm:p-4 lg:p-6 mx-32 mt-4 lg:mt-6 bg-white rounded-lg shadow-lg max-w-7xl md:flex-row">
       {/* Left Section: Profile */}
       <div className="flex items-center mb-6 md:mb-0">
         <img
