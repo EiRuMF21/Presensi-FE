@@ -145,13 +145,10 @@ const AttendancePage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen min-w-full text-black bg-gradient-to-t from-[#A0DEFF] via-[#CAF4FF] to-[#5AB2FF]">
+    <div className="flex flex-col items-center min-h-screen min-w-full text-black bg-gradient-to-t from-[#A0DEFF] via-[#CAF4FF] to-[#5AB2FF] md:px-44  lg:px-10 xl:px-56 xxl:px-[3vh]">
       {/* Navbar */}
       <div className="flex items-center justify-between w-full px-4 py-4 bg-white shadow-md">
-        <button
-          onClick={() => navigate(-1)}
-          className="text-black"
-        >
+        <button onClick={() => navigate(-1)} className="text-black">
           <img
             src="https://img.icons8.com/ios-glyphs/30/000000/back.png"
             alt="Back Icon"
@@ -206,10 +203,7 @@ const AttendancePage = () => {
         </div>
 
         {/* Hidden canvas for capturing the image */}
-        <canvas
-          ref={canvasRef}
-          style={{display: "none"}}
-        />
+        <canvas ref={canvasRef} style={{ display: "none" }} />
 
         <button
           onClick={handleAttendance}
