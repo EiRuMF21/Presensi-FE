@@ -97,7 +97,7 @@ const Login: React.FC = () => {
       </div>
 
       <div className="flex-[1] bg-[#CCCBCB] flex flex-col justify-center w-full min-h-screen items-center p-6 ss:px-20   sm:px-32  lg:px-10 xl:px-20 z-10 relative">
-        <div className="bg-[#D9D9D9] rounded-3xl p-8 ss:py-16 md:py-20 md:px-16 shadow-lg max-w-md w-full gap-y-10">
+        <div className="bg-[#D9D9D9] rounded-3xl p-8 ss:py-16 sx:m-10 ss:m-20 md:py-20  md:px-16 shadow-lg max-w-md w-full gap-y-10">
           <h2 className="text-6xl font-bold text-[#212121] mb-4">
             Login <br /> <span className="text-[#1E88E5]">Here!</span>
           </h2>
